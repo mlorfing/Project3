@@ -13,8 +13,18 @@ public class Character {
 		
 	}
 	
+	public Character(String n, int life, String special) {
+		name = n;
+		lifePoints = life;
+		specialAbility = special;
+	}
+	
 	public void clearArrows() {
 		lifePoints -= arrows;
 		arrows = 0;
+	}
+	
+	public void addArrows(int a) {
+		arrows += a;
 	}
 }
