@@ -52,10 +52,8 @@ public class BangFX extends Application {
     Scene scene1, expScene, charScene, diceScene, ddScene, initScene;
     TextArea charDesc = new TextArea();
     VBox cD = new VBox(charDesc);
-    TextArea diceNames = new TextArea();
-    VBox dN = new VBox(diceNames);
-    TextArea diceDesc = new TextArea();
-    VBox dD = new VBox(diceDesc);
+    Label diceNames = new Label();
+    Label diceDesc = new Label();
     TextArea init = new TextArea();
     Label welcome = new Label();
     Label expansion = new Label();
@@ -96,8 +94,16 @@ public class BangFX extends Application {
     ArrayList<CharCards> char_cards = new ArrayList();
     ArrayList<Dice> dice = new ArrayList();
     ArrayList<Roles> role_cards = new ArrayList();
-
-                                     //Regular Dice
+    
+    Dice bDie = new Dice(2, 0, "Indian Arrow", "Dynamite", "Duel", "Duel",
+            "Whiskey", "Gatling");                                          //LOOK AT ME DICE
+    Dice cDie = new Dice(0, 0, "Indian Arrow", "Double Beer", "Bull's Eye 1",
+            "Broken Arrow", "Beer", "Dynamite");                                 //Regular Dice
+    Dice lDie = new Dice(0, 0, "Indian Arrow", "Dynamite", "Double Bull's Eye 1",
+            "Double Bull's Eye 2", "Bullet", "Gatling");                                 //Regular Dice
+    Dice regDie = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+            "Bull's Eye 2", "Beer", "Gatling");
+    
     Player human = new Player("NULL", 0, "NULL", false);
     Player ai1 = new Player("NULL", 0, "NULL", true);
     Player ai2 = new Player("NULL", 0, "NULL", true);
@@ -127,6 +133,27 @@ public class BangFX extends Application {
         dice_d.setOnCloseRequest(e -> dice_d.hide());
         dice_d.setAlwaysOnTop(true);
         
+        setWelcomeScreen();
+        setSecondaryScreens();
+        go.setOnAction(e->{
+            eye.seek(Duration.ZERO);
+            eye.play();
+            
+            assign();
+            revealSheriff();
+            init.setLayoutX(340);
+            init.setLayoutY(160);
+            group2.getChildren()
+                .addAll(background, init, musicToggle);
+            initScene = new Scene(group2, 1280, 720);
+            window.setTitle("BANG! Gameplay");
+            window.setScene(initScene);
+            window.show();
+        });
+        
+        
+    }
+    public void setWelcomeScreen() throws Exception{
         bground = new Image(
                 new FileInputStream("src/bang/media/tabletop.jpg"));
         background = new ImageView(bground);
@@ -165,17 +192,17 @@ public class BangFX extends Application {
         bulls = new Media(this.getClass().getResource(
                 "/bang/media/music/bullseye.wav").toString());
         eye = new MediaPlayer(bulls);
-        eye.setVolume(.7);
+        eye.setVolume(.8);
 
         glass = new Media(this.getClass().getResource(
                 "/bang/media/music/beer.wav").toString());
         clink = new MediaPlayer(glass);
-        clink.setVolume(.7);
+        clink.setVolume(.8);
         
         un = new Media(this.getClass().getResource(
                 "/bang/media/music/undead.wav").toString());
         dead = new MediaPlayer(un);
-        dead.setVolume(.7);
+        dead.setVolume(.8);
         
         rules.setText("See Rules");
         rules.setLayoutX(20);
@@ -299,9 +326,9 @@ public class BangFX extends Application {
                 eye.setVolume(0);
                 bMusic.stop();
             } else {
-                dead.setVolume(.7);
-                clink.setVolume(.7);
-                eye.setVolume(.7);
+                dead.setVolume(.8);
+                clink.setVolume(.8);
+                eye.setVolume(.8);
                 bMusic.seek(Duration.ZERO);
                 bMusic.play();
             }
@@ -337,26 +364,8 @@ public class BangFX extends Application {
         window.setTitle("BANG! Gameplay");
         window.setScene(scene1);
         window.show();
-        go.setOnAction(e->{
-            eye.seek(Duration.ZERO);
-            eye.play();
-            
-            assign();
-            revealSheriff();
-            init.setLayoutX(340);
-            init.setLayoutY(160);
-            group2.getChildren()
-                .addAll(background, init, musicToggle);
-            initScene = new Scene(group2, 1280, 720);
-            window.setTitle("BANG! Gameplay");
-            window.setScene(initScene);
-            window.show();
-            if(undInc.isSelected()){
-                DiceRoll.undeaddice(1);
-            }else{
-                DiceRoll.undeaddice(0);
-            }
-        });
+    }
+    public void setSecondaryScreens() throws Exception{
         close.setText("Close");
         close.setFont(Font.font("Copperplate", 15));
         close.setOnAction(e -> {
@@ -734,30 +743,28 @@ public class BangFX extends Application {
             dGroup3();
         });
         diceNames.setWrapText(true);
-        diceNames.setEditable(false);
         diceNames.setFont(Font.font("Copperplate", 15));
         diceDesc.setWrapText(true);
-        diceDesc.setEditable(false);
         
         diceScene = new Scene(diceGroup, 300, 450, Color.BEIGE);
         ddScene = new Scene(diceGroup2, 500, 350, Color.BEIGE);
-        
         
     }
     public void diceEffects(){
         close.setLayoutX(120);
         close.setLayoutY(410);
         
-        diceNames.clear();
+        diceNames.setText("");
         
         diceNames.setText("Choose a dice group to see dice faces and names.");
-        dN.setLayoutY(340);
-        diceNames.setPrefWidth(diceScene.getWidth());
+        diceNames.setLayoutX(5);
+        diceNames.setLayoutY(340);
+        diceNames.setPrefWidth(290);
         
         diceGroup.getChildren().clear();
         
         diceGroup.getChildren()
-                .addAll(dg1, dg2, dg3, dN, close);
+                .addAll(dg1, dg2, dg3, diceNames, close);
         
         dice_n.setScene(diceScene);
         dice_n.setResizable(false);
@@ -767,19 +774,19 @@ public class BangFX extends Application {
         close2.setLayoutX(55);
         close2.setLayoutY(310);
         
-        diceDesc.clear();
+        diceDesc.setText("");
         diceDesc.setFont(Font.font("Copperplate", 25));
         
         diceDesc.setText("1. Indian Arrow\n2. Dynamite\n"
                         +"3. Bull's Eye 1\n4. Bull's Eye 2\n"
                         +"5. Beer\n6. Gatling");
-        dD.setLayoutX(170);
-        diceDesc.setPrefHeight(diceScene.getHeight());
+        diceDesc.setLayoutX(170);
+        diceDesc.setLayoutY(10);
         
         diceGroup2.getChildren().clear();
         
         diceGroup2.getChildren()
-                .addAll(d1, d2, d3, d4, d5, d6, dD, close2);
+                .addAll(d1, d2, d3, d4, d5, d6, diceDesc, close2);
         
         dice_d.setScene(ddScene);
         dice_d.setResizable(false);
@@ -789,19 +796,19 @@ public class BangFX extends Application {
         close2.setLayoutX(55);
         close2.setLayoutY(310);
         
-        diceDesc.clear();
+        diceDesc.setText("");
         diceDesc.setFont(Font.font("Copperplate", 25));
         
         diceDesc.setText("1. Broken Arrow\n2. Bullet\n"
                         +"3. Double Bull's Eye 1\n4. Double "
                         + "Bull's Eye 2\n5. Double Beer\n6. "
                         + "Double Gatling");
-        dD.setLayoutX(170);
-        diceDesc.setPrefHeight(diceScene.getHeight());
+        diceDesc.setLayoutX(170);
+        diceDesc.setLayoutY(10);
         diceGroup2.getChildren().clear();
         
         diceGroup2.getChildren()
-                .addAll(ds1, ds2, ds3, ds4, ds5, ds6, dD, close2);
+                .addAll(ds1, ds2, ds3, ds4, ds5, ds6, diceDesc, close2);
         
         dice_d.setScene(ddScene);
         dice_d.setResizable(false);
@@ -811,16 +818,16 @@ public class BangFX extends Application {
         close2.setLayoutX(55);
         close2.setLayoutY(310);
         
-        diceDesc.clear();
+        diceDesc.setText("");
         diceDesc.setFont(Font.font("Copperplate", 25));
         
         diceDesc.setText("1. Whiskey Bottle\n2. Fight a Duel");
-        dD.setLayoutX(170);
-        diceDesc.setPrefHeight(diceScene.getHeight());
+        diceDesc.setLayoutX(170);
+        diceDesc.setLayoutY(10);
         diceGroup2.getChildren().clear();
         
         diceGroup2.getChildren()
-                .addAll(du1, du2, dD, close2);
+                .addAll(du1, du2, diceDesc, close2);
         
         dice_d.setScene(ddScene);
         dice_d.setResizable(false);
@@ -1042,6 +1049,18 @@ public class BangFX extends Application {
         cSel = (int)players.getValue()-1; 
         
         //Create Character Cards and adds them to char_cards ArrayList
+        if(salInc.isSelected()){
+            char_cards.add(new CharCards("Jose Delgado", 7));
+            char_cards.add(new CharCards("Tequila Joe", 7));
+            char_cards.add(new CharCards("Apache Kid", 9));
+            char_cards.add(new CharCards("Bill Noface", 9));
+            Collections.shuffle(char_cards);  
+        }
+        if(undInc.isSelected()){
+            char_cards.add(new CharCards("Belle Star", 8));
+            char_cards.add(new CharCards("Greg Digger", 7));
+            Collections.shuffle(char_cards);
+        }
         char_cards.add(new CharCards("Bart Cassidy", 8));
         char_cards.add(new CharCards("Black Jack", 8));
         char_cards.add(new CharCards("Calamity Janet", 8));
@@ -1059,26 +1078,18 @@ public class BangFX extends Application {
         char_cards.add(new CharCards("Suzy Lafayette", 8));
         char_cards.add(new CharCards("Vulture Sam", 9));
         char_cards.add(new CharCards("Willy The Kid", 8));*/
-        if(salInc.isSelected()){
-            char_cards.add(new CharCards("Jose Delgado", 7));
-            char_cards.add(new CharCards("Tequila Joe", 7));
-            char_cards.add(new CharCards("Apache Kid", 9));
-            char_cards.add(new CharCards("Bill Noface", 9));
-            Collections.shuffle(char_cards);  
-        }
-        if(undInc.isSelected()){
-            char_cards.add(new CharCards("Belle Star", 8));
-            char_cards.add(new CharCards("Greg Digger", 7));
-            Collections.shuffle(char_cards);
-        }
 
-        /*/Adds dice to their ArrayList
-        dice.add(d1);
-        dice.add(d2);
-        dice.add(d3);
-        dice.add(d4);
-        dice.add(d5);
-        */
+        if(undInc.isSelected()){
+            dice.add(bDie);
+            dice.add(bDie);
+        }else{
+            dice.add(regDie);
+            dice.add(regDie);
+        }
+        dice.add(regDie);
+        dice.add(regDie);
+        dice.add(regDie);
+        
         //A switch to add specific cards based on how many players there are
         switch(cSel)
         {
@@ -1168,6 +1179,7 @@ public class BangFX extends Application {
                     init.appendText("NPC 1 is playing as "+ai1.name+". \n");
             }
     }
+    
     /**
      * @param args the command line arguments
      */

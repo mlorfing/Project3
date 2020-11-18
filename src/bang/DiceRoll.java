@@ -148,13 +148,13 @@ public class DiceRoll {
         
         switch (hold) {
             case 0:
-                result = "One ";
+                result = "be1";
                 break;
             case 1:
-                result = "Two ";
+                result = "be2";
                 break;
             case 2:
-                result = "Dynamite ";
+                result = "dynamite";
                 break;
             case 3:
                 result = "Arrow ";
