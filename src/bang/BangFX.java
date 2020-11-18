@@ -59,6 +59,7 @@ public class BangFX extends Application {
     TextArea init = new TextArea();
     Label welcome = new Label();
     Label expansion = new Label();
+    Label expIncl = new Label();
     Label character = new Label();
     Group group1 = new Group();
     Group group2 = new Group();
@@ -84,9 +85,11 @@ public class BangFX extends Application {
     Button prev2 = new Button();
     Button next2 = new Button();
     Button dEffects = new Button();
+    RadioButton salInc = new RadioButton();
+    RadioButton undInc = new RadioButton();
     
     ToggleButton musicToggle = new ToggleButton();
-    Boolean isSelected;
+    Boolean isSelected, sher;
     ComboBox players = new ComboBox();
     int cSel, pageNum=0;
     
@@ -135,6 +138,17 @@ public class BangFX extends Application {
         welcome.setLayoutY(100);
         welcome.setText("Welcome to ");
         welcome.setFont(Font.font ("Copperplate", 50));
+        
+        expIncl.setLayoutX(500);
+        expIncl.setLayoutY(500);
+        expIncl.setText("Include Expansion Packs?\nOld Saloon"
+                + "\nUndead or Alive");
+        expIncl.setFont(Font.font("Copperplate", 25));
+        
+        salInc.setLayoutX(750);
+        salInc.setLayoutY(530); 
+        undInc.setLayoutX(750);
+        undInc.setLayoutY(555);
         
         expansion.setLayoutX(20);
         expansion.setLayoutY(150);
@@ -309,7 +323,7 @@ public class BangFX extends Application {
         players.setLayoutX(500);
         players.setLayoutY(450);
         players.setPromptText("Choose the number of players: ");
-        for(int i=3; i<8; i++){
+        for(int i=3; i<9; i++){
             players.getItems().add(i);
         }
         
@@ -317,7 +331,8 @@ public class BangFX extends Application {
                 .addAll(background, welcome, expansion,
                         saloonR, saloonC, undeadR, undeadC,
                         bLogo, rules, charAbilities, go,
-                        players, musicToggle, dEffects);
+                        players, musicToggle, dEffects, expIncl, 
+                        salInc, undInc);
         scene1 = new Scene(group1, 1280, 720);
         window.setTitle("BANG! Gameplay");
         window.setScene(scene1);
@@ -326,14 +341,21 @@ public class BangFX extends Application {
             eye.seek(Duration.ZERO);
             eye.play();
             
-            go1();
-
+            assign();
+            revealSheriff();
+            init.setLayoutX(340);
+            init.setLayoutY(160);
             group2.getChildren()
-                .addAll(background, musicToggle);
+                .addAll(background, init, musicToggle);
             initScene = new Scene(group2, 1280, 720);
             window.setTitle("BANG! Gameplay");
             window.setScene(initScene);
             window.show();
+            if(undInc.isSelected()){
+                DiceRoll.undeaddice(1);
+            }else{
+                DiceRoll.undeaddice(0);
+            }
         });
         close.setText("Close");
         close.setFont(Font.font("Copperplate", 15));
@@ -720,7 +742,6 @@ public class BangFX extends Application {
         diceScene = new Scene(diceGroup, 300, 450, Color.BEIGE);
         ddScene = new Scene(diceGroup2, 500, 350, Color.BEIGE);
         
-        init.setText("");
         
     }
     public void diceEffects(){
@@ -1016,8 +1037,7 @@ public class BangFX extends Application {
                 break;
         }
     } 
-    
-    public void go1(){
+    public void assign(){
         //Sets the number of players in the game to how many AI there are going to be
         cSel = (int)players.getValue()-1; 
         
@@ -1030,21 +1050,27 @@ public class BangFX extends Application {
         char_cards.add(new CharCards("Jourdonnais", 7));
         char_cards.add(new CharCards("Kit Carlson", 7));
         char_cards.add(new CharCards("Lucky Duke", 8));
-        char_cards.add(new CharCards("Paul Regret", 9));
+        Collections.shuffle(char_cards);  
+        /*char_cards.add(new CharCards("Paul Regret", 9));
         char_cards.add(new CharCards("Pedro Ramirez", 8));
         char_cards.add(new CharCards("Rose Doolan", 9));
         char_cards.add(new CharCards("Sid Ketchum", 8));
         char_cards.add(new CharCards("Slab The Killer", 8));
         char_cards.add(new CharCards("Suzy Lafayette", 8));
         char_cards.add(new CharCards("Vulture Sam", 9));
-        char_cards.add(new CharCards("Willy The Kid", 8));
-        char_cards.add(new CharCards("Belle Star", 8));
-        char_cards.add(new CharCards("Greg Digger", 7));
-        char_cards.add(new CharCards("Jose Delgado", 7));
-        char_cards.add(new CharCards("Tequila Joe", 7));
-        char_cards.add(new CharCards("Apache Kid", 9));
-        char_cards.add(new CharCards("Bill Noface", 9));
-        Collections.shuffle(char_cards);                                        //Shuffles to make characters random
+        char_cards.add(new CharCards("Willy The Kid", 8));*/
+        if(salInc.isSelected()){
+            char_cards.add(new CharCards("Jose Delgado", 7));
+            char_cards.add(new CharCards("Tequila Joe", 7));
+            char_cards.add(new CharCards("Apache Kid", 9));
+            char_cards.add(new CharCards("Bill Noface", 9));
+            Collections.shuffle(char_cards);  
+        }
+        if(undInc.isSelected()){
+            char_cards.add(new CharCards("Belle Star", 8));
+            char_cards.add(new CharCards("Greg Digger", 7));
+            Collections.shuffle(char_cards);
+        }
 
         /*/Adds dice to their ArrayList
         dice.add(d1);
@@ -1065,9 +1091,10 @@ public class BangFX extends Application {
             case 4:
                 role_cards.add(new Roles("Deputy"));
             case 3:
+                role_cards.add(new Roles("Outlaw"));
+            case 2:
                 role_cards.add(new Roles("Sheriff"));
                 role_cards.add(new Roles("Renegade"));
-                role_cards.add(new Roles("Outlaw"));
                 role_cards.add(new Roles("Outlaw"));
                 Collections.shuffle(role_cards);                                //Shuffles the cards to make roles random
         }
@@ -1087,36 +1114,59 @@ public class BangFX extends Application {
                 ai4 = new Player(char_cards.get(4).name, char_cards.get(4).lp,
                         role_cards.get(4).role, true);
             case 3:
+                ai3 = new Player(char_cards.get(3).name, char_cards.get(3).lp,
+                        role_cards.get(3).role, true);
+            case 2:
                 human = new Player(char_cards.get(0).name, char_cards.get(0).lp,
                         role_cards.get(0).role, false);
                 ai1 = new Player(char_cards.get(1).name, char_cards.get(1).lp,
                         role_cards.get(1).role, true);
                 ai2 = new Player(char_cards.get(2).name, char_cards.get(2).lp,
                         role_cards.get(2).role, true);
-                ai3 = new Player(char_cards.get(3).name, char_cards.get(3).lp,
-                        role_cards.get(3).role, true);
-            
         }
-        System.out.println
-        ("_________________________________________________________");
-        System.out.println("Human is " + human.name + ", has " + human.health + 
-                ", and is a " + human.role);
-        System.out.println("AI1 is " + ai1.name + ", has " + ai1.health + 
-                ", and is a " + ai1.role);
-        System.out.println("AI2 is " + ai2.name + ", has " + ai2.health + 
-                ", and is a " + ai2.role);
-        System.out.println("AI3 is " + ai3.name + ", has " + ai3.health +
-                ", and is a " + ai3.role);
-        System.out.println("AI4 is " + ai4.name + ", has " + ai4.health + 
-                ", and is a " + ai4.role);
-        System.out.println("AI5 is " + ai5.name + ", has " + ai5.health + 
-                ", and is a " + ai5.role);
-        System.out.println("AI6 is " + ai6.name + ", has " + ai6.health + 
-                ", and is a " + ai6.role);
-        System.out.println("AI7 is " + ai7.name + ", has " + ai7.health + 
-                ", and is a " + ai7.role);
-        System.out.println
-        ("_________________________________________________________");
+    }
+    public void revealSheriff(){
+            init.setText("You are playing as "+human.name+" as the "+human.role+".\n");
+            init.setFont(Font.font("Copperplate", 25));
+            init.setWrapText(true);
+            init.setPrefSize(600,400);
+            init.setEditable(false);
+            switch(cSel){
+            case 7:
+                if(ai7.role.equals("Sheriff"))
+                    init.appendText("NPC 7 is playing as "+ai7.name+" as the Sheriff. \n");
+                else
+                    init.appendText("NPC 7 is playing as "+ai7.name+". \n");
+            case 6:
+                if(ai6.role.equals("Sheriff"))
+                    init.appendText("NPC 6 is playing as "+ai6.name+" as the Sheriff. \n");
+                else
+                    init.appendText("NPC 6 is playing as "+ai6.name+". \n");
+            case 5:
+                if(ai5.role.equals("Sheriff"))
+                    init.appendText("NPC 5 is playing as "+ai5.name+" as the Sheriff. \n");
+                else
+                    init.appendText("NPC 5 is playing as "+ai5.name+". \n");
+            case 4:
+                if(ai4.role.equals("Sheriff"))
+                    init.appendText("NPC 4 is playing as "+ai4.name+" as the Sheriff. \n");
+                else
+                    init.appendText("NPC 4 is playing as "+ai4.name+". \n");
+            case 3:
+                if(ai3.role.equals("Sheriff"))
+                    init.appendText("NPC 3 is playing as "+ai3.name+" as the Sheriff. \n");
+                else
+                    init.appendText("NPC 3 is playing as "+ai3.name+". \n");
+            case 2:
+                if(ai2.role.equals("Sheriff"))
+                    init.appendText("NPC 2 is playing as "+ai2.name+" as the Sheriff. \n");
+                else
+                    init.appendText("NPC 2 is playing as "+ai2.name+". \n");
+                if(ai1.role.equals("Sheriff"))
+                    init.appendText("NPC 1 is playing as "+ai1.name+" as the Sheriff. \n");
+                else
+                    init.appendText("NPC 1 is playing as "+ai1.name+". \n");
+            }
     }
     /**
      * @param args the command line arguments
