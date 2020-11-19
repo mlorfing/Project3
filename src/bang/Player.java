@@ -44,12 +44,6 @@ public class Player {
         if (this.name.equals("Black Jack")) {
             this.dynamiteReroll = true;
         }
-        if (this.name.equals("Lucky Duke")) {
-            this.rolls = 4;
-        }
-        if (this.name.equals("Willy The Kid")) {
-            this.gatsNeeded = 2;
-        }
         if (this.role.equals("Sheriff") || this.role.equals("Deputy")) {
             this.team = 0;
         } else if (this.role.equals("Outlaw")) {

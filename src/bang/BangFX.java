@@ -34,17 +34,20 @@ public class BangFX extends Application {
     Stage char_desc = new Stage();
     Stage dice_n = new Stage();
     Stage dice_d = new Stage();
-    Image bground, logo;
-    Image jose, tequila, apache, bill, belle, greg;
+    Image bground, logo, mheader;
+    Image black, gringo, jesse, jour, paul,
+            pedro, suzy, vulture;
+    Image jose, tequila, belle, greg;
     Image sr1, sr2, sr3, sr4, sheader;
     Image ur1, ur2, ur3, ur4, ur5, ur6, ur7, ur8,
             uheader;
     Image arrow, barrow, be1, be2, beer, bullet, dbe1,
             dbe2, dbeer, dgatling, duel, dynamite, gatling,
             whiskey, reg, undead, saloon;
-    ImageView background, bLogo;
-    ImageView jose_img, tequila_img, apache_img, bill_img, 
-            belle_img, greg_img;
+    ImageView background, bLogo, mHeader;
+    ImageView black_img, gringo_img, jesse_img, jour_img,
+            paul_img, pedro_img, suzy_img, vulture_img;
+    ImageView jose_img, tequila_img, belle_img, greg_img;
     ImageView SR1, SR2, SR3, SR4, UR1, UR2, UR3, UR4,
             UR5, UR6, UR7, UR8, sHeader, uHeader;
     ImageView d1, d2, d3, d4, d5, d6, ds1, ds2, ds3, ds4, ds5,
@@ -67,8 +70,8 @@ public class BangFX extends Application {
     Group diceGroup2 = new Group();
     Group initGroup = new Group();
     
-    Media bgM, bulls, glass, un;
-    MediaPlayer bMusic, eye, clink, dead;
+    Media bgM, bulls, glass, un, dieS;
+    MediaPlayer bMusic, eye, clink, dead, rollS;
     Button go = new Button();
     Button rules = new Button();
     Button charAbilities = new Button();
@@ -193,6 +196,11 @@ public class BangFX extends Application {
                 "/bang/media/music/bullseye.wav").toString());
         eye = new MediaPlayer(bulls);
         eye.setVolume(.8);
+        
+        dieS = new Media(this.getClass().getResource(
+                "/bang/media/music/diceroll.wav").toString());
+        rollS = new MediaPlayer(dieS);
+        rollS.setVolume(.8);
 
         glass = new Media(this.getClass().getResource(
                 "/bang/media/music/beer.wav").toString());
@@ -210,8 +218,8 @@ public class BangFX extends Application {
         rules.setFont(Font.font ("Copperplate", 25));
         rules.setOnAction((ActionEvent event) -> {
             event.consume();
-            BangSwingRules.main(new String[0]);
             eye.seek(Duration.ZERO);
+            BangSwingRules.main(new String [0]);
             eye.play();
         });
         
@@ -221,9 +229,18 @@ public class BangFX extends Application {
         charAbilities.setFont(Font.font ("Copperplate", 15));
         charAbilities.setOnAction((ActionEvent event) -> {
             event.consume();
-            BangSwingChar.main(new String[0]);
             eye.seek(Duration.ZERO);
             eye.play();
+            close.setLayoutX(120);
+            close.setLayoutY(630);
+            expGroup.getChildren().clear();
+        
+            expGroup.getChildren()
+                .addAll(mHeader, close, black_img, gringo_img, jesse_img, jour_img,
+                    paul_img, pedro_img, suzy_img, vulture_img);
+            
+            exp.setTitle("Base Characters");
+            exp.show();
         });
         
         saloonR.setText("Old Saloon - Rules");
@@ -260,8 +277,7 @@ public class BangFX extends Application {
             expGroup.getChildren().clear();
         
             expGroup.getChildren()
-                .addAll(sHeader, close, jose_img, tequila_img, 
-                        apache_img, bill_img);
+                .addAll(sHeader, close, jose_img, tequila_img);
             
             exp.setTitle("Old Saloon Characters");
             exp.show();
@@ -324,11 +340,13 @@ public class BangFX extends Application {
                 dead.setVolume(0);
                 clink.setVolume(0);
                 eye.setVolume(0);
+                rollS.setVolume(0);
                 bMusic.stop();
             } else {
                 dead.setVolume(.8);
                 clink.setVolume(.8);
                 eye.setVolume(.8);
+                rollS.setVolume(.8);
                 bMusic.seek(Duration.ZERO);
                 bMusic.play();
             }
@@ -343,7 +361,10 @@ public class BangFX extends Application {
         dEffects.setLayoutY(103);
         dEffects.setText("View Dice Faces");
         dEffects.setFont(Font.font("Copperplate", 20));
-        dEffects.setOnAction(e -> {
+        dEffects.setOnAction((ActionEvent event) -> {
+            event.consume();
+            rollS.seek(Duration.ZERO);
+            rollS.play();
             diceEffects();
         });
         
@@ -424,6 +445,13 @@ public class BangFX extends Application {
             if(pageNum < 8)
                 undeadR();
         });
+        mheader = new Image(new FileInputStream("src/bang/media/mheader.png"));
+        mHeader = new ImageView(mheader);
+        mHeader.setLayoutX(0);
+        mHeader.setLayoutY(0);
+        mHeader.setPreserveRatio(true);
+        mHeader.setFitWidth(300); 
+        
         sheader = new Image(new FileInputStream("src/bang/media/sheader.png"));
         sHeader = new ImageView(sheader);
         sHeader.setLayoutX(0);
@@ -522,6 +550,94 @@ public class BangFX extends Application {
         UR8.setPreserveRatio(true);
         UR8.setFitWidth(300);
         
+        black = new Image(
+            new FileInputStream("src/bang/media/black.png"));
+        black_img = new ImageView(black);
+        black_img.setFitWidth(125);
+        black_img.setLayoutX(20);
+        black_img.setLayoutY(110);
+        black_img.setPreserveRatio(true);
+        black_img.setOnMouseClicked(e->{
+            blackDesc();
+        });
+        
+        gringo = new Image(
+            new FileInputStream("src/bang/media/gringo.png"));
+        gringo_img = new ImageView(gringo);
+        gringo_img.setFitWidth(125);
+        gringo_img.setLayoutX(150);
+        gringo_img.setLayoutY(110);
+        gringo_img.setPreserveRatio(true);
+        gringo_img.setOnMouseClicked(e->{
+            gringoDesc();
+        });
+        
+        jesse = new Image(
+            new FileInputStream("src/bang/media/jesse.png"));
+        jesse_img = new ImageView(jesse);
+        jesse_img.setFitWidth(125);
+        jesse_img.setLayoutX(20);
+        jesse_img.setLayoutY(240);
+        jesse_img.setPreserveRatio(true);
+        jesse_img.setOnMouseClicked(e->{
+            jesseDesc();
+        });
+        
+        jour = new Image(
+            new FileInputStream("src/bang/media/jour.png"));
+        jour_img = new ImageView(jour);
+        jour_img.setFitWidth(125);
+        jour_img.setLayoutX(150);
+        jour_img.setLayoutY(240);
+        jour_img.setPreserveRatio(true);
+        jour_img.setOnMouseClicked(e->{
+            jourDesc();
+        });
+        
+        paul = new Image(
+            new FileInputStream("src/bang/media/paul.png"));
+        paul_img = new ImageView(paul);
+        paul_img.setFitWidth(125);
+        paul_img.setLayoutX(20);
+        paul_img.setLayoutY(370);
+        paul_img.setPreserveRatio(true);
+        paul_img.setOnMouseClicked(e->{
+            paulDesc();
+        });
+        
+        pedro = new Image(
+            new FileInputStream("src/bang/media/pedro.png"));
+        pedro_img = new ImageView(pedro);
+        pedro_img.setFitWidth(125);
+        pedro_img.setLayoutX(150);
+        pedro_img.setLayoutY(370);
+        pedro_img.setPreserveRatio(true);
+        pedro_img.setOnMouseClicked(e->{
+            pedroDesc();
+        });
+        
+        suzy = new Image(
+            new FileInputStream("src/bang/media/suzy.png"));
+        suzy_img = new ImageView(suzy);
+        suzy_img.setFitWidth(125);
+        suzy_img.setLayoutX(20);
+        suzy_img.setLayoutY(500);
+        suzy_img.setPreserveRatio(true);
+        suzy_img.setOnMouseClicked(e->{
+            suzyDesc();
+        });
+        
+        vulture = new Image(
+            new FileInputStream("src/bang/media/vulture.png"));
+        vulture_img = new ImageView(vulture);
+        vulture_img.setFitWidth(125);
+        vulture_img.setLayoutX(150);
+        vulture_img.setLayoutY(500);
+        vulture_img.setPreserveRatio(true);
+        vulture_img.setOnMouseClicked(e->{
+            vultureDesc();
+        });
+        
         jose = new Image(
             new FileInputStream("src/bang/media/jose.png"));
         jose_img = new ImageView(jose);
@@ -542,28 +658,6 @@ public class BangFX extends Application {
         tequila_img.setPreserveRatio(true);
         tequila_img.setOnMouseClicked(e->{
             tequilaDesc();
-        });
-        
-        apache = new Image(
-            new FileInputStream("src/bang/media/apache.png"));
-        apache_img = new ImageView(apache);
-        apache_img.setFitWidth(125);
-        apache_img.setLayoutX(87);
-        apache_img.setLayoutY(365);
-        apache_img.setPreserveRatio(true);
-        apache_img.setOnMouseClicked(e->{
-            apacheDesc();
-        });
-        
-        bill = new Image(
-            new FileInputStream("src/bang/media/bill.png"));
-        bill_img = new ImageView(bill);
-        bill_img.setFitWidth(125);
-        bill_img.setLayoutX(87);
-        bill_img.setLayoutY(495);
-        bill_img.setPreserveRatio(true);
-        bill_img.setOnMouseClicked(e->{
-            billDesc();
         });
         
         belle = new Image(
@@ -833,6 +927,134 @@ public class BangFX extends Application {
         dice_d.setResizable(false);
         dice_d.show();
     }
+    public void blackDesc(){
+        char_desc.setTitle("Black Jack");
+        
+        charGroup.getChildren().clear();
+        
+        charGroup.getChildren()
+            .addAll(cD, close2);
+        
+        charDesc.clear();
+        String desc = ("BLACK JACK\n(8 Life Points)\n\nYou may re-roll Dynamite"
+                + " (not if you roll three or more!).\n\nIf you roll three or "
+                + "more Dynamite at once (or in total if you didn’t re-roll "
+                + "them), follow the usual rules (your turn ends, etc.).");
+        charDesc.setText(desc);
+        char_desc.show();
+        
+    }
+    public void gringoDesc(){
+        char_desc.setTitle("El Gringo");
+        
+        charGroup.getChildren().clear();
+        
+        charGroup.getChildren()
+            .addAll(cD, close2);
+        
+        charDesc.clear();
+        String desc = ("EL GRINGO\n(7 Life Points)\n\nWhen a player makes you "
+                + "lose one or more life points, he must take an arrow.\n\nLife "
+                + "points lost to Indians or Dynamite are not affected.");
+        charDesc.setText(desc);
+        char_desc.show();
+        
+    }
+    public void jesseDesc(){
+        char_desc.setTitle("Jesse Jones");
+        
+        charGroup.getChildren().clear();
+        
+        charGroup.getChildren()
+            .addAll(cD, close2);
+        
+        charDesc.clear();
+        String desc = ("JESSE JONES\n(9 Life Points)\n\nIf you have four "
+                + "life points or less, you gain two if you use BEER for "
+                + "yourself.\n\nFor example, if you have four life points and use"
+                + " two beers, you get four life points.");
+        charDesc.setText(desc);
+        char_desc.show();
+        
+    }
+    public void jourDesc(){
+        char_desc.setTitle("Jourdonnais");
+        
+        charGroup.getChildren().clear();
+        
+        charGroup.getChildren()
+            .addAll(cD, close2);
+        
+        charDesc.clear();
+        String desc = ("JOURDONNAIS\n(7 Life Points)\n\nYou never lose more"
+                + " than one life point to Indians.");
+        charDesc.setText(desc);
+        char_desc.show();
+        
+    }
+    public void paulDesc(){
+        char_desc.setTitle("Paul Regret");
+        
+        charGroup.getChildren().clear();
+        
+        charGroup.getChildren()
+            .addAll(cD, close2);
+        
+        charDesc.clear();
+        String desc = ("PAUL REGRET\n(9 Life Points)\n\nYou never lose "
+                + "life points to the Gatling Gun.");
+        charDesc.setText(desc);
+        char_desc.show();
+        
+    }
+    public void pedroDesc(){
+        char_desc.setTitle("Pedro Ramirez");
+        
+        charGroup.getChildren().clear();
+        
+        charGroup.getChildren()
+            .addAll(cD, close2);
+        
+        charDesc.clear();
+        String desc = ("PEDRO RAMIREZ\n(8 Life Points)\n\nEach time you lose a"
+                + " life point, you may discard one of your arrows.\n\nYou "
+                + "still lose the life point when you use this ability.");
+        charDesc.setText(desc);
+        char_desc.show();
+        
+    }
+    public void suzyDesc(){
+        char_desc.setTitle("Suzy Lafayette");
+        
+        charGroup.getChildren().clear();
+        
+        charGroup.getChildren()
+            .addAll(cD, close2);
+        
+        charDesc.clear();
+        String desc = ("SUZY LAFAYETTE\n(8 Life Points)\n\nIf you didn’t roll"
+                + " any BULLSEYE1 or BULLSEYE2, you gain two life points.\n\n"
+                + "This only applies at the END of your turn, not during your"
+                + " re-rolls.");
+        charDesc.setText(desc);
+        char_desc.show();
+        
+    }
+    public void vultureDesc(){
+        char_desc.setTitle("Vulture Sam");
+        
+        charGroup.getChildren().clear();
+        
+        charGroup.getChildren()
+            .addAll(cD, close2);
+        
+        charDesc.clear();
+        String desc = ("VULTURE SAM\n(9 Life Points)\n\nEach time another "
+                + "player is eliminated, you gain two life points.");
+        charDesc.setText(desc);
+        char_desc.show();
+        
+    }
     public void joseDesc(){
         char_desc.setTitle("Jose Delgado");
         
@@ -864,35 +1086,6 @@ public class BangFX extends Application {
                 + "If you use the Coward die, you roll 6 dice total; if you "
                 + "use the Loudmouth die, 5. You cannot use the Loudmouth and "
                 + "the Coward dice together.");
-        charDesc.setText(desc);
-        char_desc.show();
-    }
-    public void apacheDesc(){
-        char_desc.setTitle("Apache Kid");
-        
-        charGroup.getChildren().clear();
-        
-        charGroup.getChildren()
-            .addAll(cD, close2);
-        
-        charDesc.clear();
-        String desc = ("APACHE KID\n(9 Life Points)\n\nIf you roll ARROW, "
-                + "you may take the Indian Chief's arrow from another player");
-        charDesc.setText(desc);
-        char_desc.show();
-    }
-    public void billDesc(){
-        char_desc.setTitle("Bill Noface");
-        
-        charGroup.getChildren().clear();
-        
-        charGroup.getChildren()
-            .addAll(cD, close2);
-        
-        charDesc.clear();
-        String desc = ("BILL NOFACE\n(9 Life Points)\n\nApply ARROW results "
-                + "only after your last roll.\n\nYour last roll isn't "
-                + "necessarily the third one, you may stop earlier, as normal.");
         charDesc.setText(desc);
         char_desc.show();
     }
@@ -1052,8 +1245,6 @@ public class BangFX extends Application {
         if(salInc.isSelected()){
             char_cards.add(new CharCards("Jose Delgado", 7));
             char_cards.add(new CharCards("Tequila Joe", 7));
-            char_cards.add(new CharCards("Apache Kid", 9));
-            char_cards.add(new CharCards("Bill Noface", 9));
             Collections.shuffle(char_cards);  
         }
         if(undInc.isSelected()){
@@ -1061,23 +1252,16 @@ public class BangFX extends Application {
             char_cards.add(new CharCards("Greg Digger", 7));
             Collections.shuffle(char_cards);
         }
-        char_cards.add(new CharCards("Bart Cassidy", 8));
         char_cards.add(new CharCards("Black Jack", 8));
-        char_cards.add(new CharCards("Calamity Janet", 8));
         char_cards.add(new CharCards("El Gringo", 7));
         char_cards.add(new CharCards("Jesse Jones", 9));
         char_cards.add(new CharCards("Jourdonnais", 7));
-        char_cards.add(new CharCards("Kit Carlson", 7));
-        char_cards.add(new CharCards("Lucky Duke", 8));
-        Collections.shuffle(char_cards);  
-        /*char_cards.add(new CharCards("Paul Regret", 9));
+        char_cards.add(new CharCards("Paul Regret", 9));
         char_cards.add(new CharCards("Pedro Ramirez", 8));
-        char_cards.add(new CharCards("Rose Doolan", 9));
-        char_cards.add(new CharCards("Sid Ketchum", 8));
-        char_cards.add(new CharCards("Slab The Killer", 8));
         char_cards.add(new CharCards("Suzy Lafayette", 8));
         char_cards.add(new CharCards("Vulture Sam", 9));
-        char_cards.add(new CharCards("Willy The Kid", 8));*/
+        Collections.shuffle(char_cards);  
+
 
         if(undInc.isSelected()){
             dice.add(bDie);
