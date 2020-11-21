@@ -9,13 +9,10 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.*;
 import javafx.scene.paint.Color;
@@ -29,6 +26,7 @@ import javafx.util.Duration;
  */
 public class BangFX extends Application {
 
+    //initialization of variables used for GUI
     Stage window = new Stage();
     Stage exp = new Stage();
     Stage char_desc = new Stage();
@@ -44,6 +42,7 @@ public class BangFX extends Application {
     Image arrow, barrow, be1, be2, beer, bullet, dbe1,
             dbe2, dbeer, dgatling, duel, dynamite, gatling,
             whiskey, reg, undead, saloon;
+    Image rdie, ldie, cdie, bdie, rdie2, rdie3, rdie4, rdie5, bdie2;
     ImageView background, bLogo, mHeader;
     ImageView black_img, gringo_img, jesse_img, jour_img,
             paul_img, pedro_img, suzy_img, vulture_img;
@@ -51,19 +50,23 @@ public class BangFX extends Application {
     ImageView SR1, SR2, SR3, SR4, UR1, UR2, UR3, UR4,
             UR5, UR6, UR7, UR8, sHeader, uHeader;
     ImageView d1, d2, d3, d4, d5, d6, ds1, ds2, ds3, ds4, ds5,
-            ds6, du1, du2, dg1, dg2, dg3;
-    Scene scene1, expScene, charScene, diceScene, ddScene, initScene;
+            ds6, du1, du2, du3, du4, du5, du6, dg1, dg2, dg3;
+    ImageView rDie_img, lDie_img, cDie_img, bDie_img, bDie2_img,
+            rDie2_img, rDie3_img, rDie4_img, rDie5_img;
+    Scene scene1, expScene, charScene, diceScene, ddScene, 
+            initScene, scene2;
     TextArea charDesc = new TextArea();
     VBox cD = new VBox(charDesc);
     Label diceNames = new Label();
     Label diceDesc = new Label();
-    TextArea init = new TextArea();
+    Label init = new Label();
     Label welcome = new Label();
     Label expansion = new Label();
     Label expIncl = new Label();
     Label character = new Label();
     Group group1 = new Group();
     Group group2 = new Group();
+    Group group3 = new Group();
     Group expGroup = new Group();
     Group charGroup = new Group();
     Group diceGroup = new Group();
@@ -85,6 +88,8 @@ public class BangFX extends Application {
     Button next = new Button();
     Button prev2 = new Button();
     Button next2 = new Button();
+    Button nextMain = new Button();
+    Button nextMain2 = new Button();
     Button dEffects = new Button();
     RadioButton salInc = new RadioButton();
     RadioButton undInc = new RadioButton();
@@ -94,16 +99,20 @@ public class BangFX extends Application {
     ComboBox players = new ComboBox();
     int cSel, pageNum=0;
     
+    //initialization of game variables
     ArrayList<CharCards> char_cards = new ArrayList();
     ArrayList<Dice> dice = new ArrayList();
     ArrayList<Roles> role_cards = new ArrayList();
+    static ArrayList<Player> play_order = new ArrayList();
+    static ArrayList<Player> temp_play_order = new ArrayList();
+    static ArrayList<Player> temp_play_order2 = new ArrayList();
     
     Dice bDie = new Dice(2, 0, "Indian Arrow", "Dynamite", "Duel", "Duel",
-            "Whiskey", "Gatling");                                          //LOOK AT ME DICE
+            "Whiskey", "Gatling");
     Dice cDie = new Dice(0, 0, "Indian Arrow", "Double Beer", "Bull's Eye 1",
-            "Broken Arrow", "Beer", "Dynamite");                                 //Regular Dice
+            "Broken Arrow", "Beer", "Dynamite");
     Dice lDie = new Dice(0, 0, "Indian Arrow", "Dynamite", "Double Bull's Eye 1",
-            "Double Bull's Eye 2", "Bullet", "Gatling");                                 //Regular Dice
+            "Double Bull's Eye 2", "Bullet", "Gatling");
     Dice regDie = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
             "Bull's Eye 2", "Beer", "Gatling");
     
@@ -116,10 +125,11 @@ public class BangFX extends Application {
     Player ai6 = new Player("NULL", 0, "NULL", true);
     Player ai7 = new Player("NULL", 0, "NULL", true);
     
+    //main method
     public static void main(String[] args) {
         launch(args);
     }
-    
+    //sets the buttons to go forward to next screen
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
@@ -147,15 +157,19 @@ public class BangFX extends Application {
             init.setLayoutX(340);
             init.setLayoutY(160);
             group2.getChildren()
-                .addAll(background, init, musicToggle);
+                .addAll(background, init, nextMain, musicToggle);
             initScene = new Scene(group2, 1280, 720);
             window.setTitle("BANG! Gameplay");
             window.setScene(initScene);
             window.show();
         });
+        nextMain2.setOnAction(e->{
+            diceRoll();
+        });
         
         
     }
+    //sets initial welcome screen, asks for user input
     public void setWelcomeScreen() throws Exception{
         bground = new Image(
                 new FileInputStream("src/bang/media/tabletop.jpg"));
@@ -386,6 +400,7 @@ public class BangFX extends Application {
         window.setScene(scene1);
         window.show();
     }
+    //sets character/dice/rule windows and images
     public void setSecondaryScreens() throws Exception{
         close.setText("Close");
         close.setFont(Font.font("Copperplate", 15));
@@ -403,8 +418,6 @@ public class BangFX extends Application {
             Stage stage =  (Stage)close2.getScene().getWindow();
             stage.close();
         });
-        close2.setLayoutX(120);
-        close2.setLayoutY(250);
         
         prev.setLayoutX(95);
         prev.setLayoutY(600);
@@ -836,6 +849,70 @@ public class BangFX extends Application {
         dg3.setOnMouseClicked(e ->{
             dGroup3();
         });
+        
+        rdie = new Image(new FileInputStream("src/bang/media/rdie.png"));
+        rDie_img = new ImageView(rdie);
+        rDie_img.setLayoutX(0);
+        rDie_img.setLayoutY(0);
+        rDie_img.setPreserveRatio(true);
+        rDie_img.setFitWidth(50);
+        
+        rdie2 = new Image(new FileInputStream("src/bang/media/rdie.png"));
+        rDie2_img = new ImageView(rdie2);
+        rDie2_img.setLayoutX(0);
+        rDie2_img.setLayoutY(0);
+        rDie2_img.setPreserveRatio(true);
+        rDie2_img.setFitWidth(50);
+        
+        rdie3 = new Image(new FileInputStream("src/bang/media/rdie.png"));
+        rDie3_img = new ImageView(rdie3);
+        rDie3_img.setLayoutX(0);
+        rDie3_img.setLayoutY(0);
+        rDie3_img.setPreserveRatio(true);
+        rDie3_img.setFitWidth(50);
+        
+        rdie4 = new Image(new FileInputStream("src/bang/media/rdie.png"));
+        rDie4_img = new ImageView(rdie4);
+        rDie4_img.setLayoutX(0);
+        rDie4_img.setLayoutY(0);
+        rDie4_img.setPreserveRatio(true);
+        rDie4_img.setFitWidth(50);
+        
+        rdie5 = new Image(new FileInputStream("src/bang/media/rdie.png"));
+        rDie5_img = new ImageView(rdie5);
+        rDie5_img.setLayoutX(0);
+        rDie5_img.setLayoutY(0);
+        rDie5_img.setPreserveRatio(true);
+        rDie5_img.setFitWidth(50);
+        
+        bdie = new Image(new FileInputStream("src/bang/media/bdie.png"));
+        bDie_img = new ImageView(bdie);
+        bDie_img.setLayoutX(60);
+        bDie_img.setLayoutY(0);
+        bDie_img.setPreserveRatio(true);
+        bDie_img.setFitWidth(50);
+        
+        bdie2 = new Image(new FileInputStream("src/bang/media/bdie.png"));
+        bDie2_img = new ImageView(bdie2);
+        bDie2_img.setLayoutX(0);
+        bDie2_img.setLayoutY(0);
+        bDie2_img.setPreserveRatio(true);
+        bDie2_img.setFitWidth(50);
+        
+        ldie = new Image(new FileInputStream("src/bang/media/ldie.png"));
+        lDie_img = new ImageView(ldie);
+        lDie_img.setLayoutX(0);
+        lDie_img.setLayoutY(0);
+        lDie_img.setPreserveRatio(true);
+        lDie_img.setFitWidth(50);
+        
+        cdie = new Image(new FileInputStream("src/bang/media/cdie.png"));
+        cDie_img = new ImageView(cdie);
+        cDie_img.setLayoutX(0);
+        cDie_img.setLayoutY(0);
+        cDie_img.setPreserveRatio(true);
+        cDie_img.setFitWidth(50);
+        
         diceNames.setWrapText(true);
         diceNames.setFont(Font.font("Copperplate", 15));
         diceDesc.setWrapText(true);
@@ -843,7 +920,139 @@ public class BangFX extends Application {
         diceScene = new Scene(diceGroup, 300, 450, Color.BEIGE);
         ddScene = new Scene(diceGroup2, 500, 350, Color.BEIGE);
         
+        nextMain.setLayoutX(1000);
+        nextMain.setLayoutY(650);
+        nextMain.setText("Next");
+        nextMain.setFont(Font.font("Copperplate", 20));
+        
+        nextMain2.setLayoutX(1000);
+        nextMain2.setLayoutY(650);
+        nextMain2.setText("Next");
+        nextMain2.setFont(Font.font("Copperplate", 20));
+        nextMain.setOnAction(e->{
+            group1.getChildren().clear();
+            
+            group1.getChildren()
+                    .addAll(background, musicToggle, character, nextMain2);
+            window.setTitle("BANG! Gameplay");
+            window.setScene(scene1);
+            window.show();
+        });
+        
+        charTooltips();
+        
     }
+    //sets character tooltips
+    public void charTooltips(){
+        Tooltip t = new Tooltip("Black Jack");
+        t.setFont(Font.font ("Copperplate"));
+        Tooltip.install(black_img, t);
+        Tooltip t1 = new Tooltip("El Gringo");
+        t1.setFont(Font.font ("Copperplate"));
+        Tooltip.install(gringo_img, t1);
+        Tooltip t2 = new Tooltip("Jesse Jones");
+        t2.setFont(Font.font ("Copperplate"));
+        Tooltip.install(jesse_img, t2);
+        Tooltip t3 = new Tooltip("Jourdonnais");
+        t3.setFont(Font.font ("Copperplate"));
+        Tooltip.install(jour_img, t3);
+        Tooltip t4 = new Tooltip("Paul Regret");
+        t4.setFont(Font.font ("Copperplate"));
+        Tooltip.install(paul_img, t4);
+        Tooltip t5 = new Tooltip("Pedro Ramirez");
+        t5.setFont(Font.font ("Copperplate"));
+        Tooltip.install(pedro_img, t5);
+        Tooltip t6 = new Tooltip("Suzy Lafayette");
+        t6.setFont(Font.font ("Copperplate"));
+        Tooltip.install(suzy_img, t6);
+        Tooltip t7 = new Tooltip("Vulture Sam");
+        t7.setFont(Font.font ("Copperplate"));
+        Tooltip.install(vulture_img, t7);
+        Tooltip t8 = new Tooltip("Jose Delgado");
+        t8.setFont(Font.font ("Copperplate"));
+        Tooltip.install(jose_img, t8);
+        Tooltip t9 = new Tooltip("Tequila Joe");
+        t9.setFont(Font.font ("Copperplate"));
+        Tooltip.install(tequila_img, t9);
+        Tooltip t10 = new Tooltip("Belle Star");
+        t10.setFont(Font.font ("Copperplate"));
+        Tooltip.install(belle_img, t10);
+        Tooltip t11 = new Tooltip("Greg Digger");
+        t11.setFont(Font.font ("Copperplate"));
+        Tooltip.install(greg_img, t11);
+        Tooltip t12 = new Tooltip("Regular Dice");
+        t12.setFont(Font.font ("Copperplate"));
+        Tooltip.install(dg1, t12);
+        Tooltip t13 = new Tooltip("Old Saloon Dice");
+        t13.setFont(Font.font ("Copperplate"));
+        Tooltip.install(dg2, t13);
+        Tooltip t14 = new Tooltip("Undead or Alive Dice");
+        t14.setFont(Font.font ("Copperplate"));
+        Tooltip.install(dg3, t14);
+    }
+    //sets play order starting with sheriff
+    public void setPlayOrder(){
+        //A temp list to store all players for UI, game mechanics, and more
+        temp_play_order.add(human);
+        temp_play_order.add(ai1);
+        temp_play_order.add(ai2);
+        temp_play_order.add(ai3);
+        temp_play_order.add(ai4);
+        temp_play_order.add(ai5);
+        temp_play_order.add(ai6);
+        temp_play_order.add(ai7);
+
+        //Temp variables for helping with making the play order
+        int stop = -1;
+        boolean sher = false;
+
+        //Making the human's role shown so they know which team they are on
+        temp_play_order.get(0).shown = true;
+        
+        //This figures out who's the Sheriff and the correct playing order
+        for (int i = 0; i < 16; i++) {                                          
+            if (!(temp_play_order.get(i % 8).role.equals("NULL"))) {            
+                if (sher == true) {                                             
+                    if (i % 8 == stop) {                                        
+                        break;                                                  
+                    } 
+                    else {                                                        
+                        play_order.add(temp_play_order.get(i % 8));                   
+                    }
+                }
+                if (sher == false) {                                              
+                    if (temp_play_order.get(i % 8).role.equals("Sheriff")) {       
+                        temp_play_order.get(i % 8).setMaxHealth(
+                                temp_play_order.get(i % 8).maxHealth + 2);         
+                        temp_play_order.get(i % 8).heal(2);                         
+                        temp_play_order.get(i % 8).shown = true;                 
+                        temp_play_order.get(i % 8).known = true;                   
+                        play_order.add(temp_play_order.get(i % 8));                
+                        stop = i;                                                  
+                        sher = true;                                         
+                    }
+                }
+
+            }
+        }
+        
+        character.setLayoutX(10);
+        character.setLayoutY(10);
+        character.setWrapText(true);
+        character.setMaxHeight(500);
+        character.setFont(Font.font("Copperplate", 20));
+        
+        //Start of play order
+        character.setText("The play order is: \n");
+        
+        //Prints out the play order, starting with sheriff
+        for (int j = 0; j < play_order.size()+1; j++) {
+            character.setText(character.getText()+ (j + 1) + ") " + play_order.get(j).name + "\n");
+        }
+        
+        
+    }  
+    //sets window for dice
     public void diceEffects(){
         close.setLayoutX(120);
         close.setLayoutY(410);
@@ -863,7 +1072,8 @@ public class BangFX extends Application {
         dice_n.setScene(diceScene);
         dice_n.setResizable(false);
         dice_n.show();
-    }
+    } 
+    //window for regular dice
     public void dGroup1(){
         close2.setLayoutX(55);
         close2.setLayoutY(310);
@@ -886,6 +1096,7 @@ public class BangFX extends Application {
         dice_d.setResizable(false);
         dice_d.show();
     }
+    //window for Old Saloon dice
     public void dGroup2(){
         close2.setLayoutX(55);
         close2.setLayoutY(310);
@@ -908,6 +1119,7 @@ public class BangFX extends Application {
         dice_d.setResizable(false);
         dice_d.show();
     }
+    //window for Undead or Alive dice
     public void dGroup3(){
         close2.setLayoutX(55);
         close2.setLayoutY(310);
@@ -927,7 +1139,10 @@ public class BangFX extends Application {
         dice_d.setResizable(false);
         dice_d.show();
     }
+    //sets dialog windows for the characer descriptions
     public void blackDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Black Jack");
         
         charGroup.getChildren().clear();
@@ -945,6 +1160,8 @@ public class BangFX extends Application {
         
     }
     public void gringoDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("El Gringo");
         
         charGroup.getChildren().clear();
@@ -961,6 +1178,8 @@ public class BangFX extends Application {
         
     }
     public void jesseDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Jesse Jones");
         
         charGroup.getChildren().clear();
@@ -978,6 +1197,8 @@ public class BangFX extends Application {
         
     }
     public void jourDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Jourdonnais");
         
         charGroup.getChildren().clear();
@@ -993,6 +1214,8 @@ public class BangFX extends Application {
         
     }
     public void paulDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Paul Regret");
         
         charGroup.getChildren().clear();
@@ -1008,6 +1231,8 @@ public class BangFX extends Application {
         
     }
     public void pedroDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Pedro Ramirez");
         
         charGroup.getChildren().clear();
@@ -1024,6 +1249,8 @@ public class BangFX extends Application {
         
     }
     public void suzyDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Suzy Lafayette");
         
         charGroup.getChildren().clear();
@@ -1041,6 +1268,8 @@ public class BangFX extends Application {
         
     }
     public void vultureDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Vulture Sam");
         
         charGroup.getChildren().clear();
@@ -1056,6 +1285,8 @@ public class BangFX extends Application {
         
     }
     public void joseDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Jose Delgado");
         
         charGroup.getChildren().clear();
@@ -1073,7 +1304,9 @@ public class BangFX extends Application {
         char_desc.show();
     }
     public void tequilaDesc(){
-        char_desc.setTitle("Tequila Jose");
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
+        char_desc.setTitle("Tequila Joe");
         
         charGroup.getChildren().clear();
         
@@ -1081,7 +1314,7 @@ public class BangFX extends Application {
             .addAll(cD, close2);
         
         charDesc.clear();
-        String desc = ("TEQUILA JOSE\n(7 Life Points)\n\nYou may use the Coward"
+        String desc = ("TEQUILA JOE\n(7 Life Points)\n\nYou may use the Coward"
                 + " die without replacing a base die (roll six dice total).\n\n"
                 + "If you use the Coward die, you roll 6 dice total; if you "
                 + "use the Loudmouth die, 5. You cannot use the Loudmouth and "
@@ -1090,6 +1323,8 @@ public class BangFX extends Application {
         char_desc.show();
     }
     public void belleDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Belle Star");
         
         charGroup.getChildren().clear();
@@ -1105,6 +1340,8 @@ public class BangFX extends Application {
         char_desc.show();
     }
     public void gregDesc(){
+        close2.setLayoutX(120);
+        close2.setLayoutY(250);
         char_desc.setTitle("Greg Digger");
         
         charGroup.getChildren().clear();
@@ -1118,6 +1355,7 @@ public class BangFX extends Application {
         charDesc.setText(desc);
         char_desc.show();
     }
+    //sets dialog windows for the rules
     public void regDesc(){
         char_desc.setTitle("Jose Delgado");
         
@@ -1237,6 +1475,7 @@ public class BangFX extends Application {
                 break;
         }
     } 
+    //assigns each AI and the user a character and role
     public void assign(){
         //Sets the number of players in the game to how many AI there are going to be
         cSel = (int)players.getValue()-1; 
@@ -1320,48 +1559,61 @@ public class BangFX extends Application {
                         role_cards.get(2).role, true);
         }
     }
+    //prob gonna remove this and add to assign() method, reveals roles
     public void revealSheriff(){
-            init.setText("You are playing as "+human.name+" as the "+human.role+".\n");
+            init.setText("You are the "+human.role+", playing as "+human.name+".\n");
             init.setFont(Font.font("Copperplate", 25));
             init.setWrapText(true);
             init.setPrefSize(600,400);
-            init.setEditable(false);
             switch(cSel){
             case 7:
                 if(ai7.role.equals("Sheriff"))
-                    init.appendText("NPC 7 is playing as "+ai7.name+" as the Sheriff. \n");
+                    init.setText(init.getText()+"NPC 7 is the Sheriff, playing as "+ai7.name+".\n");
                 else
-                    init.appendText("NPC 7 is playing as "+ai7.name+". \n");
+                    init.setText(init.getText()+"NPC 7 is playing as "+ai7.name+". \n");
             case 6:
                 if(ai6.role.equals("Sheriff"))
-                    init.appendText("NPC 6 is playing as "+ai6.name+" as the Sheriff. \n");
+                    init.setText(init.getText()+"NPC 6 is the Sheriff, playing as "+ai6.name+".\n");
                 else
-                    init.appendText("NPC 6 is playing as "+ai6.name+". \n");
+                    init.setText(init.getText()+"NPC 6 is playing as "+ai6.name+". \n");
             case 5:
                 if(ai5.role.equals("Sheriff"))
-                    init.appendText("NPC 5 is playing as "+ai5.name+" as the Sheriff. \n");
+                    init.setText(init.getText()+"NPC 5 is the Sheriff, playing as "+ai5.name+".\n");
                 else
-                    init.appendText("NPC 5 is playing as "+ai5.name+". \n");
+                    init.setText(init.getText()+"NPC 5 is playing as "+ai5.name+". \n");
             case 4:
                 if(ai4.role.equals("Sheriff"))
-                    init.appendText("NPC 4 is playing as "+ai4.name+" as the Sheriff. \n");
+                    init.setText(init.getText()+"NPC 4 is the Sheriff, playing as "+ai4.name+".\n");
                 else
-                    init.appendText("NPC 4 is playing as "+ai4.name+". \n");
+                    init.setText(init.getText()+"NPC 4 is playing as "+ai4.name+". \n");
             case 3:
                 if(ai3.role.equals("Sheriff"))
-                    init.appendText("NPC 3 is playing as "+ai3.name+" as the Sheriff. \n");
+                    init.setText(init.getText()+"NPC 3 is the Sheriff, playing as "+ai3.name+".\n");
                 else
-                    init.appendText("NPC 3 is playing as "+ai3.name+". \n");
+                    init.setText(init.getText()+"NPC 3 is playing as "+ai3.name+". \n");
             case 2:
                 if(ai2.role.equals("Sheriff"))
-                    init.appendText("NPC 2 is playing as "+ai2.name+" as the Sheriff. \n");
+                    init.setText(init.getText()+"NPC 2 is the Sheriff, playing as "+ai2.name+".\n");
                 else
-                    init.appendText("NPC 2 is playing as "+ai2.name+". \n");
+                    init.setText(init.getText()+"NPC 2 is playing as "+ai2.name+". \n");
                 if(ai1.role.equals("Sheriff"))
-                    init.appendText("NPC 1 is playing as "+ai1.name+" as the Sheriff. \n");
+                    init.setText(init.getText()+"NPC 1 is the Sheriff, playing as "+ai1.name+".\n");
                 else
-                    init.appendText("NPC 1 is playing as "+ai1.name+". \n");
+                    init.setText(init.getText()+"NPC 1 is playing as "+ai1.name+". \n");
             }
+            
+            setPlayOrder();
+    }
+    //trying to implement a button for dice rolling initiative
+    public void diceRoll(){
+        group3.getChildren().clear();
+        if((undInc.isSelected()))
+        group3.getChildren()
+                .addAll(background, musicToggle, rDie_img, bDie_img);
+        
+        scene2 = new Scene(group3, 1280, 720);
+        window.setScene(scene2);
+        window.show();
     }
     
     /**
