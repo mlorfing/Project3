@@ -23,8 +23,8 @@ public class Character {
 	private int team; // 0 is for sherrif or deputy, 1 for outlaw, 2 for renegade
 	
 	// ------------------------INFO about
-	int gatsNeeded = 3; // number of gatlings still needed to use the gatling gun
-	int rolls = 3; //
+	public int gatsNeeded = 3; // number of gatlings still needed to use the gatling gun
+	public int rolls = 3; //
 	
 	
 	// default constructor for the character class
