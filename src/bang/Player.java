@@ -27,6 +27,9 @@ public class Player {
     public boolean shown;
     public boolean known;
     public boolean chiefArrow = false;
+    
+    //expanction Character traits
+    int numDice=5;
 
     CharCards c; //team assign
 
