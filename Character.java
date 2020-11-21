@@ -22,7 +22,7 @@ public class Character {
 	// -------------------------INFO abut the characters role
 	private int team; // 0 is for sherrif or deputy, 1 for outlaw, 2 for renegade
 	
-	// ------------------------INFO about
+	// ------------------------INFO about dice things
 	public int gatsNeeded = 3; // number of gatlings still needed to use the gatling gun
 	public int rolls = 3; //
 	
@@ -113,6 +113,8 @@ public class Character {
 	// input: none
 	// output: none
 	public void clearArrows() {
+		if(specialAbility[3] == 1 && arrows > 1)
+			arrows = 1;
 		lifePoints -= arrows;
 		arrows = 0;
 	}
@@ -164,6 +166,10 @@ public class Character {
 		} else {
 			lifePoints -= d;
 		}
+		if(specialAbility[5] == 1) {
+			if(arrows > 0)
+				arrows--;
+		}
 	}
 	
 	// function name:
@@ -173,6 +179,30 @@ public class Character {
 	public void showRole() {
 		shown = true;
 		known = true;
+	}
+	
+	// function name: resetRolls
+	// purpose: used to reset the number of rolls the character has for the next round
+	// input: none
+	// output: none
+	public void resetRolls() {
+		rolls = 3;
+	}
+	
+	// function: Beer
+	// purpose: used when a character rolls a beer and uses it on themselves
+	// input: none
+	// output: none
+	public void selfBeer() {
+		int healthAdded;
+		if(specialAbility[11] == 1 || (specialAbility[2] == 1 && lifePoints <= 4))
+			healthAdded = 2;
+		else
+			healthAdded = 1;
+		if(lifePoints + healthAdded > maxHealth)
+			lifePoints = maxHealth;
+		else
+			lifePoints += healthAdded;
 	}
 }
 
@@ -188,11 +218,11 @@ public class Character {
  * 	2
  * 		Jesse Jones
  * 		9
- * 		If you have four life points or less, you gain two if you beer for yourself
+ * 		If you have four life points or less, you gain two if you beer for yourself (IMPLEMENTED IN THE CLASS (selfBeer))
  * 	3
  * 		Jourdonnais
  * 		7
- * 		Don't loose more than one life point to indians
+ * 		Don't loose more than one life point to indians (IMPLEMENTED IN THE CLASS (clearArrows))
  * 	4
  * 		Paul Regret
  * 		9
@@ -200,7 +230,7 @@ public class Character {
  * 	5
  * 		Pedro Ramirez
  * 		8
- * 		Each time you lose a life point, you may discard one of your arrows
+ * 		Each time you lose a life point, you may discard one of your arrows (IMPLEMENTED IN THE CLASS (damage))
  * 	6
  * 		Suzy Lafayette
  * 		8
@@ -224,11 +254,11 @@ public class Character {
  * 	11
  * 		Greg Digger
  * 		7
- * 		Use each beer rolled twice (outside)
+ * 		Use each beer rolled twice (IMPLEMENTED IN THE CLASS (selfBeer))
  * 
  */
 
-
+// Note on terminology: Players are the group, the human running the program is the user and the AI are called computers
 
 
 
