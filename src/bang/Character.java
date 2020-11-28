@@ -9,9 +9,10 @@
 public class Character {
 	// -------------------- INFO about the player -------------------
 	private String name; // string used to hold the name of the character
-	private int lifePoints; // int to hold the current health of the player
-	private int maxHealth; // int to hold the max health of the player
+	private int lifePoints; // int to hold the current health of the character
+	private int maxHealth; // int to hold the max health of the character
 	private int[] specialAbility = {0,0,0,0,0,0,0,0,0,0,0,0}; // int (0 for no, 1 for yes) to hold whose special ability is activated
+	private String role; // string used to hold the role of the character
 
 	// ------------------------------ Info about the characters hand
 	private int arrows; // int to hold the number of arrows in the players hand
@@ -203,6 +204,31 @@ public class Character {
 			lifePoints = maxHealth;
 		else
 			lifePoints += healthAdded;
+	}
+	
+	// function: setRole
+	// purpose: used to set the role of the character at the beginning of the game
+	// input: int that is their role and similar to the team they are on
+	// output: none
+	public void setRole(int r) {
+		switch(r) {
+			case 0:
+				role = "Sherrif";
+				team = 1;
+				break;
+			case 1:
+				role = "Outlaw";
+				team = 2; 
+				break;
+			case 2:
+				role = "Renegade";
+				team = 3;
+				break;
+			case 3:
+				role = "Debuty";
+				team = 4;
+				break;
+		}
 	}
 }
 
