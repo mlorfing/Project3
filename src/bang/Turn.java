@@ -6,13 +6,11 @@ ToDo: add layed out methods
 
  */
 
-
-
 package bang;
 import java.util.*;
 /**
  *
- * @author Hunter King
+ * @author Hunter King 
  */
 
 /*
@@ -56,41 +54,61 @@ public class Turn {
         Dice die6 = new Dice(0,0, "indian arrow","dynamite" 
                              ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
         
-        
-        
         Dice diceArray[]= {die1, die2, die3, die4, die5, die6};
         
         for(int rolls=0; rolls<turnPlayer.rolls; rolls++){
             for(int numDice=0; numDice<turnPlayer.numDice; numDice++){
                 currDie= diceArray[numDice];
-                currDie.roll();
+                if (!currDie.keep().equals(dyn)){
+                    currDie.roll();
+                } 
             }  
             //Testing
             for(int numDice=0; numDice<turnPlayer.numDice; numDice++){
                 currDie= diceArray[numDice];
-                System.out.println(numDice);
                 System.out.println(currDie.keep());
             }  
             //test end
-            
-            System.out.println("do you wish to reroll? {y/n}");
-            Scanner scan= new Scanner(System.in);
-            Reroll = scan.nextLine();
-            
-            if (Reroll.toLowerCase()=="y"){
+            System.out.println(rolls);
+            Reroll=null;
+            while (Reroll==null&&rolls+1<turnPlayer.rolls){
+                //user input for Rerolls Yes/ No
+                System.out.println("do you wish to reroll? {y/n}");
+                Scanner scan= new Scanner(System.in);
+                Reroll = scan.nextLine();
                 
-            }
-            
-            else if (Reroll.toLowerCase()=="y"){
-            
-            }
-            
-            else {
-                
+
+                switch (Reroll.toLowerCase()) {
+                    case "y":
+                        break;
+                    case "n":
+                        rolls=turnPlayer.rolls;
+                        break;
+                    default:
+                        System.out.println("please enter a valid answer {y/n}.");
+                        break;
+                }
             }
         }
         
-        
+        for(int numDice=0; numDice<turnPlayer.numDice; numDice++){
+            switch (diceArray[numDice].keep()){
+                case "dynamite":
+                    break;
+                case "indian arrow":
+                    break;
+                case "bull's eye '1'":
+                    break;
+                case "bull's eye '2'":
+                    break;
+                case "beer":
+                    break;
+                case "gatling":
+                    break;
+                
+                
+            }
+        }
     }
     
     /* 
@@ -134,5 +152,10 @@ public class Turn {
     */
     public void arrowCheck(){
         
+    }
+    public static void main(String args[]) {
+        Player p1= new Player("memes",1, "bitch", false);
+        Player p2= new Player("memes",1, "bitch", false);
+        Turn neww= new Turn(p1, p2);
     }
 }
