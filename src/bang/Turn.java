@@ -6,8 +6,10 @@ ToDo: add layed out methods
 
  */
 
-package bang;
 
+
+package bang;
+import java.util.*;
 /**
  *
  * @author Hunter King
@@ -18,7 +20,7 @@ user: real person
 computer: AIs
 player: user and computer
 */
-public class turn {
+public class Turn {
     /*
     turn
     handles the players turn
@@ -26,7 +28,7 @@ public class turn {
     out: updated players
     */
     
-    public turn(Player turnPlayer, Player p1){
+    public Turn(Player turnPlayer, Player p1){
         //dice rolls
         String indianArrow="indian arrow";
         String dyn= "dynamite"; 
@@ -34,18 +36,25 @@ public class turn {
         String be2= "bull's eye '2'";
         String beer= "beer";
         String gatling= "gatling";
+        String Reroll;
         
         Dice currDie;
         String side;
         
         Dice regDie = new Dice(0,0, "indian arrow","dynamite" ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
         
-        Dice die1 = regDie;
-        Dice die2 = regDie;
-        Dice die3 = regDie;
-        Dice die4 = regDie;
-        Dice die5 = regDie;
-        Dice die6 = regDie;
+        Dice die1 = new Dice(0,0, "indian arrow","dynamite" 
+                             ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
+        Dice die2 = new Dice(0,0, "indian arrow","dynamite" 
+                             ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
+        Dice die3 = new Dice(0,0, "indian arrow","dynamite" 
+                             ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
+        Dice die4 = new Dice(0,0, "indian arrow","dynamite" 
+                             ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
+        Dice die5 = new Dice(0,0, "indian arrow","dynamite" 
+                             ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
+        Dice die6 = new Dice(0,0, "indian arrow","dynamite" 
+                             ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
         
         
         
@@ -54,12 +63,31 @@ public class turn {
         for(int rolls=0; rolls<turnPlayer.rolls; rolls++){
             for(int numDice=0; numDice<turnPlayer.numDice; numDice++){
                 currDie= diceArray[numDice];
-                side=currDie.roll();
-                System.out.println(side);
+                currDie.roll();
+            }  
+            //Testing
+            for(int numDice=0; numDice<turnPlayer.numDice; numDice++){
+                currDie= diceArray[numDice];
+                System.out.println(numDice);
+                System.out.println(currDie.keep());
+            }  
+            //test end
+            
+            System.out.println("do you wish to reroll? {y/n}");
+            Scanner scan= new Scanner(System.in);
+            Reroll = scan.nextLine();
+            
+            if (Reroll.toLowerCase()=="y"){
                 
             }
             
-            System.out.println("---------------");
+            else if (Reroll.toLowerCase()=="y"){
+            
+            }
+            
+            else {
+                
+            }
         }
         
         
