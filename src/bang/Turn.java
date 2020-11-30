@@ -26,10 +26,10 @@ public class Turn {
     out: updated players
     */
     
-    public Turn(Player turnPlayer, Player p1){
+    public Turn(Character turnPlayer, Character p1){
         //dice rolls
         String indianArrow="indian arrow";
-        String dyn= "dynamite"; 
+        int dynCounter=0; 
         String be1= "bull's eye '1'";
         String be2= "bull's eye '2'";
         String beer= "beer";
@@ -59,7 +59,7 @@ public class Turn {
         for(int rolls=0; rolls<turnPlayer.rolls; rolls++){
             for(int numDice=0; numDice<turnPlayer.numDice; numDice++){
                 currDie= diceArray[numDice];
-                if (!currDie.keep().equals(dyn)){
+                if (!currDie.keep().equals("dynamite")){
                     currDie.roll();
                 } 
             }  
@@ -93,23 +93,47 @@ public class Turn {
         
         for(int numDice=0; numDice<turnPlayer.numDice; numDice++){
             switch (diceArray[numDice].keep()){
-                case "dynamite":
-                    break;
                 case "indian arrow":
                     break;
+                case "dynamite":
+                    dynCounter++;
+                    if (dynCounter<=3){
+                        //deal dynamite damage to player
+                        
+                    }
+                    break;
                 case "bull's eye '1'":
+                    
                     break;
                 case "bull's eye '2'":
+                    
                     break;
                 case "beer":
+                    
                     break;
                 case "gatling":
+                    
                     break;
                 
                 
             }
         }
     }
+    /*
+    Creates the lobby of players
+    takes user input
+    outputs the lobby of players 
+    */
+    public ArrayList<Player> createLobby(){
+        
+        ArrayList<Player> Lobby=new ArrayList<>();
+        
+        
+        
+        return Lobby;
+    }
+    
+    
     
     /* 
     dynamite 
@@ -154,8 +178,8 @@ public class Turn {
         
     }
     public static void main(String args[]) {
-        Player p1= new Player("memes",1, "bitch", false);
-        Player p2= new Player("memes",1, "bitch", false);
+        Character p1= new Character(0);
+        Character p2= new Character(0);
         Turn neww= new Turn(p1, p2);
     }
 }
