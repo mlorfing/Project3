@@ -11,6 +11,7 @@ import java.util.*;
 /**
  *
  * @author Hunter King 
+ * @author Megan Lorfing
  */
 
 /*
@@ -25,6 +26,9 @@ public class Turn {
     in: players
     out: updated players
     */
+	
+	// int to keep track of the number of indian arrows left
+    int arrowPool = 9;
     
     public Turn(Character turnPlayer, Character p1){
         //dice rolls
@@ -35,6 +39,8 @@ public class Turn {
         String beer= "beer";
         String gatling= "gatling";
         String Reroll;
+        
+        
         
         Dice currDie;
         String side;
@@ -112,7 +118,7 @@ public class Turn {
                     
                     break;
                 case "gatling":
-                    
+                    // keeping track of the gats is done by each character (part of their class)
                     break;
                 
                 
@@ -158,60 +164,85 @@ public class Turn {
         
     }
     
-   /*
+    /*
     attack
     user input to designate who they want to attack based on dice roll
     in: dice type (d), player list (l), index of the player performing the action (p)
     out: updated player list
     */
+    // dependent upon single bullet always being on side 2, double bullet always being on side 3 and gatling always being on side 5
     public ArrayList<Character> attack(Dice d, ArrayList<Character> l, int p){
-        int choice1 = -1;
-        int choice2 = -1; // integers to hold the options for the player to deal damage to. Gatling gun will not use this
+        int option1 = -1;
+        int option2 = -1; // integers to hold the options for the player to deal damage to. Gatling gun will not use this
+        int choice = -1;
     	switch(d.side) {
         case 2: // If the side of the dice is the single bullet side
         	// assigning the index of the player for the "left" option
         	if(p-1 < 0)  // if needing to go to the end of the lobby to get the next player
-        		choice1 = l.size() - 1; // get the end of the lobby
+        		option1 = l.size() - 1; // get the end of the lobby
         	else
-        		choice1 = p - 1;
+        		option1 = p - 1;
         	
         	if(p+1 == l.size())
-        		choice2 = 0;
+        		option2 = 0;
         	else
-        		choice2 = p + 1;
+        		option2 = p + 1;
         	
         	break;
         case 3: // if the side of the dice is the double bullet side
         	if(p == 1) // if two people to the left would need to go the end of the lobby
-        		choice1 = l.size() - 1;
+        		option1 = l.size() - 1;
         	else if(p == 0) // if two people to the left would be the end of the lobby and one farther left
-        		choice1 = l.size() - 2;
+        		option1 = l.size() - 2;
         	else // in the middle of the lobby
-        		choice1 = p - 2;
+        		option1 = p - 2;
         	if(p == l.size() - 2)  // if two people to the right would be the beginning of the lobby
-        		choice2 = 0;
+        		option2 = 0;
         	else if(p == l.size() - 1) // if two people to the right would be the beginning of the lobby + 1
-        		choice2 = 1;
+        		option2 = 1;
         	else // in the middle of the lobby
-        		choice2 = p + 2;
+        		option2 = p + 2;
         	break;
         case 5: // if the side of the dice is the gatling gun side
+        	l.get(p).gatsNeeded--; // decrement the number of gats needed, since the player has chosen to keep the dice
         	
-        	
-        	break;
-        }
-    	while(l.get(choice1).isDead()) { // if that character is dead
-			if(choice1 - 1 < 0) // if needing to go to the end of the lobby to get the next player
-        		choice1 = l.size() - 1; // go to the end of the lobby
-			choice1 -= 1; // decrement the choice
+        	if(l.get(p).gatsNeeded == 0) { // if the current player has gotten enough gatling guns
+        		for(int i = 0; i < l.size(); i++) { // go through all of the characters
+        			if(i != p && !l.get(i).isDead()) { // if the chosen character is not the current player and the chosen character isn't dead
+        				l.get(i).damage(1);
+        				if(l.get(i).name.equals("El Gringo")) {
+        					l.get(p).addArrows(1);
+        					arrowPool--;
+        				}
+        				if(l.get(i).name.equals("Paul Regret"))
+        					l.get(i).heal(1);
+        			}	
+        		}
+        		l.get(p).gatsNeeded = 3;
+        	}
+        	return l;
+        } 
+    	if(d.side == 2 || d.side == 3) {
+	    	while(l.get(option1).isDead()) { // if that character is dead
+				if(option1 - 1 < 0) // if needing to go to the end of the lobby to get the next player
+	        		option1 = l.size() - 1; // go to the end of the lobby
+				option1 -= 1; // decrement the choice
+	    	}
+	    	while(l.get(option2).isDead()) { // if that character is dead
+				if(option2 + 1 == l.size()) // if needing to go to the beginning of the lobby to get the next player
+	        		option2 = 0; // go to the beginning of the lobby
+				option2 += 1; // imcrement the choice
+	    	}
+	    	// ask the user to choose who to kill: choice1 or choice2
+	    	System.out.println("Do you want to deal one damage to (1)" + l.get(option1).name + " or (2)" + l.get(option2).name);
+	    	System.out.println("Enter the number of the player to deal damage to: ");
+	    	
+	    	Scanner scan = new Scanner(System.in);
+	    	choice = scan.nextInt();
+	    	
+	    	l.get(choice).damage(1); 
     	}
-    	while(l.get(choice2).isDead()) { // if that character is dead
-			if(choice2 + 1 == l.size()) // if needing to go to the beginning of the lobby to get the next player
-        		choice2 = 0; // go to the beginning of the lobby
-			choice2 += 1; // imcrement the choice
-    	}
-    	// ask the user to choose who to kill: choice1 or choice2
-    	
+    	if()
     	return l;
     }
     /*
@@ -224,6 +255,8 @@ public class Turn {
     public void arrowCheck(){
         
     }
+    
+    
     public static void main(String args[]) {
         Character p1= new Character(0);
         Character p2= new Character(0);
