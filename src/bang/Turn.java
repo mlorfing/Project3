@@ -158,14 +158,72 @@ public class Turn {
         
     }
     
-    /*
+   /*
     attack
     user input to designate who they want to attack based on dice roll
-    in: dice type, player list
+    in: dice type (d), player list (l), index of the player performing the action (p)
     out: updated player list
     */
-    public void attack(){
-        
+    public ArrayList<Character> attack(Dice d, ArrayList<Character> l, int p){
+        int choice1, choice2; // integers to hold the options for the player to deal damage to. I
+    	switch(d.side) {
+        case 2: // If the side of the dice is the single bullet side
+        	if(p-1 < 0) {
+        		choice1 = l.size() - 1;
+        		while(l.get(choice1).isDead()) {
+        			if(choice1 - 1 < 0)
+                		choice1 = l.size() - 1;
+        			choice1 -= 1;
+        		}
+        	} else {
+        		choice1 = p - 1;
+        		while(l.get(choice1).isDead()) {
+        			if(choice1 - 1 < 0)
+        				choice1 = l.size() - 1;
+        			choice1 -= 1;
+        		}
+        	}
+        	if(p+1 == l.size()) {
+        		choice2 = 0;
+        		while(l.get(choice1).isDead()) {
+        			if(choice1 - 1 < 0)
+                		choice1 = l.size() - 1;
+        			choice1 -= 1;
+        		}
+        	} else {
+        		choice1 = p - 1;
+        		while(l.get(choice1).isDead()) {
+        			if(choice1 - 1 < 0)
+        				choice 1 = l.size() - 1;
+        			choice1 -= 1;
+        		}
+        	}
+        	// ask for user input of who to kill: choice1 or choice2
+        	
+        	break;
+        case 3: // if the side of the dice is the double bullet side
+        	if(p-2 < 0) {
+        		choice1 = l.size() - 1;
+        		while(l.get(choice1).isDead()) {
+        			if(choice1 - 1 < 0)
+                		choice1 = l.size() - 1;
+        			choice1 -= 1;
+        		}
+        	} else {
+        		choice1 = p - 1;
+        		while(l.get(choice1).isDead()) {
+        			if(choice1 - 1 < 0)
+        				choice1 = l.size() - 1;
+        			choice1 -= 1;
+        		}
+        	}        	
+        	break;
+        case 5: // if the side of the dice is the gatling gun side
+        	break;
+        }
+    	
+    	
+    	return l;
     }
     /*
     arrowCheck
