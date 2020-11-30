@@ -1,3 +1,4 @@
+package bang;
 /*
  * @author Megan Lorfing
  * 
@@ -8,7 +9,7 @@
 
 public class Character {
 	// -------------------- INFO about the player -------------------
-	private String name; // string used to hold the name of the character
+	public String name; // string used to hold the name of the character
 	private int lifePoints; // int to hold the current health of the character
 	private int maxHealth; // int to hold the max health of the character
 	private int[] specialAbility = {0,0,0,0,0,0,0,0,0,0,0,0}; // int (0 for no, 1 for yes) to hold whose special ability is activated
@@ -26,7 +27,7 @@ public class Character {
 	// ------------------------INFO about dice things
 	public int gatsNeeded = 3; // number of gatlings still needed to use the gatling gun
 	public int rolls = 3; //
-	
+	public int numDice = 5;
 	
 	// default constructor for the character class
 	public Character() {
@@ -230,6 +231,15 @@ public class Character {
 				break;
 		}
 	}
+	
+	// function: isDead
+	// purpose: return if the character's life points have reached zero, meaning they are dead
+	// input: none
+	// output: boolean
+	public boolean isDead() {
+		return lifePoints == 0;
+	}
+	
 }
 
 /* Character/Life Point/Special Ability:
@@ -240,7 +250,7 @@ public class Character {
  * 	1
  * 		El Gringo
  * 		7
- * 		When life point decrease by another player, they take an arrow (dealt with outside character)
+ * 		When life point decrease by another player, they take an arrow (dealt with outside character) (dealt with in TURN)
  * 	2
  * 		Jesse Jones
  * 		9
@@ -252,7 +262,7 @@ public class Character {
  * 	4
  * 		Paul Regret
  * 		9
- * 		Gatling gun doesn't harm (maybe dealt with outside character)
+ * 		Gatling gun doesn't harm (maybe dealt with outside character) (dealt with in TURN
  * 	5
  * 		Pedro Ramirez
  * 		8
