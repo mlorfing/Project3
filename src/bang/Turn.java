@@ -165,63 +165,52 @@ public class Turn {
     out: updated player list
     */
     public ArrayList<Character> attack(Dice d, ArrayList<Character> l, int p){
-        int choice1, choice2; // integers to hold the options for the player to deal damage to. I
+        int choice1 = -1;
+        int choice2 = -1; // integers to hold the options for the player to deal damage to. Gatling gun will not use this
     	switch(d.side) {
         case 2: // If the side of the dice is the single bullet side
-        	if(p-1 < 0) {
-        		choice1 = l.size() - 1;
-        		while(l.get(choice1).isDead()) {
-        			if(choice1 - 1 < 0)
-                		choice1 = l.size() - 1;
-        			choice1 -= 1;
-        		}
-        	} else {
+        	// assigning the index of the player for the "left" option
+        	if(p-1 < 0)  // if needing to go to the end of the lobby to get the next player
+        		choice1 = l.size() - 1; // get the end of the lobby
+        	else
         		choice1 = p - 1;
-        		while(l.get(choice1).isDead()) {
-        			if(choice1 - 1 < 0)
-        				choice1 = l.size() - 1;
-        			choice1 -= 1;
-        		}
-        	}
-        	if(p+1 == l.size()) {
+        	
+        	if(p+1 == l.size())
         		choice2 = 0;
-        		while(l.get(choice1).isDead()) {
-        			if(choice1 - 1 < 0)
-                		choice1 = l.size() - 1;
-        			choice1 -= 1;
-        		}
-        	} else {
-        		choice1 = p - 1;
-        		while(l.get(choice1).isDead()) {
-        			if(choice1 - 1 < 0)
-        				choice 1 = l.size() - 1;
-        			choice1 -= 1;
-        		}
-        	}
-        	// ask for user input of who to kill: choice1 or choice2
+        	else
+        		choice2 = p + 1;
         	
         	break;
         case 3: // if the side of the dice is the double bullet side
-        	if(p-2 < 0) {
+        	if(p == 1) // if two people to the left would need to go the end of the lobby
         		choice1 = l.size() - 1;
-        		while(l.get(choice1).isDead()) {
-        			if(choice1 - 1 < 0)
-                		choice1 = l.size() - 1;
-        			choice1 -= 1;
-        		}
-        	} else {
-        		choice1 = p - 1;
-        		while(l.get(choice1).isDead()) {
-        			if(choice1 - 1 < 0)
-        				choice1 = l.size() - 1;
-        			choice1 -= 1;
-        		}
-        	}        	
+        	else if(p == 0) // if two people to the left would be the end of the lobby and one farther left
+        		choice1 = l.size() - 2;
+        	else // in the middle of the lobby
+        		choice1 = p - 2;
+        	if(p == l.size() - 2)  // if two people to the right would be the beginning of the lobby
+        		choice2 = 0;
+        	else if(p == l.size() - 1) // if two people to the right would be the beginning of the lobby + 1
+        		choice2 = 1;
+        	else // in the middle of the lobby
+        		choice2 = p + 2;
         	break;
         case 5: // if the side of the dice is the gatling gun side
+        	
+        	
         	break;
         }
-    	
+    	while(l.get(choice1).isDead()) { // if that character is dead
+			if(choice1 - 1 < 0) // if needing to go to the end of the lobby to get the next player
+        		choice1 = l.size() - 1; // go to the end of the lobby
+			choice1 -= 1; // decrement the choice
+    	}
+    	while(l.get(choice2).isDead()) { // if that character is dead
+			if(choice2 + 1 == l.size()) // if needing to go to the beginning of the lobby to get the next player
+        		choice2 = 0; // go to the beginning of the lobby
+			choice2 += 1; // imcrement the choice
+    	}
+    	// ask the user to choose who to kill: choice1 or choice2
     	
     	return l;
     }
