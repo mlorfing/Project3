@@ -27,6 +27,12 @@ public class Player {
     public boolean shown;
     public boolean known;
     public boolean chiefArrow = false;
+    
+    // variables to hold the special abilities
+    public boolean doubleBeer = false; // special ability for greg digger
+    public boolean pedro = false; // special ability for pedro
+    public boolean jourdonnais = false; // special ability for jourdonnais
+    public boolean JJ = false; // special ability for jesse jones
 
     CharCards c; //team assign
 
@@ -51,6 +57,14 @@ public class Player {
         } else if (this.role.equals("Renegade")) {
             this.team = 2;
         }
+        if(name.equals("Greg Digger"))
+        	doubleBeer = true;
+        if(name.equals("Pedro Ramirez"))
+        	pedro = true;
+        if(name.equals("Jourdonnais"))
+        	jourdonnais = true;
+        if(name.equals("Jesse Jones"))
+        	JJ = true;
     }
 
     public CharCards getCharacter() { //calling characters class from bang.java
@@ -82,6 +96,18 @@ public class Player {
         }
         bulletUpdate();
     }
+    
+    // function name: clearArrows()
+ 	// purpose: this function is used when all of the arrows have been taken and the health points need to be distrubted to all players
+ 	//			It will subtract the number of players in the players hand from their health and reset the number of arrows to 0
+ 	// input: none
+ 	// output: none
+ 	public void clearArrows() {
+ 		if(jourdonnais && arrows > 1)
+ 			arrows = 1;
+ 		health -= arrows;
+ 		arrows = 0;
+ 	}
 
 //AI assigning  each character roles according to their abilties
 
@@ -112,5 +138,28 @@ public class Player {
         return true;
     }
     
+ // function: isDead
+ 	// purpose: return if the character's life points have reached zero, meaning they are dead
+ 	// input: none
+ 	// output: boolean
+ 	public boolean isDead() {
+ 		return health == 0;
+ 	}
+ 	
+ // function: Beer
+ 	// purpose: used when a character rolls a beer and uses it on themselves
+ 	// input: none
+ 	// output: none
+ 	public void selfBeer() {
+ 		int healthAdded;
+ 		if(doubleBeer || ( JJ && health <= 4))
+ 			healthAdded = 2;
+ 		else
+ 			healthAdded = 1;
+ 		if(health + healthAdded > maxHealth)
+ 			health = maxHealth;
+ 		else
+ 			health += healthAdded;
+ 	}
 }
 
