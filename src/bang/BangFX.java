@@ -89,13 +89,16 @@ public class BangFX extends Application {
     Button prev2 = new Button();
     Button next2 = new Button();
     Button nextMain = new Button();
-    Button nextMain2 = new Button();
+    Button setupDice = new Button();
+    Button rollDice = new Button();
     Button dEffects = new Button();
     RadioButton salInc = new RadioButton();
     RadioButton undInc = new RadioButton();
+    RadioButton loudmouth = new RadioButton();
+    RadioButton coward = new RadioButton();
     
     ToggleButton musicToggle = new ToggleButton();
-    Boolean isSelected, sher;
+    Boolean isSelected, cDSelect, lDSelect, sher;
     ComboBox players = new ComboBox();
     int cSel, pageNum=0;
     
@@ -163,8 +166,10 @@ public class BangFX extends Application {
             window.setScene(initScene);
             window.show();
         });
-        nextMain2.setOnAction(e->{
-            diceRoll();
+        
+        scene2 = new Scene(group3, 1280, 720);
+        setupDice.setOnAction(e->{
+            diceSetup();
         });
         
         
@@ -852,66 +857,66 @@ public class BangFX extends Application {
         
         rdie = new Image(new FileInputStream("src/bang/media/rdie.png"));
         rDie_img = new ImageView(rdie);
-        rDie_img.setLayoutX(0);
-        rDie_img.setLayoutY(0);
+        rDie_img.setLayoutX(300);
+        rDie_img.setLayoutY(100);
         rDie_img.setPreserveRatio(true);
-        rDie_img.setFitWidth(50);
+        rDie_img.setFitWidth(75);
         
         rdie2 = new Image(new FileInputStream("src/bang/media/rdie.png"));
         rDie2_img = new ImageView(rdie2);
-        rDie2_img.setLayoutX(0);
-        rDie2_img.setLayoutY(0);
+        rDie2_img.setLayoutX(385);
+        rDie2_img.setLayoutY(100);
         rDie2_img.setPreserveRatio(true);
-        rDie2_img.setFitWidth(50);
+        rDie2_img.setFitWidth(75);
         
         rdie3 = new Image(new FileInputStream("src/bang/media/rdie.png"));
         rDie3_img = new ImageView(rdie3);
-        rDie3_img.setLayoutX(0);
-        rDie3_img.setLayoutY(0);
+        rDie3_img.setLayoutX(470);
+        rDie3_img.setLayoutY(100);
         rDie3_img.setPreserveRatio(true);
-        rDie3_img.setFitWidth(50);
+        rDie3_img.setFitWidth(75);
         
         rdie4 = new Image(new FileInputStream("src/bang/media/rdie.png"));
         rDie4_img = new ImageView(rdie4);
-        rDie4_img.setLayoutX(0);
-        rDie4_img.setLayoutY(0);
+        rDie4_img.setLayoutX(555);
+        rDie4_img.setLayoutY(100);
         rDie4_img.setPreserveRatio(true);
-        rDie4_img.setFitWidth(50);
+        rDie4_img.setFitWidth(75);
         
         rdie5 = new Image(new FileInputStream("src/bang/media/rdie.png"));
         rDie5_img = new ImageView(rdie5);
-        rDie5_img.setLayoutX(0);
-        rDie5_img.setLayoutY(0);
+        rDie5_img.setLayoutX(640);
+        rDie5_img.setLayoutY(100);
         rDie5_img.setPreserveRatio(true);
-        rDie5_img.setFitWidth(50);
+        rDie5_img.setFitWidth(75);
         
         bdie = new Image(new FileInputStream("src/bang/media/bdie.png"));
         bDie_img = new ImageView(bdie);
-        bDie_img.setLayoutX(60);
-        bDie_img.setLayoutY(0);
+        bDie_img.setLayoutX(555);
+        bDie_img.setLayoutY(100);
         bDie_img.setPreserveRatio(true);
-        bDie_img.setFitWidth(50);
+        bDie_img.setFitWidth(75);
         
         bdie2 = new Image(new FileInputStream("src/bang/media/bdie.png"));
         bDie2_img = new ImageView(bdie2);
-        bDie2_img.setLayoutX(0);
-        bDie2_img.setLayoutY(0);
+        bDie2_img.setLayoutX(640);
+        bDie2_img.setLayoutY(100);
         bDie2_img.setPreserveRatio(true);
-        bDie2_img.setFitWidth(50);
+        bDie2_img.setFitWidth(75);
         
         ldie = new Image(new FileInputStream("src/bang/media/ldie.png"));
         lDie_img = new ImageView(ldie);
-        lDie_img.setLayoutX(0);
-        lDie_img.setLayoutY(0);
+        lDie_img.setLayoutX(385);
+        lDie_img.setLayoutY(100);
         lDie_img.setPreserveRatio(true);
-        lDie_img.setFitWidth(50);
+        lDie_img.setFitWidth(75);
         
         cdie = new Image(new FileInputStream("src/bang/media/cdie.png"));
         cDie_img = new ImageView(cdie);
-        cDie_img.setLayoutX(0);
-        cDie_img.setLayoutY(0);
+        cDie_img.setLayoutX(385);
+        cDie_img.setLayoutY(100);
         cDie_img.setPreserveRatio(true);
-        cDie_img.setFitWidth(50);
+        cDie_img.setFitWidth(75);
         
         diceNames.setWrapText(true);
         diceNames.setFont(Font.font("Copperplate", 15));
@@ -925,15 +930,15 @@ public class BangFX extends Application {
         nextMain.setText("Next");
         nextMain.setFont(Font.font("Copperplate", 20));
         
-        nextMain2.setLayoutX(1000);
-        nextMain2.setLayoutY(650);
-        nextMain2.setText("Next");
-        nextMain2.setFont(Font.font("Copperplate", 20));
+        setupDice.setLayoutX(1000);
+        setupDice.setLayoutY(650);
+        setupDice.setText("Choose Dice");
+        setupDice.setFont(Font.font("Copperplate", 20));
         nextMain.setOnAction(e->{
             group1.getChildren().clear();
             
             group1.getChildren()
-                    .addAll(background, musicToggle, character, nextMain2);
+                    .addAll(background, musicToggle, character, setupDice);
             window.setTitle("BANG! Gameplay");
             window.setScene(scene1);
             window.show();
@@ -990,68 +995,6 @@ public class BangFX extends Application {
         t14.setFont(Font.font ("Copperplate"));
         Tooltip.install(dg3, t14);
     }
-    //sets play order starting with sheriff
-    public void setPlayOrder(){
-        //A temp list to store all players for UI, game mechanics, and more
-        temp_play_order.add(human);
-        temp_play_order.add(ai1);
-        temp_play_order.add(ai2);
-        temp_play_order.add(ai3);
-        temp_play_order.add(ai4);
-        temp_play_order.add(ai5);
-        temp_play_order.add(ai6);
-        temp_play_order.add(ai7);
-
-        //Temp variables for helping with making the play order
-        int stop = -1;
-        boolean sher = false;
-
-        //Making the human's role shown so they know which team they are on
-        temp_play_order.get(0).shown = true;
-        
-        //This figures out who's the Sheriff and the correct playing order
-        for (int i = 0; i < 16; i++) {                                          
-            if (!(temp_play_order.get(i % 8).role.equals("NULL"))) {            
-                if (sher == true) {                                             
-                    if (i % 8 == stop) {                                        
-                        break;                                                  
-                    } 
-                    else {                                                        
-                        play_order.add(temp_play_order.get(i % 8));                   
-                    }
-                }
-                if (sher == false) {                                              
-                    if (temp_play_order.get(i % 8).role.equals("Sheriff")) {       
-                        temp_play_order.get(i % 8).setMaxHealth(
-                                temp_play_order.get(i % 8).maxHealth + 2);         
-                        temp_play_order.get(i % 8).heal(2);                         
-                        temp_play_order.get(i % 8).shown = true;                 
-                        temp_play_order.get(i % 8).known = true;                   
-                        play_order.add(temp_play_order.get(i % 8));                
-                        stop = i;                                                  
-                        sher = true;                                         
-                    }
-                }
-
-            }
-        }
-        
-        character.setLayoutX(10);
-        character.setLayoutY(10);
-        character.setWrapText(true);
-        character.setFont(Font.font("Copperplate", 20));
-        
-        //Start of play order
-        character.setText("The play order is: \n");
-        
-        //Prints out the play order, starting with sheriff
-        for (int j = 0; j < play_order.size(); j++) {
-            character.setText(character.getText()+ (j + 1) + ") " + play_order.get(j).name + "\n");
-        }
-        character.setText(character.getText()+"\n");
-        
-        
-    }  
     //sets window for dice
     public void diceEffects(){
         close.setLayoutX(120);
@@ -1601,18 +1544,148 @@ public class BangFX extends Application {
             
             setPlayOrder();
     }
-    //trying to implement a button for dice rolling initiative
-    public void diceRoll(){
-        group3.getChildren().clear();
-        if((undInc.isSelected()))
-        group3.getChildren()
-                .addAll(background, musicToggle, rDie_img, bDie_img);
+    //sets play order starting with sheriff
+    public void setPlayOrder(){
+        //A temp list to store all players for UI, game mechanics, and more
+        temp_play_order.add(human);
+        temp_play_order.add(ai1);
+        temp_play_order.add(ai2);
+        temp_play_order.add(ai3);
+        temp_play_order.add(ai4);
+        temp_play_order.add(ai5);
+        temp_play_order.add(ai6);
+        temp_play_order.add(ai7);
+
+        //Temp variables for helping with making the play order
+        int stop = -1;
+        boolean sher = false;
+
+        //Making the human's role shown so they know which team they are on
+        temp_play_order.get(0).shown = true;
         
-        scene2 = new Scene(group3, 1280, 720);
+        //This figures out who's the Sheriff and the correct playing order
+        for (int i = 0; i < 16; i++) {                                          
+            if (!(temp_play_order.get(i % 8).role.equals("NULL"))) {            
+                if (sher == true) {                                             
+                    if (i % 8 == stop) {                                        
+                        break;                                                  
+                    } 
+                    else {                                                        
+                        play_order.add(temp_play_order.get(i % 8));                   
+                    }
+                }
+                if (sher == false) {                                              
+                    if (temp_play_order.get(i % 8).role.equals("Sheriff")) {       
+                        temp_play_order.get(i % 8).setMaxHealth(
+                                temp_play_order.get(i % 8).maxHealth + 2);         
+                        temp_play_order.get(i % 8).heal(2);                         
+                        temp_play_order.get(i % 8).shown = true;                 
+                        temp_play_order.get(i % 8).known = true;                   
+                        play_order.add(temp_play_order.get(i % 8));                
+                        stop = i;                                                  
+                        sher = true;                                         
+                    }
+                }
+
+            }
+        }
+        
+        character.setLayoutX(10);
+        character.setLayoutY(10);
+        character.setWrapText(true);
+        character.setFont(Font.font("Copperplate", 20));
+        
+        //Start of play order
+        character.setText("The play order is: \n");
+        
+        //Prints out the play order, starting with sheriff
+        for (int j = 0; j < play_order.size(); j++) {
+            character.setText(character.getText()+ (j + 1) + ") " + play_order.get(j).name + "\n");
+        }
+        character.setText(character.getText()+"\n");
+        
+    }  
+    //trying to implement a button for dice rolling initiative
+    public void diceSetup(){
+        loudmouth.setLayoutX(300);
+        loudmouth.setLayoutY(185);
+        loudmouth.setFont(Font.font("Copperplate", 20));
+        coward.setLayoutX(300);
+        coward.setLayoutY(215);
+        coward.setFont(Font.font("Copperplate", 20));
+        group3.getChildren().clear();
+        group3.getChildren()
+                .addAll(background, musicToggle, rollDice);
+        if((undInc.isSelected())){
+            group3.getChildren()
+                    .addAll(bDie_img, bDie2_img);
+            if((salInc.isSelected())){
+                group3.getChildren()
+                        .addAll(lDie_img, cDie_img, rDie_img, rDie2_img,
+                                rDie3_img, loudmouth, coward);
+                }
+            else if((!salInc.isSelected())){
+                group3.getChildren()
+                        .addAll(rDie_img, rDie2_img, rDie3_img);
+                }
+            }
+        else if((!undInc.isSelected())){
+            group3.getChildren()
+                    .add(rDie_img);
+            if((salInc.isSelected())){
+                group3.getChildren()
+                        .addAll(lDie_img, cDie_img, rDie3_img, rDie2_img,
+                                rDie4_img, rDie5_img, loudmouth, coward);
+                }
+            else if((!salInc.isSelected())){
+                group3.getChildren()
+                        .addAll(rDie4_img, rDie2_img, rDie3_img, rDie5_img);
+                }
+            }
         window.setScene(scene2);
         window.show();
+        
+        coward.setText("Use Coward Die");
+        loudmouth.setText("Use Loudmouth Die");
+        
+        loudmouth.setOnAction((ActionEvent event) -> {
+            event.consume();
+            lDSelect = loudmouth.isSelected();
+            
+            if(lDSelect){
+                loudmouth.setText("Loudmouth Die in use");
+                coward.setText("Use Coward Die");
+                coward.setSelected(false);
+                cDie_img.setVisible(false);
+                lDie_img.setVisible(true);
+                rDie2_img.setVisible(false);
+            } else {
+                loudmouth.setText("Use Loudmouth Die");
+                cDie_img.setVisible(false);
+                lDie_img.setVisible(false);
+                rDie2_img.setVisible(true);
+            }
+        });     
+        
+        coward.setOnAction((ActionEvent event) -> {
+            event.consume();
+            cDSelect = coward.isSelected();
+            
+            if(cDSelect){
+                coward.setText("Coward Die in use");
+                loudmouth.setText("Use Loudmouth Die");
+                loudmouth.setSelected(false);
+                lDie_img.setVisible(false);
+                cDie_img.setVisible(true);
+                rDie2_img.setVisible(false);
+            } else {
+                coward.setText("Use Coward Die");
+                lDie_img.setVisible(false);
+                cDie_img.setVisible(false);
+                rDie2_img.setVisible(true);
+            }
+        });
     }
-    
     /**
      * @param args the command line arguments
      */
