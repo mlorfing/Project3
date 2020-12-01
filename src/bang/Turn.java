@@ -30,7 +30,7 @@ public class Turn {
 	// int to keep track of the number of indian arrows left
     int arrowPool = 9;
     
-    public Turn(Character turnPlayer, Character p1){
+    public Turn(ArrayList<Player> lobby, int pos){
         //dice rolls
         String indianArrow="indian arrow";
         int dynCounter=0; 
@@ -40,7 +40,7 @@ public class Turn {
         String gatling= "gatling";
         String Reroll;
         
-        
+        Player turnPlayer = lobby.get(pos);
         
         Dice currDie;
         String side;
@@ -59,7 +59,7 @@ public class Turn {
                              ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
         Dice die6 = new Dice(0,0, "indian arrow","dynamite" 
                              ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
-        
+                             
         Dice diceArray[]= {die1, die2, die3, die4, die5, die6};
         
         for(int rolls=0; rolls<turnPlayer.rolls; rolls++){
@@ -82,8 +82,6 @@ public class Turn {
                 System.out.println("do you wish to reroll? {y/n}");
                 Scanner scan= new Scanner(System.in);
                 Reroll = scan.nextLine();
-                
-
                 switch (Reroll.toLowerCase()) {
                     case "y":
                         break;
@@ -96,7 +94,6 @@ public class Turn {
                 }
             }
         }
-        
         for(int numDice=0; numDice<turnPlayer.numDice; numDice++){
             switch (diceArray[numDice].keep()){
                 case "indian arrow":
@@ -105,53 +102,26 @@ public class Turn {
                     dynCounter++;
                     if (dynCounter<=3){
                         //deal dynamite damage to player
-                        
+                        turnPlayer.damage(1);
                     }
                     break;
                 case "bull's eye '1'":
-                    
+                    lobby=attack(diceArray[numDice],lobby,pos);
                     break;
                 case "bull's eye '2'":
-                    
+                    lobby=attack(diceArray[numDice],lobby,pos);
                     break;
                 case "beer":
-                    
+                    lobby=heal(diceArray[numDice],lobby,pos);
                     break;
                 case "gatling":
                     // keeping track of the gats is done by each character (part of their class)
+                    lobby=attack(diceArray[numDice],lobby,pos);
                     break;
-                
-                
             }
         }
     }
-    /*
-    Creates the lobby of players
-    takes user input
-    outputs the lobby of players 
-    */
-    public ArrayList<Player> createLobby(){
-        
-        ArrayList<Player> Lobby=new ArrayList<>();
-        
-        
-        
-        return Lobby;
-    }
     
-    
-    
-    /* 
-    dynamite 
-    changes a die to an unueseable state and how many dice dynamite there are
-    deals damage if 3 or more dunamite.
-    in: diceArray
-    out: diceArray
-    */
-    
-    public void dynamite(Dice die1){
-        
-    }
     /*
     winCheck
     checks if a players have won
@@ -160,8 +130,10 @@ public class Turn {
     out: who won. 
     */
     
-    public void winCheck(){
+    public ArrayList<Player> winCheck(ArrayList<Player> l, int p){
         
+        
+        return l;
     }
     
     /*
@@ -171,7 +143,7 @@ public class Turn {
     out: updated player list
     */
     // dependent upon single bullet always being on side 2, double bullet always being on side 3 and gatling always being on side 5
-    public ArrayList<Character> attack(Dice d, ArrayList<Character> l, int p){
+    public ArrayList<Player> attack(Dice d, ArrayList<Player> l, int p){
         int option1 = -1;
         int option2 = -1; // integers to hold the options for the player to deal damage to. Gatling gun will not use this
         int choice = -1;
@@ -211,7 +183,7 @@ public class Turn {
         			if(i != p && !l.get(i).isDead()) { // if the chosen character is not the current player and the chosen character isn't dead
         				l.get(i).damage(1);
         				if(l.get(i).name.equals("El Gringo")) {
-        					l.get(p).addArrows(1);
+        					l.get(p).addArrow(1);
         					arrowPool--;
         				}
         				if(l.get(i).name.equals("Paul Regret"))
@@ -242,7 +214,10 @@ public class Turn {
 	    	
 	    	l.get(choice).damage(1); 
     	}
-    	if()
+        if(l.get(choice).name.equals("El Gringo")) {
+            l.get(p).addArrow(1);
+            arrowPool--;
+        }
     	return l;
     }
     /*
@@ -255,11 +230,36 @@ public class Turn {
     public void arrowCheck(){
         
     }
-    
+    public ArrayList<Player> heal (Dice d, ArrayList<Player> l, int p){
+        int choice; //stores player choise if applicable 
+        if (l.get(p).computer){
+            l.get(p).selfBeer();
+        }
+        else{
+            //player choice
+            System.out.println("chose player to heal");
+            for (int i=0; i>l.size(); i++){
+                if (l.get(i).isDead()){
+                    System.out.print(i);
+                    System.out.println(l.get(i).name);
+                }
+            }
+            Scanner scan = new Scanner(System.in);
+	    choice = scan.nextInt();
+            for (int i=0; i>l.size(); i++){
+                if(choice==p) l.get(p).selfBeer();
+                else{
+                    l.get(choice).health=l.get(choice).health+1;
+                }
+                
+            }
+        }
+        return l;
+    }
     
     public static void main(String args[]) {
-        Character p1= new Character(0);
-        Character p2= new Character(0);
-        Turn neww= new Turn(p1, p2);
+        ArrayList<Player> lobby=new ArrayList<>();
+        lobby.add(new Player("name",8,"renegade",false));
+        Turn neww= new Turn(lobby, 0);
     }
 }
