@@ -8,6 +8,7 @@ package bang;
 /**
  *
  * @author ctaylor
+ * @author Megan Lorfing (secondary author)
  */
 public class Player {
 
