@@ -385,7 +385,7 @@ public class BangFX extends Application {
         players.setLayoutX(500);
         players.setLayoutY(450);
         players.setPromptText("Choose the number of players: ");
-        for(int i=3; i<9; i++){
+        for(int i=4; i<9; i++){
             players.getItems().add(i);
         }
         
@@ -1039,16 +1039,16 @@ public class BangFX extends Application {
         character.setLayoutX(10);
         character.setLayoutY(10);
         character.setWrapText(true);
-        character.setMaxHeight(500);
         character.setFont(Font.font("Copperplate", 20));
         
         //Start of play order
         character.setText("The play order is: \n");
         
         //Prints out the play order, starting with sheriff
-        for (int j = 0; j < play_order.size()+1; j++) {
+        for (int j = 0; j < play_order.size(); j++) {
             character.setText(character.getText()+ (j + 1) + ") " + play_order.get(j).name + "\n");
         }
+        character.setText(character.getText()+"\n");
         
         
     }  
@@ -1516,7 +1516,7 @@ public class BangFX extends Application {
         //A switch to add specific cards based on how many players there are
         switch(cSel)
         {
-            case 7:
+            case 8:
                 role_cards.add(new Roles("Renegade"));
             case 6:
                 role_cards.add(new Roles("Deputy"));
@@ -1525,10 +1525,9 @@ public class BangFX extends Application {
             case 4:
                 role_cards.add(new Roles("Deputy"));
             case 3:
-                role_cards.add(new Roles("Outlaw"));
-            case 2:
                 role_cards.add(new Roles("Sheriff"));
                 role_cards.add(new Roles("Renegade"));
+                role_cards.add(new Roles("Outlaw"));
                 role_cards.add(new Roles("Outlaw"));
                 Collections.shuffle(role_cards);                                //Shuffles the cards to make roles random
         }
@@ -1548,15 +1547,14 @@ public class BangFX extends Application {
                 ai4 = new Player(char_cards.get(4).name, char_cards.get(4).lp,
                         role_cards.get(4).role, true);
             case 3:
-                ai3 = new Player(char_cards.get(3).name, char_cards.get(3).lp,
-                        role_cards.get(3).role, true);
-            case 2:
                 human = new Player(char_cards.get(0).name, char_cards.get(0).lp,
                         role_cards.get(0).role, false);
                 ai1 = new Player(char_cards.get(1).name, char_cards.get(1).lp,
                         role_cards.get(1).role, true);
                 ai2 = new Player(char_cards.get(2).name, char_cards.get(2).lp,
                         role_cards.get(2).role, true);
+                ai3 = new Player(char_cards.get(3).name, char_cards.get(3).lp,
+                        role_cards.get(3).role, true);
         }
     }
     //prob gonna remove this and add to assign() method, reveals roles
@@ -1564,7 +1562,7 @@ public class BangFX extends Application {
             init.setText("You are the "+human.role+", playing as "+human.name+".\n");
             init.setFont(Font.font("Copperplate", 25));
             init.setWrapText(true);
-            init.setPrefSize(600,400);
+            init.setPrefSize(600, 400);
             switch(cSel){
             case 7:
                 if(ai7.role.equals("Sheriff"))
@@ -1591,7 +1589,6 @@ public class BangFX extends Application {
                     init.setText(init.getText()+"NPC 3 is the Sheriff, playing as "+ai3.name+".\n");
                 else
                     init.setText(init.getText()+"NPC 3 is playing as "+ai3.name+". \n");
-            case 2:
                 if(ai2.role.equals("Sheriff"))
                     init.setText(init.getText()+"NPC 2 is the Sheriff, playing as "+ai2.name+".\n");
                 else
