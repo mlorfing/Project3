@@ -138,7 +138,7 @@ public class Player {
         return true;
     }
     
- // function: isDead
+    // function: isDead
  	// purpose: return if the character's life points have reached zero, meaning they are dead
  	// input: none
  	// output: boolean
@@ -146,7 +146,7 @@ public class Player {
  		return health == 0;
  	}
  	
- // function: Beer
+ 	// function: Beer
  	// purpose: used when a character rolls a beer and uses it on themselves
  	// input: none
  	// output: none
