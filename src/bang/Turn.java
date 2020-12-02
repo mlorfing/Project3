@@ -130,7 +130,7 @@ public class Turn {
     out: who won. 
     */
     
-    public int winCheck(ArrayList<Player> l, int p){
+    public int winCheck(ArrayList<Player> l){
         int sheriffCheck=0;
         int deputyCount=0;
         int outlawCount=0;
@@ -158,7 +158,7 @@ public class Turn {
             }
         }
         if(sheriffCheck==0){
-            if (outlawCount==0&&deputyCount==0){
+            if (outlawCount==0&&deputyCount==0&&renegadeCount==1){
                 //renegade wins team 2
                 return 2;
             }
