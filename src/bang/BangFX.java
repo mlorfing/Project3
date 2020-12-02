@@ -52,9 +52,11 @@ public class BangFX extends Application {
     ImageView jose_img, tequila_img, belle_img, greg_img;
     ImageView SR1, SR2, SR3, SR4, UR1, UR2, UR3, UR4,
             UR5, UR6, UR7, UR8, sHeader, uHeader;
-    ImageView d1, d2, d3, d4, d5, d6, dc1, dc2, dc3, dc4, dc5, dc6,
+    ImageView d1, d2, d3, d4, d5, d6, d12, d22, d32, d42, d52, d62,
+            d13, d23, d33, d43, d53, d63, d14, d24, d34, d44, d54, d64,
+            d15, d25, d35, d45, d55, d65, dc1, dc2, dc3, dc4, dc5, dc6,
             dl1, dl2, dl3, dl4, dl5, dl6, du1, du2, du3, du4, 
-            du5, du6, dg1, dg2, dg3;
+            du5, du6, du12, du22, du32, du42, du52, du62, dg1, dg2, dg3;
     ImageView rDie_img, lDie_img, cDie_img, bDie_img, bDie2_img,
             rDie2_img, rDie3_img, rDie4_img, rDie5_img;
     Scene scene1, expScene, charScene, diceScene, ddScene, 
@@ -773,7 +775,103 @@ public class BangFX extends Application {
         d6.setLayoutX(90);
         d6.setLayoutY(170);
         d6.setPreserveRatio(true);
-         
+        
+        d12 = new ImageView(arrow);
+        d12.setFitWidth(75);
+        d12.setPreserveRatio(true);
+        
+        d22 = new ImageView(dynamite);
+        d22.setFitWidth(75);
+        d22.setPreserveRatio(true);
+        
+        d32 = new ImageView(be1);
+        d32.setFitWidth(75);
+        d32.setPreserveRatio(true);
+        
+        d42 = new ImageView(be2);
+        d42.setFitWidth(75);
+        d42.setPreserveRatio(true);
+        
+        d52 = new ImageView(beer);
+        d52.setFitWidth(75);
+        d52.setPreserveRatio(true);
+        
+        d62 = new ImageView(gatling);
+        d62.setFitWidth(75);
+        d62.setPreserveRatio(true);
+        
+        d13 = new ImageView(arrow);
+        d13.setFitWidth(75);
+        d13.setPreserveRatio(true);
+        
+        d23 = new ImageView(dynamite);
+        d23.setFitWidth(75);
+        d23.setPreserveRatio(true);
+        
+        d33 = new ImageView(be1);
+        d33.setFitWidth(75);
+        d33.setPreserveRatio(true);
+        
+        d43 = new ImageView(be2);
+        d43.setFitWidth(75);
+        d43.setPreserveRatio(true);
+        
+        d53 = new ImageView(beer);
+        d53.setFitWidth(75);
+        d53.setPreserveRatio(true);
+        
+        d63 = new ImageView(gatling);
+        d63.setFitWidth(75);
+        d63.setPreserveRatio(true);
+        
+        d14 = new ImageView(arrow);
+        d14.setFitWidth(75);
+        d14.setPreserveRatio(true);
+        
+        d24 = new ImageView(dynamite);
+        d24.setFitWidth(75);
+        d24.setPreserveRatio(true);
+        
+        d34 = new ImageView(be1);
+        d34.setFitWidth(75);
+        d34.setPreserveRatio(true);
+        
+        d44 = new ImageView(be2);
+        d44.setFitWidth(75);
+        d44.setPreserveRatio(true);
+        
+        d54 = new ImageView(beer);
+        d54.setFitWidth(75);
+        d54.setPreserveRatio(true);
+        
+        d64 = new ImageView(gatling);
+        d64.setFitWidth(75);
+        d64.setPreserveRatio(true);
+        
+        d15 = new ImageView(arrow);
+        d15.setFitWidth(75);
+        d15.setPreserveRatio(true);
+        
+        d25 = new ImageView(dynamite);
+        d25.setFitWidth(75);
+        d25.setPreserveRatio(true);
+        
+        d35 = new ImageView(be1);
+        d35.setFitWidth(75);
+        d35.setPreserveRatio(true);
+        
+        d45 = new ImageView(be2);
+        d45.setFitWidth(75);
+        d45.setPreserveRatio(true);
+        
+        d55 = new ImageView(beer);
+        d55.setFitWidth(75);
+        d55.setPreserveRatio(true);
+        
+        d65 = new ImageView(gatling);
+        d65.setFitWidth(75);
+        d65.setPreserveRatio(true);
+        
         dl1 = new ImageView(arrow);
         dl1.setFitWidth(75);
         dl1.setPreserveRatio(true);
@@ -895,12 +993,32 @@ public class BangFX extends Application {
         
         du6 = new ImageView(duel);
         du6.setFitWidth(75);
-        du6.setLayoutX(90);
-        du6.setLayoutY(170);
         du6.setPreserveRatio(true);
+        
+        du12 = new ImageView(blarrow);
+        du12.setFitWidth(75);
+        du12.setPreserveRatio(true);
+        
+        du22 = new ImageView(bdynamite);
+        du22.setFitWidth(75);
+        du22.setPreserveRatio(true);
+        
+        du32 = new ImageView(whiskey);
+        du32.setFitWidth(75);
+        du32.setPreserveRatio(true);
+        
+        du42 = new ImageView(bgatling);
+        du42.setFitWidth(75);
+        du42.setPreserveRatio(true);
+        
+        du52 = new ImageView(duel);
+        du52.setFitWidth(75);
+        du52.setPreserveRatio(true);
+        
+        du62 = new ImageView(duel);
+        du62.setFitWidth(75);
+        du62.setPreserveRatio(true);
        
-        reg = new Image(
-            new FileInputStream("src/bang/media/reg.png"));
         dg1 = new ImageView(reg);
         dg1.setFitWidth(250);
         dg1.setLayoutX(25);
@@ -1674,6 +1792,132 @@ public class BangFX extends Application {
     }  
     //trying to implement a button for dice rolling initiative
     public void diceSetup(){
+        d1.setLayoutY(300);
+        d2.setLayoutY(300);
+        d3.setLayoutY(300);
+        d4.setLayoutY(300);
+        d5.setLayoutY(300);
+        d6.setLayoutY(300);
+        
+        d12.setLayoutY(300);
+        d22.setLayoutY(300);
+        d32.setLayoutY(300);
+        d42.setLayoutY(300);
+        d52.setLayoutY(300);
+        d62.setLayoutY(300);
+        
+        d13.setLayoutY(300);
+        d23.setLayoutY(300);
+        d33.setLayoutY(300);
+        d43.setLayoutY(300);
+        d53.setLayoutY(300);
+        d63.setLayoutY(300);
+        
+        d14.setLayoutY(300);
+        d24.setLayoutY(300);
+        d34.setLayoutY(300);
+        d44.setLayoutY(300);
+        d54.setLayoutY(300);
+        d64.setLayoutY(300);
+        
+        d15.setLayoutY(300);
+        d25.setLayoutY(300);
+        d35.setLayoutY(300);
+        d45.setLayoutY(300);
+        d55.setLayoutY(300);
+        d65.setLayoutY(300);
+        
+        dl1.setLayoutY(300);
+        dl2.setLayoutY(300);
+        dl3.setLayoutY(300);
+        dl4.setLayoutY(300);
+        dl5.setLayoutY(300);
+        dl6.setLayoutY(300);
+        
+        dc1.setLayoutY(300);
+        dc2.setLayoutY(300);
+        dc3.setLayoutY(300);
+        dc4.setLayoutY(300);
+        dc5.setLayoutY(300);
+        dc6.setLayoutY(300);
+        
+        du1.setLayoutY(300);
+        du2.setLayoutY(300);
+        du3.setLayoutY(300);
+        du4.setLayoutY(300);
+        du5.setLayoutY(300);
+        du6.setLayoutY(300);
+        
+        du12.setLayoutY(300);
+        du22.setLayoutY(300);
+        du32.setLayoutY(300);
+        du42.setLayoutY(300);
+        du52.setLayoutY(300);
+        du62.setLayoutY(300);
+        
+        d1.setVisible(false);
+        d2.setVisible(false);
+        d3.setVisible(false);
+        d4.setVisible(false);
+        d5.setVisible(false);
+        d6.setVisible(false);
+        
+        d12.setVisible(false);
+        d22.setVisible(false);
+        d32.setVisible(false);
+        d42.setVisible(false);
+        d52.setVisible(false);
+        d62.setVisible(false);
+        
+        d13.setVisible(false);
+        d23.setVisible(false);
+        d33.setVisible(false);
+        d43.setVisible(false);
+        d53.setVisible(false);
+        d63.setVisible(false);
+        
+        d14.setVisible(false);
+        d24.setVisible(false);
+        d34.setVisible(false);
+        d44.setVisible(false);
+        d54.setVisible(false);
+        d64.setVisible(false);
+        
+        d15.setVisible(false);
+        d25.setVisible(false);
+        d35.setVisible(false);
+        d45.setVisible(false);
+        d55.setVisible(false);
+        d65.setVisible(false);
+        
+        dl1.setVisible(false);
+        dl2.setVisible(false);
+        dl3.setVisible(false);
+        dl4.setVisible(false);
+        dl5.setVisible(false);
+        dl6.setVisible(false);
+        
+        dc1.setVisible(false);
+        dc2.setVisible(false);
+        dc3.setVisible(false);
+        dc4.setVisible(false);
+        dc5.setVisible(false);
+        dc6.setVisible(false);
+        
+        du1.setVisible(false);
+        du2.setVisible(false);
+        du3.setVisible(false);
+        du4.setVisible(false);
+        du5.setVisible(false);
+        du6.setVisible(false);
+        
+        du12.setVisible(false);
+        du22.setVisible(false);
+        du32.setVisible(false);
+        du42.setVisible(false);
+        du52.setVisible(false);
+        du62.setVisible(false);
+        
         loudmouth.setLayoutX(300);
         loudmouth.setLayoutY(185);
         loudmouth.setFont(Font.font("Copperplate", 20));
@@ -1688,7 +1932,12 @@ public class BangFX extends Application {
         
         group3.getChildren().clear();
         group3.getChildren()
-                .addAll(background, musicToggle, rollDice);
+                .addAll(background, musicToggle, rollDice, d1, d2, d3, d4, 
+                        d5, d6, d12, d22, d32, d42, d52, d62, d13, d23, d33, 
+                        d43, d53, d63, d14, d24, d34, d44, d54, d64, d15, 
+                        d25, d35, d45, d55, d65,  dc1, dc2, dc3, dc4, dc5,
+                        dc6, dl1, dl2, dl3, dl4, dl5, dl6, du1, du2, du3, 
+                        du4, du5, du6, du12, du22, du32, du42, du52, du62);
         if((undInc.isSelected())){
             group3.getChildren()
                     .addAll(bDie_img, bDie2_img);
@@ -1799,6 +2048,8 @@ public class BangFX extends Application {
     }
     
     public void rollDiceGo(){
+        
+        reset();
         for (int roll = 0; roll < 5; roll++)
                 dice.get(roll).roll();
         for (int rolls = 0; rolls < play_order.get(0).rolls - 1; rolls++) {
@@ -1809,9 +2060,358 @@ public class BangFX extends Application {
             System.out.println("Dice 4 : " + RD4.sides[RD4.side]);
             System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
         }
+        
+        reset();
+        for(int i=0; i<5; i++) {
+            if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
+                if(dice.get(i).dice == 0){
+                    if(dice.get(i).equals(RD1)){
+                        d2.setLayoutX(300);
+                        d2.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD2)){
+                        d22.setLayoutX(385);
+                        d22.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD3)){
+                        d23.setLayoutX(470);
+                        d23.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD4)){
+                        d24.setLayoutX(555);
+                        d24.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        d25.setLayoutX(640);
+                        d25.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                    if(dice.get(i).equals(RD2)){
+                        dl3.setLayoutX(385);
+                        dl3.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                    if(dice.get(i).equals(RD2)){
+                        dc3.setLayoutX(385);
+                        dc3.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).dice == 2){
+                    if(dice.get(i).equals(RD4)){
+                        du2.setLayoutX(555);
+                        du2.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        du22.setLayoutX(640);
+                        du22.setVisible(true);
+                    }
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
+                if(dice.get(i).dice == 0){
+                    if(dice.get(i).equals(RD1)){
+                        d1.setLayoutX(300);
+                        d1.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD2)){
+                        d12.setLayoutX(385);
+                        d12.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD3)){
+                        d13.setLayoutX(470);
+                        d13.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD4)){
+                        d14.setLayoutX(555);
+                        d14.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        d15.setLayoutX(640);
+                        d15.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                    if(dice.get(i).equals(RD2)){
+                        dl1.setLayoutX(385);
+                        dl1.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                    if(dice.get(i).equals(RD2)){
+                        dc1.setLayoutX(385);
+                        dc1.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).dice == 2){
+                    if(dice.get(i).equals(RD4)){
+                        du1.setLayoutX(555);
+                        du1.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        du12.setLayoutX(640);
+                        du12.setVisible(true);
+                    }
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+                if(dice.get(i).dice == 0){
+                    if(dice.get(i).equals(RD1)){
+                        d6.setLayoutX(300);
+                        d6.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD2)){
+                        d62.setLayoutX(385);
+                        d62.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD3)){
+                        d63.setLayoutX(470);
+                        d63.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD4)){
+                        d64.setLayoutX(555);
+                        d64.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        d65.setLayoutX(640);
+                        d65.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).dice == 2){
+                    if(dice.get(i).equals(RD4)){
+                        du4.setLayoutX(555);
+                        du4.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        du42.setLayoutX(640);
+                        du42.setVisible(true);
+                    }
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1") {
+                if(dice.get(i).dice == 0){
+                    if(dice.get(i).equals(RD1)){
+                        d3.setLayoutX(300);
+                        d3.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD2)){
+                        d32.setLayoutX(385);
+                        d32.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD3)){
+                        d33.setLayoutX(470);
+                        d33.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD4)){
+                        d34.setLayoutX(555);
+                        d34.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        d35.setLayoutX(640);
+                        d35.setVisible(true);
+                    }
+                }
+                else {
+                    if(dice.get(i).equals(RD2)){
+                        dc4.setLayoutX(385);
+                        dc4.setVisible(true);
+                    }
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2") {
+                if(dice.get(i).dice == 0){
+                    if(dice.get(i).equals(RD1)){
+                        d4.setLayoutX(300);
+                        d4.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD2)){
+                        d42.setLayoutX(385);
+                        d42.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD3)){
+                        d43.setLayoutX(470);
+                        d43.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD4)){
+                        d44.setLayoutX(555);
+                        d44.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        d45.setLayoutX(640);
+                        d45.setVisible(true);
+                    }
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Beer") {
+                if(dice.get(i).dice == 0){
+                    if(dice.get(i).equals(RD1)){
+                        d5.setLayoutX(300);
+                        d5.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD2)){
+                        d52.setLayoutX(385);
+                        d52.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD3)){
+                        d53.setLayoutX(470);
+                        d53.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD4)){
+                        d54.setLayoutX(555);
+                        d54.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        d55.setLayoutX(640);
+                        d55.setVisible(true);
+                    }
+                }
+                else {
+                    if(dice.get(i).equals(RD2)){
+                        dc5.setLayoutX(385);
+                        dc5.setVisible(true);
+                    }
+                }
+            }
+        else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
+            if(dice.get(i).dice == 1) {
+                dl2.setLayoutX(385);
+                dl2.setVisible(true);
+            }
+        }
+        else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
+            if(dice.get(i).dice == 1) {
+                dl4.setLayoutX(385);
+                dl4.setVisible(true);
+            }
+        }
+        else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
+            if(dice.get(i).dice == 1) {
+                dl5.setLayoutX(385);
+                dl5.setVisible(true);
+            }
+        }
+        else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
+            if(dice.get(i).dice == 1) {
+                dl6.setLayoutX(385);
+                dl6.setVisible(true);
+            }
+        }
+        else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
+            if(dice.get(i).dice == 1) {
+                dc6.setLayoutX(385);
+                dc6.setVisible(true);
+            }
+        }
+        else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
+            if(dice.get(i).dice == 1) {
+                dc2.setLayoutX(385);
+                dc2.setVisible(true);
+            }
+        }
+        else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
+            if(dice.get(i).dice == 2){
+                if(dice.get(i).equals(RD4)){
+                    du3.setLayoutX(555);
+                    du3.setVisible(true);
+                }
+                if(dice.get(i).equals(RD5)){
+                    du32.setLayoutX(640);
+                    du32.setVisible(true);
+                }
+            }
+        }
+        else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
+            if(dice.get(i).dice == 2){
+                if(dice.get(i).equals(RD4)){
+                    du5.setLayoutX(555);
+                    du5.setVisible(true);
+                }
+                if(dice.get(i).equals(RD5)){
+                    du52.setLayoutX(640);
+                    du52.setVisible(true);
+                }
+            }
+            if(dice.get(i).dice == 2){
+                if(dice.get(i).equals(RD4)){
+                    du6.setLayoutX(555);
+                    du6.setVisible(true);
+                }
+                if(dice.get(i).equals(RD5)){
+                    du62.setLayoutX(640);
+                    du62.setVisible(true);
+                }
+            }
+        }
     }
     
-    
+    }
+    public void reset(){
+        
+        d1.setVisible(false);
+        d2.setVisible(false);
+        d3.setVisible(false);
+        d4.setVisible(false);
+        d5.setVisible(false);
+        d6.setVisible(false);
+        
+        d12.setVisible(false);
+        d22.setVisible(false);
+        d32.setVisible(false);
+        d42.setVisible(false);
+        d52.setVisible(false);
+        d62.setVisible(false);
+        
+        d13.setVisible(false);
+        d23.setVisible(false);
+        d33.setVisible(false);
+        d43.setVisible(false);
+        d53.setVisible(false);
+        d63.setVisible(false);
+        
+        d14.setVisible(false);
+        d24.setVisible(false);
+        d34.setVisible(false);
+        d44.setVisible(false);
+        d54.setVisible(false);
+        d64.setVisible(false);
+        
+        d15.setVisible(false);
+        d25.setVisible(false);
+        d35.setVisible(false);
+        d45.setVisible(false);
+        d55.setVisible(false);
+        d65.setVisible(false);
+        
+        dl1.setVisible(false);
+        dl2.setVisible(false);
+        dl3.setVisible(false);
+        dl4.setVisible(false);
+        dl5.setVisible(false);
+        dl6.setVisible(false);
+        
+        dc1.setVisible(false);
+        dc2.setVisible(false);
+        dc3.setVisible(false);
+        dc4.setVisible(false);
+        dc5.setVisible(false);
+        dc6.setVisible(false);
+        
+        du1.setVisible(false);
+        du2.setVisible(false);
+        du3.setVisible(false);
+        du4.setVisible(false);
+        du5.setVisible(false);
+        du6.setVisible(false);
+        
+        du12.setVisible(false);
+        du22.setVisible(false);
+        du32.setVisible(false);
+        du42.setVisible(false);
+        du52.setVisible(false);
+        du62.setVisible(false);
+        
+    }
     
     
     
