@@ -8,6 +8,8 @@ package bang;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
+import java.util.Scanner;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.*;
@@ -41,7 +43,8 @@ public class BangFX extends Application {
             uheader;
     Image arrow, barrow, be1, be2, beer, bullet, dbe1,
             dbe2, dbeer, dgatling, duel, dynamite, gatling,
-            whiskey, reg, undead, saloon;
+            whiskey, reg, undead, saloon, bdynamite, bgatling,
+            blarrow;
     Image rdie, ldie, cdie, bdie, rdie2, rdie3, rdie4, rdie5, bdie2;
     ImageView background, bLogo, mHeader;
     ImageView black_img, gringo_img, jesse_img, jour_img,
@@ -49,8 +52,9 @@ public class BangFX extends Application {
     ImageView jose_img, tequila_img, belle_img, greg_img;
     ImageView SR1, SR2, SR3, SR4, UR1, UR2, UR3, UR4,
             UR5, UR6, UR7, UR8, sHeader, uHeader;
-    ImageView d1, d2, d3, d4, d5, d6, ds1, ds2, ds3, ds4, ds5,
-            ds6, du1, du2, du3, du4, du5, du6, dg1, dg2, dg3;
+    ImageView d1, d2, d3, d4, d5, d6, dc1, dc2, dc3, dc4, dc5, dc6,
+            dl1, dl2, dl3, dl4, dl5, dl6, du1, du2, du3, du4, 
+            du5, du6, dg1, dg2, dg3;
     ImageView rDie_img, lDie_img, cDie_img, bDie_img, bDie2_img,
             rDie2_img, rDie3_img, rDie4_img, rDie5_img;
     Scene scene1, expScene, charScene, diceScene, ddScene, 
@@ -98,10 +102,14 @@ public class BangFX extends Application {
     RadioButton coward = new RadioButton();
     
     ToggleButton musicToggle = new ToggleButton();
-    Boolean isSelected, cDSelect, lDSelect, sher;
+    Boolean isSelected, cDSelect, lDSelect, sher, reroll;
     ComboBox players = new ComboBox();
-    int cSel, pageNum=0;
+    int cSel, pageNum=0, dynamiteCount = 0;
     
+    static Scanner scan;
+    String answer;
+    static int arrowCount = 10;
+    static boolean chiefArrow = true;
     //initialization of game variables
     ArrayList<CharCards> char_cards = new ArrayList();
     ArrayList<Dice> dice = new ArrayList();
@@ -110,13 +118,15 @@ public class BangFX extends Application {
     static ArrayList<Player> temp_play_order = new ArrayList();
     static ArrayList<Player> temp_play_order2 = new ArrayList();
     
-    Dice bDie = new Dice(2, 0, "Indian Arrow", "Dynamite", "Duel", "Duel",
-            "Whiskey", "Gatling");
-    Dice cDie = new Dice(0, 0, "Indian Arrow", "Double Beer", "Bull's Eye 1",
-            "Broken Arrow", "Beer", "Dynamite");
-    Dice lDie = new Dice(0, 0, "Indian Arrow", "Dynamite", "Double Bull's Eye 1",
-            "Double Bull's Eye 2", "Bullet", "Gatling");
-    Dice regDie = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+    Dice RD1 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+            "Bull's Eye 2", "Beer", "Gatling");
+    Dice RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+            "Bull's Eye 2", "Beer", "Gatling");
+    Dice RD3 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+            "Bull's Eye 2", "Beer", "Gatling");
+    Dice RD4 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+            "Bull's Eye 2", "Beer", "Gatling");
+    Dice RD5 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
             "Bull's Eye 2", "Beer", "Gatling");
     
     Player human = new Player("NULL", 0, "NULL", false);
@@ -135,6 +145,12 @@ public class BangFX extends Application {
     //sets the buttons to go forward to next screen
     @Override
     public void start(Stage primaryStage) throws Exception {
+        scan  = new Scanner(System.in);
+        dice.add(RD1);
+        dice.add(RD2);
+        dice.add(RD3);
+        dice.add(RD4);
+        dice.add(RD5);
         window = primaryStage;
         window.setResizable(false);
         exp.setOnCloseRequest(e -> {
@@ -757,71 +773,132 @@ public class BangFX extends Application {
         d6.setLayoutX(90);
         d6.setLayoutY(170);
         d6.setPreserveRatio(true);
-        
-        barrow = new Image(
-            new FileInputStream("src/bang/media/barrow.png"));
-        ds1 = new ImageView(barrow);
-        ds1.setFitWidth(75);
-        ds1.setLayoutX(10);
-        ds1.setLayoutY(10);
-        ds1.setPreserveRatio(true);
+         
+        dl1 = new ImageView(arrow);
+        dl1.setFitWidth(75);
+        dl1.setPreserveRatio(true);
         
         bullet = new Image(
             new FileInputStream("src/bang/media/bullet.png"));
-        ds2 = new ImageView(bullet);
-        ds2.setFitWidth(75);
-        ds2.setLayoutX(90);
-        ds2.setLayoutY(10);
-        ds2.setPreserveRatio(true);
+        dl2 = new ImageView(bullet);
+        dl2.setFitWidth(75);
+        dl2.setLayoutX(90);
+        dl2.setLayoutY(10);
+        dl2.setPreserveRatio(true);
+        
+        dl3 = new ImageView(dynamite);
+        dl3.setFitWidth(75);
+        dl3.setPreserveRatio(true);
         
         dbe1 = new Image(
             new FileInputStream("src/bang/media/dbe1.png"));
-        ds3 = new ImageView(dbe1);
-        ds3.setFitWidth(75);
-        ds3.setLayoutX(10);
-        ds3.setLayoutY(90);
-        ds3.setPreserveRatio(true);
+        dl4 = new ImageView(dbe1);
+        dl4.setFitWidth(75);
+        dl4.setLayoutX(10);
+        dl4.setLayoutY(90);
+        dl4.setPreserveRatio(true);
         
         dbe2 = new Image(
             new FileInputStream("src/bang/media/dbe2.png"));
-        ds4 = new ImageView(dbe2);
-        ds4.setFitWidth(75);
-        ds4.setLayoutX(90);
-        ds4.setLayoutY(90);
-        ds4.setPreserveRatio(true);
-        
-        dbeer = new Image(
-            new FileInputStream("src/bang/media/dbeer.png"));
-        ds5 = new ImageView(dbeer);
-        ds5.setFitWidth(75);
-        ds5.setLayoutX(10);
-        ds5.setLayoutY(170);
-        ds5.setPreserveRatio(true);
+        dl5 = new ImageView(dbe2);
+        dl5.setFitWidth(75);
+        dl5.setLayoutX(90);
+        dl5.setLayoutY(90);
+        dl5.setPreserveRatio(true);
         
         dgatling = new Image(
             new FileInputStream("src/bang/media/dgatling.png"));
-        ds6 = new ImageView(dgatling);
-        ds6.setFitWidth(75);
-        ds6.setLayoutX(90);
-        ds6.setLayoutY(170);
-        ds6.setPreserveRatio(true);
+        dl6 = new ImageView(dgatling);
+        dl6.setFitWidth(75);
+        dl6.setLayoutX(90);
+        dl6.setLayoutY(170);
+        dl6.setPreserveRatio(true);
         
-        whiskey = new Image(
-            new FileInputStream("src/bang/media/whiskey.png"));
-        du1 = new ImageView(whiskey);
+        
+        dc1 = new ImageView(arrow);
+        dc1.setFitWidth(75);
+        dc1.setPreserveRatio(true);
+       
+        barrow = new Image(
+            new FileInputStream("src/bang/media/barrow.png"));
+        dc2 = new ImageView(barrow);
+        dc2.setFitWidth(75);
+        dc2.setLayoutX(10);
+        dc2.setLayoutY(10);
+        dc2.setPreserveRatio(true);
+        
+        dc3 = new ImageView(dynamite);
+        dc3.setFitWidth(75);
+        dc3.setLayoutX(10);
+        dc3.setLayoutY(90);
+        dc3.setPreserveRatio(true);
+       
+        dc4 = new ImageView(be1);
+        dc4.setFitWidth(75);
+        dc4.setLayoutX(90);
+        dc4.setLayoutY(90);
+        dc4.setPreserveRatio(true);
+       
+        dc5 = new ImageView(beer);
+        dc5.setFitWidth(75);
+        dc5.setLayoutX(10);
+        dc5.setLayoutY(170);
+        dc5.setPreserveRatio(true);
+        
+        dbeer = new Image(
+            new FileInputStream("src/bang/media/dbeer.png"));
+        dc6 = new ImageView(dbeer);
+        dc6.setFitWidth(75);
+        dc6.setLayoutX(10);
+        dc6.setLayoutY(170);
+        dc6.setPreserveRatio(true);
+        
+        blarrow = new Image(
+            new FileInputStream("src/bang/media/blarrow.png"));
+        du1 = new ImageView(blarrow);
         du1.setFitWidth(75);
         du1.setLayoutX(10);
         du1.setLayoutY(10);
         du1.setPreserveRatio(true);
         
-        duel = new Image(
-            new FileInputStream("src/bang/media/duel.png"));
-        du2 = new ImageView(duel);
+        bdynamite = new Image(
+            new FileInputStream("src/bang/media/bdynamite.png"));
+        du2 = new ImageView(bdynamite);
         du2.setFitWidth(75);
         du2.setLayoutX(90);
         du2.setLayoutY(10);
         du2.setPreserveRatio(true);
         
+        whiskey = new Image(
+            new FileInputStream("src/bang/media/whiskey.png"));
+        du3 = new ImageView(whiskey);
+        du3.setFitWidth(75);
+        du3.setLayoutX(10);
+        du3.setLayoutY(90);
+        du3.setPreserveRatio(true);
+        
+        bgatling = new Image(
+            new FileInputStream("src/bang/media/bgatling.png"));
+        du4 = new ImageView(bgatling);
+        du4.setFitWidth(75);
+        du4.setLayoutX(90);
+        du4.setLayoutY(90);
+        du4.setPreserveRatio(true);
+        
+        duel = new Image(
+            new FileInputStream("src/bang/media/duel.png"));
+        du5 = new ImageView(duel);
+        du5.setFitWidth(75);
+        du5.setLayoutX(10);
+        du5.setLayoutY(170);
+        du5.setPreserveRatio(true);
+        
+        du6 = new ImageView(duel);
+        du6.setFitWidth(75);
+        du6.setLayoutX(90);
+        du6.setLayoutY(170);
+        du6.setPreserveRatio(true);
+       
         reg = new Image(
             new FileInputStream("src/bang/media/reg.png"));
         dg1 = new ImageView(reg);
@@ -1056,7 +1133,7 @@ public class BangFX extends Application {
         diceGroup2.getChildren().clear();
         
         diceGroup2.getChildren()
-                .addAll(ds1, ds2, ds3, ds4, ds5, ds6, diceDesc, close2);
+                .addAll(dc2, dl2, dl5, dl4, dc6, dl6, diceDesc, close2);
         
         dice_d.setScene(ddScene);
         dice_d.setResizable(false);
@@ -1070,13 +1147,15 @@ public class BangFX extends Application {
         diceDesc.setText("");
         diceDesc.setFont(Font.font("Copperplate", 25));
         
-        diceDesc.setText("1. Whiskey Bottle\n2. Fight a Duel");
+        diceDesc.setText("1. Indian Arrow\n2. Dynamite\n"
+                + "3. Whiskey\n4. Gatling\n"
+                + "5. Fight a Duel");
         diceDesc.setLayoutX(170);
         diceDesc.setLayoutY(10);
         diceGroup2.getChildren().clear();
         
         diceGroup2.getChildren()
-                .addAll(du1, du2, diceDesc, close2);
+                .addAll(du1, du2, du3, du4, du5, diceDesc, close2);
         
         dice_d.setScene(ddScene);
         dice_d.setResizable(false);
@@ -1444,22 +1523,10 @@ public class BangFX extends Application {
         char_cards.add(new CharCards("Vulture Sam", 9));
         Collections.shuffle(char_cards);  
 
-
-        if(undInc.isSelected()){
-            dice.add(bDie);
-            dice.add(bDie);
-        }else{
-            dice.add(regDie);
-            dice.add(regDie);
-        }
-        dice.add(regDie);
-        dice.add(regDie);
-        dice.add(regDie);
-        
         //A switch to add specific cards based on how many players there are
         switch(cSel)
         {
-            case 8:
+            case 7:
                 role_cards.add(new Roles("Renegade"));
             case 6:
                 role_cards.add(new Roles("Deputy"));
@@ -1613,12 +1680,26 @@ public class BangFX extends Application {
         coward.setLayoutX(300);
         coward.setLayoutY(215);
         coward.setFont(Font.font("Copperplate", 20));
+        
+        rollDice.setLayoutX(850);
+        rollDice.setLayoutY(120);
+        rollDice.setText("ROLL");
+        rollDice.setFont(Font.font("Copperplate", 20));
+        
         group3.getChildren().clear();
         group3.getChildren()
                 .addAll(background, musicToggle, rollDice);
         if((undInc.isSelected())){
             group3.getChildren()
                     .addAll(bDie_img, bDie2_img);
+            dice.remove(RD4);
+            RD4 = new Dice(2, 0, "Indian Arrow", "Dynamite",
+                "Whiskey", "Gatling", "Duel", "Duel");
+            dice.add(RD4);
+            dice.remove(RD5);
+            RD5 = new Dice(2, 0, "Indian Arrow", "Dynamite",
+                "Whiskey", "Gatling", "Duel", "Duel");
+            dice.add(RD5);
             if((salInc.isSelected())){
                 group3.getChildren()
                         .addAll(lDie_img, cDie_img, rDie_img, rDie2_img,
@@ -1628,10 +1709,19 @@ public class BangFX extends Application {
                 group3.getChildren()
                         .addAll(rDie_img, rDie2_img, rDie3_img);
                 }
+            
             }
         else if((!undInc.isSelected())){
             group3.getChildren()
                     .add(rDie_img);
+            dice.remove(RD4);
+            RD4 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+                    "Bull's Eye 2", "Beer", "Gatling");
+            dice.add(RD4);
+            dice.remove(RD5);
+            RD5 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+                    "Bull's Eye 2", "Beer", "Gatling");
+            dice.add(RD5);
             if((salInc.isSelected())){
                 group3.getChildren()
                         .addAll(lDie_img, cDie_img, rDie3_img, rDie2_img,
@@ -1653,6 +1743,11 @@ public class BangFX extends Application {
             lDSelect = loudmouth.isSelected();
             
             if(lDSelect){
+                dice.remove(RD2);
+                RD2 = new Dice(1, 0, "Indian Arrow", "Bullet", "Dynamite", 
+                        "Double Bull's Eye 1", "Double Bull's Eye 2", 
+                        "Double Gatling");
+                dice.add(RD2);
                 loudmouth.setText("Loudmouth Die in use");
                 coward.setText("Use Coward Die");
                 coward.setSelected(false);
@@ -1660,6 +1755,10 @@ public class BangFX extends Application {
                 lDie_img.setVisible(true);
                 rDie2_img.setVisible(false);
             } else {
+                dice.remove(RD2);
+                RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+                    "Bull's Eye 2", "Beer", "Gatling");
+                dice.add(RD2);
                 loudmouth.setText("Use Loudmouth Die");
                 cDie_img.setVisible(false);
                 lDie_img.setVisible(false);
@@ -1672,6 +1771,10 @@ public class BangFX extends Application {
             cDSelect = coward.isSelected();
             
             if(cDSelect){
+                dice.remove(RD2);
+                RD2 = new Dice(1, 0, "Indian Arrow", "Broken Arrow", "Dynamite",
+                        "Bull's Eye 1", "Beer", "Double Beer");
+                dice.add(RD2)
                 coward.setText("Coward Die in use");
                 loudmouth.setText("Use Loudmouth Die");
                 loudmouth.setSelected(false);
@@ -1679,15 +1782,38 @@ public class BangFX extends Application {
                 cDie_img.setVisible(true);
                 rDie2_img.setVisible(false);
             } else {
+                dice.remove(RD2);
+                RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+                    "Bull's Eye 2", "Beer", "Gatling");
+                dice.add(RD2);
                 coward.setText("Use Coward Die");
                 lDie_img.setVisible(false);
                 cDie_img.setVisible(false);
                 rDie2_img.setVisible(true);
             }
         });
+        
+        rollDice.setOnAction(e-> {
+            rollDiceGo();
+        });
     }
-    /**
-     * @param args the command line arguments
-     */
     
+    public void rollDiceGo(){
+        for (int roll = 0; roll < 5; roll++)
+                dice.get(roll).roll();
+        for (int rolls = 0; rolls < play_order.get(0).rolls - 1; rolls++) {
+            System.out.println("Roll " + (rolls + 1) + " results:");
+            System.out.println("Dice 1 : " + RD1.sides[RD1.side]);
+            System.out.println("Dice 2 : " + RD2.sides[RD2.side]);
+            System.out.println("Dice 3 : " + RD3.sides[RD3.side]);
+            System.out.println("Dice 4 : " + RD4.sides[RD4.side]);
+            System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
+        }
+    }
+    
+    
+    
+    
+    
+    //end of file
 }
