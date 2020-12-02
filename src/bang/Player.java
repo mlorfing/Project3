@@ -28,6 +28,7 @@ public class Player {
     public boolean shown;
     public boolean known;
     public boolean chiefArrow = false;
+    public int numDice = 5;
     
     // variables to hold the special abilities
     public boolean doubleBeer = false; // special ability for greg digger
