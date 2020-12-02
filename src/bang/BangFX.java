@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.*;
@@ -72,6 +73,7 @@ public class BangFX extends Application {
     Label character = new Label();
     Label chiefChoice = new Label();
     Label action = new Label();
+    Label indAtt = new Label();
     Group group1 = new Group();
     Group group2 = new Group();
     Group group3 = new Group();
@@ -81,8 +83,8 @@ public class BangFX extends Application {
     Group diceGroup2 = new Group();
     Group initGroup = new Group();
     
-    Media bgM, bulls, glass, un, dieS;
-    MediaPlayer bMusic, eye, clink, dead, rollS;
+    Media bgM, bulls, glass, un, dieS, dyna, arrS, ind, gat;
+    MediaPlayer bMusic, eye, clink, dead, rollS, mite, swoosh, attack, ling;
     Button go = new Button();
     Button rules = new Button();
     Button charAbilities = new Button();
@@ -256,6 +258,26 @@ public class BangFX extends Application {
         eye = new MediaPlayer(bulls);
         eye.setVolume(.8);
         
+        arrS = new Media(this.getClass().getResource(
+                "/bang/media/music/arrow.wav").toString());
+        swoosh = new MediaPlayer(arrS);
+        swoosh.setVolume(.8);
+        
+        gat = new Media(this.getClass().getResource(
+                "/bang/media/music/gatling.wav").toString());
+        ling = new MediaPlayer(gat);
+        ling.setVolume(.8);
+        
+        ind = new Media(this.getClass().getResource(
+                "/bang/media/music/indians.wav").toString());
+        attack = new MediaPlayer(ind);
+        attack.setVolume(.8);
+        
+        dyna = new Media(this.getClass().getResource(
+                "/bang/media/music/dynamite.wav").toString());
+        mite = new MediaPlayer(dyna);
+        mite.setVolume(.8);
+        
         dieS = new Media(this.getClass().getResource(
                 "/bang/media/music/diceroll.wav").toString());
         rollS = new MediaPlayer(dieS);
@@ -400,12 +422,18 @@ public class BangFX extends Application {
                 clink.setVolume(0);
                 eye.setVolume(0);
                 rollS.setVolume(0);
+                mite.setVolume(0);
+                attack.setVolume(0);
+                ling.setVolume(0);
                 bMusic.stop();
             } else {
                 dead.setVolume(.8);
                 clink.setVolume(.8);
                 eye.setVolume(.8);
                 rollS.setVolume(.8);
+                mite.setVolume(.8);
+                attack.setVolume(.8);
+                ling.setVolume(.8);
                 bMusic.seek(Duration.ZERO);
                 bMusic.play();
             }
@@ -2006,6 +2034,13 @@ public class BangFX extends Application {
         action.setVisible(true);
         action.setFont(Font.font("Copperplate", 20));
         
+        indAtt.setLayoutX(300);
+        indAtt.setLayoutY(400);
+        indAtt.setWrapText(true);
+        indAtt.setText("Indians are attacking!");
+        indAtt.setDisable(true);
+        indAtt.setFont(Font.font("Copperplate", 20));
+        
             
         chiefY.setOnAction(e-> {
             rollDice.setDisable(false);
@@ -2034,7 +2069,7 @@ public class BangFX extends Application {
                         dc2, dc3, dc4, dc5, dc6, dl1, dl2, dl3, dl4, dl5, 
                         dl6, du1, du2, du3, du4, du5, du6, du12, du22, 
                         du32, du42, du52, du62, die1, die2, die3, die4, die5,
-                        action);
+                        action, indAtt);
         if((undInc.isSelected())){
             group3.getChildren()
                     .addAll(bDie_img, bDie2_img);
@@ -2170,6 +2205,73 @@ public class BangFX extends Application {
         });
     }
     
+    public void resetDieFace(){
+        
+        d1.setVisible(false);
+        d2.setVisible(false);
+        d3.setVisible(false);
+        d4.setVisible(false);
+        d5.setVisible(false);
+        d6.setVisible(false);
+        
+        d12.setVisible(false);
+        d22.setVisible(false);
+        d32.setVisible(false);
+        d42.setVisible(false);
+        d52.setVisible(false);
+        d62.setVisible(false);
+        
+        d13.setVisible(false);
+        d23.setVisible(false);
+        d33.setVisible(false);
+        d43.setVisible(false);
+        d53.setVisible(false);
+        d63.setVisible(false);
+        
+        d14.setVisible(false);
+        d24.setVisible(false);
+        d34.setVisible(false);
+        d44.setVisible(false);
+        d54.setVisible(false);
+        d64.setVisible(false);
+        
+        d15.setVisible(false);
+        d25.setVisible(false);
+        d35.setVisible(false);
+        d45.setVisible(false);
+        d55.setVisible(false);
+        d65.setVisible(false);
+        
+        dl1.setVisible(false);
+        dl2.setVisible(false);
+        dl3.setVisible(false);
+        dl4.setVisible(false);
+        dl5.setVisible(false);
+        dl6.setVisible(false);
+        
+        dc1.setVisible(false);
+        dc2.setVisible(false);
+        dc3.setVisible(false);
+        dc4.setVisible(false);
+        dc5.setVisible(false);
+        dc6.setVisible(false);
+        
+        du1.setVisible(false);
+        du2.setVisible(false);
+        du3.setVisible(false);
+        du4.setVisible(false);
+        du5.setVisible(false);
+        du6.setVisible(false);
+        
+        du12.setVisible(false);
+        du22.setVisible(false);
+        du32.setVisible(false);
+        du42.setVisible(false);
+        du52.setVisible(false);
+        du62.setVisible(false);
+        
+    }
+    
     public void rollDiceGo(){
         
         finalDice.clear();
@@ -2213,98 +2315,7 @@ public class BangFX extends Application {
         
         for(int i=0; i<5; i++) {
             checkBoxes.get(i).setDisable(false);
-            if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
-                if(dice.get(i).dice == 0){
-                    if(dice.get(i).equals(RD1)){
-                        d2.setLayoutX(300);
-                        d2.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die1.setDisable(false);
-                        else
-                            die1.setDisable(current.computer);
-                    }
-                    if(dice.get(i).equals(RD2)){
-                        d22.setLayoutX(385);
-                        d22.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die2.setDisable(false);
-                        else
-                            die2.setDisable(current.computer);
-                    }
-                    if(dice.get(i).equals(RD3)){
-                        d23.setLayoutX(470);
-                        d23.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die3.setDisable(false);
-                        else
-                            die3.setDisable(current.computer);
-                    }
-                    if(dice.get(i).equals(RD4)){
-                        d24.setLayoutX(555);
-                        d24.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die4.setDisable(false);
-                        else
-                            die4.setDisable(current.computer);
-                    }
-                    if(dice.get(i).equals(RD5)){
-                        d25.setLayoutX(640);
-                        d25.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die5.setDisable(false);
-                        else
-                            die5.setDisable(current.computer);
-                    }
-                }
-                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
-                    if(dice.get(i).equals(RD2)){
-                        dl3.setLayoutX(385);
-                        dl3.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die2.setDisable(false);
-                        else
-                            die2.setDisable(current.computer);
-                    }
-                }
-                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
-                    if(dice.get(i).equals(RD2)){
-                        dc3.setLayoutX(385);
-                        dc3.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die2.setDisable(false);
-                        else
-                            die2.setDisable(current.computer);
-                    }
-                }
-                else if(dice.get(i).dice == 2){
-                    if(dice.get(i).equals(RD4)){
-                        du2.setLayoutX(555);
-                        du2.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die4.setDisable(false);
-                        else
-                            die4.setDisable(current.computer);
-                    }
-                    if(dice.get(i).equals(RD5)){
-                        du22.setLayoutX(640);
-                        du22.setVisible(true);
-                        dynamiteAction();
-                        if(current.name == "Black Jack")
-                            die5.setDisable(false);
-                        else
-                            die5.setDisable(current.computer);
-                    }
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
+            if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
                         d1.setLayoutX(300);
@@ -2378,37 +2389,88 @@ public class BangFX extends Application {
                     }
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+            else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
+                if(dice.get(i).dice == 1) {
+                    dc2.setLayoutX(385);
+                    dc2.setVisible(true);
+                    die2.setSelected(true);
+                    die2.setDisable(true);
+                    barrowAction();
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
+                if(dice.get(i).dice == 1) {
+                    dl2.setLayoutX(385);
+                    dl2.setVisible(true);
+                    die2.setSelected(true);
+                    die2.setDisable(true);
+                    bulletAction();
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
-                        d6.setLayoutX(300);
-                        d6.setVisible(true);
+                        d2.setLayoutX(300);
+                        d2.setVisible(true);
+                        dynamiteAction(i);
                     }
                     if(dice.get(i).equals(RD2)){
-                        d62.setLayoutX(385);
-                        d62.setVisible(true);
+                        d22.setLayoutX(385);
+                        d22.setVisible(true);
+                        dynamiteAction(i);
                     }
                     if(dice.get(i).equals(RD3)){
-                        d63.setLayoutX(470);
-                        d63.setVisible(true);
+                        d23.setLayoutX(470);
+                        d23.setVisible(true);
+                        dynamiteAction(i);
                     }
                     if(dice.get(i).equals(RD4)){
-                        d64.setLayoutX(555);
-                        d64.setVisible(true);
+                        d24.setLayoutX(555);
+                        d24.setVisible(true);
+                        dynamiteAction(i);
                     }
                     if(dice.get(i).equals(RD5)){
-                        d65.setLayoutX(640);
-                        d65.setVisible(true);
+                        d25.setLayoutX(640);
+                        d25.setVisible(true);
+                        dynamiteAction(i);
+                    }
+                }
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                    if(dice.get(i).equals(RD2)){
+                        dl3.setLayoutX(385);
+                        dl3.setVisible(true);
+                        dynamiteAction(i);
+                    }
+                }
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                    if(dice.get(i).equals(RD2)){
+                        dc3.setLayoutX(385);
+                        dc3.setVisible(true);
+                        dynamiteAction(i);
                     }
                 }
                 else if(dice.get(i).dice == 2){
                     if(dice.get(i).equals(RD4)){
-                        du4.setLayoutX(555);
-                        du4.setVisible(true);
+                        du2.setLayoutX(555);
+                        du2.setVisible(true);
+                        dynamiteAction(i);
                     }
                     if(dice.get(i).equals(RD5)){
-                        du42.setLayoutX(640);
-                        du42.setVisible(true);
+                        du22.setLayoutX(640);
+                        du22.setVisible(true);
+                        dynamiteAction(i);
+                    }
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
+                if(dice.get(i).dice == 2){
+                    if(dice.get(i).equals(RD4)){
+                        du3.setLayoutX(555);
+                        du3.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        du32.setLayoutX(640);
+                        du32.setVisible(true);
                     }
                 }
             }
@@ -2466,245 +2528,137 @@ public class BangFX extends Application {
                     }
                 }
             }
+            else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
+                if(dice.get(i).dice == 1) {
+                    dl4.setLayoutX(385);
+                    dl4.setVisible(true);
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
+                if(dice.get(i).dice == 1) {
+                    dl5.setLayoutX(385);
+                    dl5.setVisible(true);
+                }
+            }
             else if(dice.get(i).sides[dice.get(i).side] == "Beer") {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
                         d5.setLayoutX(300);
                         d5.setVisible(true);
-                        die1.setSelected(true);
-                        die1.setDisable(true);
-                        current.selfBeer();
-                        action.setText(action.getText()+current.name+" drank a beer.");
                     }
                     if(dice.get(i).equals(RD2)){
                         d52.setLayoutX(385);
                         d52.setVisible(true);
-                        die2.setSelected(true);
-                        die2.setDisable(true);
-                        current.selfBeer();
-                        action.setText(action.getText()+current.name+" drank a beer.");
                     }
                     if(dice.get(i).equals(RD3)){
                         d53.setLayoutX(470);
                         d53.setVisible(true);
-                        die3.setSelected(true);
-                        die3.setDisable(true);
-                        current.selfBeer();
-                        action.setText(action.getText()+current.name+" drank a beer.");
                     }
                     if(dice.get(i).equals(RD4)){
                         d54.setLayoutX(555);
                         d54.setVisible(true);
-                        die4.setSelected(true);
-                        die4.setDisable(true);
-                        current.selfBeer();
-                        action.setText(action.getText()+current.name+" drank a beer.");
                     }
                     if(dice.get(i).equals(RD5)){
                         d55.setLayoutX(640);
                         d55.setVisible(true);
-                        die5.setSelected(true);
-                        die5.setDisable(true);
-                        current.selfBeer();
-                        action.setText(action.getText()+current.name+" drank a beer.");
                     }
                 }
                 else {
                     if(dice.get(i).equals(RD2)){
                         dc5.setLayoutX(385);
                         dc5.setVisible(true);
-                        die2.setSelected(true);
-                        die2.setDisable(true);
-                        current.selfBeer();
-                        action.setText(action.getText()+current.name+" drank a beer.");
                     }
                 }
             }
-        else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
-            if(dice.get(i).dice == 1) {
-                dl2.setLayoutX(385);
-                dl2.setVisible(true);
-                die2.setSelected(true);
-                die2.setDisable(true);
-                action.setText(action.getText()+current.name+" took a bullet.");
-                bulletAction();
-            }
-        }
-        else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
-            if(dice.get(i).dice == 1) {
-                dl4.setLayoutX(385);
-                dl4.setVisible(true);
-            }
-        }
-        else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
-            if(dice.get(i).dice == 1) {
-                dl5.setLayoutX(385);
-                dl5.setVisible(true);
-            }
-        }
-        else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
-            if(dice.get(i).dice == 1) {
-                dl6.setLayoutX(385);
-                dl6.setVisible(true);
-            }
-        }
-        else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
-            if(dice.get(i).dice == 1) {
-                dc6.setLayoutX(385);
-                dc6.setVisible(true);
-                die2.setSelected(true);
-                die2.setDisable(true);s
-                current.selfBeer();
-                current.selfBeer();
-                action.setText(action.getText()+current.name+" drank 2 beers.");
-            }
-        }
-        else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
-            if(dice.get(i).dice == 1) {
-                dc2.setLayoutX(385);
-                dc2.setVisible(true);
-                die2.setSelected(true);
-                die2.setDisable(true);
-                barrowAction();
-            }
-        }
-        else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
-            if(dice.get(i).dice == 2){
-                if(dice.get(i).equals(RD4)){
-                    du3.setLayoutX(555);
-                    du3.setVisible(true);
-                    die4.setSelected(true);
-                    die4.setDisable(true);
-                    if(current.name.equals("Greg Digger"))
-                        current.heal(2);
-                    else
-                        current.heal(1);
-                    action.setText(action.getText()+current.name+" healed his/herself.");
+            else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
+                if(dice.get(i).dice == 1) {
+                    dc6.setLayoutX(385);
+                    dc6.setVisible(true);
                 }
-                if(dice.get(i).equals(RD5)){
-                    du32.setLayoutX(640);
-                    du32.setVisible(true);
-                    die4.setSelected(true);
-                    die4.setDisable(true);
-                    if(current.name.equals("Greg Digger"))
-                        current.heal(2);
-                    else
-                        current.heal(1);
-                    action.setText(action.getText()+current.name+" healed his/herself.");
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+                if(dice.get(i).dice == 0){
+                    if(dice.get(i).equals(RD1)){
+                        d6.setLayoutX(300);
+                        d6.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD2)){
+                        d62.setLayoutX(385);
+                        d62.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD3)){
+                        d63.setLayoutX(470);
+                        d63.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD4)){
+                        d64.setLayoutX(555);
+                        d64.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        d65.setLayoutX(640);
+                        d65.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).dice == 2){
+                    if(dice.get(i).equals(RD4)){
+                        du4.setLayoutX(555);
+                        du4.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        du42.setLayoutX(640);
+                        du42.setVisible(true);
+                    }
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
+                if(dice.get(i).dice == 1) {
+                    dl6.setLayoutX(385);
+                    dl6.setVisible(true);
+                }
+            }
+            else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
+                if(dice.get(i).dice == 2){
+                    if(dice.get(i).equals(RD4)){
+                        du5.setLayoutX(555);
+                        du5.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        du52.setLayoutX(640);
+                        du52.setVisible(true);
+                    }
+                }
+                if(dice.get(i).dice == 2){
+                    if(dice.get(i).equals(RD4)){
+                        du6.setLayoutX(555);
+                        du6.setVisible(true);
+                    }
+                    if(dice.get(i).equals(RD5)){
+                        du62.setLayoutX(640);
+                        du62.setVisible(true);
+                    }
                 }
             }
         }
-        else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
-            if(dice.get(i).dice == 2){
-                if(dice.get(i).equals(RD4)){
-                    du5.setLayoutX(555);
-                    du5.setVisible(true);
-                }
-                if(dice.get(i).equals(RD5)){
-                    du52.setLayoutX(640);
-                    du52.setVisible(true);
-                }
-            }
-            if(dice.get(i).dice == 2){
-                if(dice.get(i).equals(RD4)){
-                    du6.setLayoutX(555);
-                    du6.setVisible(true);
-                }
-                if(dice.get(i).equals(RD5)){
-                    du62.setLayoutX(640);
-                    du62.setVisible(true);
-                }
-            }
-        }
-    }
-    coward.setDisable(current.computer);
-    loudmouth.setDisable(current.computer);
-    coward.setSelected(false);
-    loudmouth.setSelected(false);
-    for (int i = 0; i < 5; i++) {                                     //For the size of all the check boxes for the dice selection
-        checkBoxes.get(i).setFont(Font.font("Copperplate", 10));                            //Set all to not selected
-        checkBoxes.get(i).setLayoutX((i * 85) + 300);                    //Layout X
-        checkBoxes.get(i).setLayoutY(275);                                //Layout Y
-        checkBoxes.get(i).setDisable(current.computer);         //Only enabled if current player is not a computer
+        coward.setDisable(current.computer);
+        loudmouth.setDisable(current.computer);
+        coward.setSelected(false);
+        loudmouth.setSelected(false);
+        for (int i = 0; i < 5; i++) {                                    
+            checkBoxes.get(i).setFont(Font.font("Copperplate", 10)); 
+            checkBoxes.get(i).setLayoutX((i * 85) + 300);   
+            checkBoxes.get(i).setLayoutY(275);           
+            checkBoxes.get(i).setDisable(current.computer);    
 
-    } 
-    rollDice.setOnAction(e-> {
-        if(arrCount != 0){
-            arrowAction(arrCount);
-            arrCount = 0;
-        }
-        rollCount++;
-        reroll();
-    });
-        
+        } 
+        rollDice.setOnAction(e-> {
+            if(arrCount != 0){
+                arrowAction(arrCount);
+                arrCount = 0;
+            }
+            rollCount++;
+            reroll();
+        });
     
-    }
-    
-    public void resetDieFace(){
-        
-        d1.setVisible(false);
-        d2.setVisible(false);
-        d3.setVisible(false);
-        d4.setVisible(false);
-        d5.setVisible(false);
-        d6.setVisible(false);
-        
-        d12.setVisible(false);
-        d22.setVisible(false);
-        d32.setVisible(false);
-        d42.setVisible(false);
-        d52.setVisible(false);
-        d62.setVisible(false);
-        
-        d13.setVisible(false);
-        d23.setVisible(false);
-        d33.setVisible(false);
-        d43.setVisible(false);
-        d53.setVisible(false);
-        d63.setVisible(false);
-        
-        d14.setVisible(false);
-        d24.setVisible(false);
-        d34.setVisible(false);
-        d44.setVisible(false);
-        d54.setVisible(false);
-        d64.setVisible(false);
-        
-        d15.setVisible(false);
-        d25.setVisible(false);
-        d35.setVisible(false);
-        d45.setVisible(false);
-        d55.setVisible(false);
-        d65.setVisible(false);
-        
-        dl1.setVisible(false);
-        dl2.setVisible(false);
-        dl3.setVisible(false);
-        dl4.setVisible(false);
-        dl5.setVisible(false);
-        dl6.setVisible(false);
-        
-        dc1.setVisible(false);
-        dc2.setVisible(false);
-        dc3.setVisible(false);
-        dc4.setVisible(false);
-        dc5.setVisible(false);
-        dc6.setVisible(false);
-        
-        du1.setVisible(false);
-        du2.setVisible(false);
-        du3.setVisible(false);
-        du4.setVisible(false);
-        du5.setVisible(false);
-        du6.setVisible(false);
-        
-        du12.setVisible(false);
-        du22.setVisible(false);
-        du32.setVisible(false);
-        du42.setVisible(false);
-        du52.setVisible(false);
-        du62.setVisible(false);
-        
     }
     
     public void reroll(){  
@@ -2766,98 +2720,7 @@ public class BangFX extends Application {
 
             } 
             for(int i=0; i<5; i++) {
-                if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
-                    if(dice.get(i).dice == 0){
-                        if(dice.get(i).equals(RD1)){
-                            d2.setLayoutX(300);
-                            d2.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die1.setDisable(false);
-                            else
-                                die1.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD2)){
-                            d22.setLayoutX(385);
-                            d22.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die2.setDisable(false);
-                            else
-                                die2.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD3)){
-                            d23.setLayoutX(470);
-                            d23.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die3.setDisable(false);
-                            else
-                                die3.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD4)){
-                            d24.setLayoutX(555);
-                            d24.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die4.setDisable(false);
-                            else
-                                die4.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD5)){
-                            d25.setLayoutX(640);
-                            d25.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die5.setDisable(false);
-                            else
-                                die5.setDisable(current.computer);
-                        }
-                    }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
-                        if(dice.get(i).equals(RD2)){
-                            dl3.setLayoutX(385);
-                            dl3.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die2.setDisable(false);
-                            else
-                                die2.setDisable(current.computer);
-                        }
-                    }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
-                        if(dice.get(i).equals(RD2)){
-                            dc3.setLayoutX(385);
-                            dc3.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die2.setDisable(false);
-                            else
-                                die2.setDisable(current.computer);
-                        }
-                    }
-                    else if(dice.get(i).dice == 2){
-                        if(dice.get(i).equals(RD4)){
-                            du2.setLayoutX(555);
-                            du2.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die4.setDisable(false);
-                            else
-                                die4.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD5)){
-                            du22.setLayoutX(640);
-                            du22.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die5.setDisable(false);
-                            else
-                                die5.setDisable(current.computer);
-                        }
-                    }
-                }
-                else if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
+                if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d1.setLayoutX(300);
@@ -2931,37 +2794,88 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+                else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
+                    if(dice.get(i).dice == 1) {
+                        dc2.setLayoutX(385);
+                        dc2.setVisible(true);
+                        die2.setSelected(true);
+                        die2.setDisable(true);
+                        barrowAction();
+                    }
+                }
+                else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
+                    if(dice.get(i).dice == 1) {
+                        dl2.setLayoutX(385);
+                        dl2.setVisible(true);
+                        die2.setSelected(true);
+                        die2.setDisable(true);
+                        bulletAction();
+                    }
+                }
+                else if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
-                            d6.setLayoutX(300);
-                            d6.setVisible(true);
+                            d2.setLayoutX(300);
+                            d2.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD2)){
-                            d62.setLayoutX(385);
-                            d62.setVisible(true);
+                            d22.setLayoutX(385);
+                            d22.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD3)){
-                            d63.setLayoutX(470);
-                            d63.setVisible(true);
+                            d23.setLayoutX(470);
+                            d23.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD4)){
-                            d64.setLayoutX(555);
-                            d64.setVisible(true);
+                            d24.setLayoutX(555);
+                            d24.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD5)){
-                            d65.setLayoutX(640);
-                            d65.setVisible(true);
+                            d25.setLayoutX(640);
+                            d25.setVisible(true);
+                            dynamiteAction(i);
+                        }
+                    }
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                        if(dice.get(i).equals(RD2)){
+                            dc3.setLayoutX(385);
+                            dc3.setVisible(true);
+                            dynamiteAction(i);
+                        }
+                    }
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                        if(dice.get(i).equals(RD2)){
+                            dl3.setLayoutX(385);
+                            dl3.setVisible(true);
+                            dynamiteAction(i);
                         }
                     }
                     else if(dice.get(i).dice == 2){
                         if(dice.get(i).equals(RD4)){
-                            du4.setLayoutX(555);
-                            du4.setVisible(true);
+                            du2.setLayoutX(555);
+                            du2.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD5)){
-                            du42.setLayoutX(640);
-                            du42.setVisible(true);
+                            du22.setLayoutX(640);
+                            du22.setVisible(true);
+                            dynamiteAction(i);
+                        }
+                    }
+                }
+                else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
+                    if(dice.get(i).dice == 2){
+                        if(dice.get(i).equals(RD4)){
+                            du3.setLayoutX(555);
+                            du3.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD5)){
+                            du32.setLayoutX(640);
+                            du32.setVisible(true);
                         }
                     }
                 }
@@ -3019,181 +2933,127 @@ public class BangFX extends Application {
                         }
                     }
                 }
+                else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
+                    if(dice.get(i).dice == 1) {
+                        dl4.setLayoutX(385);
+                        dl4.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
+                    if(dice.get(i).dice == 1) {
+                        dl5.setLayoutX(385);
+                        dl5.setVisible(true);
+                    }
+                }
                 else if(dice.get(i).sides[dice.get(i).side] == "Beer") {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d5.setLayoutX(300);
                             d5.setVisible(true);
-                            die1.setSelected(true);
-                            die1.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                         if(dice.get(i).equals(RD2)){
                             d52.setLayoutX(385);
                             d52.setVisible(true);
-                            die2.setSelected(true);
-                            die2.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                         if(dice.get(i).equals(RD3)){
                             d53.setLayoutX(470);
                             d53.setVisible(true);
-                            die3.setSelected(true);
-                            die3.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                         if(dice.get(i).equals(RD4)){
                             d54.setLayoutX(555);
                             d54.setVisible(true);
-                            die4.setSelected(true);
-                            die4.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                         if(dice.get(i).equals(RD5)){
                             d55.setLayoutX(640);
                             d55.setVisible(true);
-                            die5.setSelected(true);
-                            die5.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                     }
                     else {
                         if(dice.get(i).equals(RD2)){
                             dc5.setLayoutX(385);
                             dc5.setVisible(true);
-                            die2.setSelected(true);
-                            die2.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                     }
                 }
-            else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
-                if(dice.get(i).dice == 1) {
-                    dl2.setLayoutX(385);
-                    dl2.setVisible(true);
-                    die2.setSelected(true);
-                    die2.setDisable(true);
-                    action.setText(action.getText()+current.name+" took a bullet.");
-                    bulletAction();
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
-                if(dice.get(i).dice == 1) {
-                    dl4.setLayoutX(385);
-                    dl4.setVisible(true);
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
-                if(dice.get(i).dice == 1) {
-                    dl5.setLayoutX(385);
-                    dl5.setVisible(true);
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
-                if(dice.get(i).dice == 1) {
-                    dl6.setLayoutX(385);
-                    dl6.setVisible(true);
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
-                if(dice.get(i).dice == 1) {
-                    dc6.setLayoutX(385);
-                    dc6.setVisible(true);
-                    die2.setSelected(true);
-                    die2.setDisable(true);
-                    current.selfBeer();
-                    current.selfBeer();
-                    action.setText(action.getText()+current.name+" drank 2 beers.");
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
-                if(dice.get(i).dice == 1) {
-                    dc2.setLayoutX(385);
-                    dc2.setVisible(true);
-                    die2.setSelected(true);
-                    die2.setDisable(true);
-                    barrowAction();
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
-                if(dice.get(i).dice == 2){
-                    if(dice.get(i).equals(RD4)){
-                        du3.setLayoutX(555);
-                        du3.setVisible(true);
-                        die4.setSelected(true);
-                        die4.setDisable(true);
-                        if(current.name.equals("Greg Digger"))
-                            current.heal(2);
-                        else
-                            current.heal(1);
-                        action.setText(action.getText()+current.name+" healed his/herself.");
-                    }
-                    if(dice.get(i).equals(RD5)){
-                        du32.setLayoutX(640);
-                        du32.setVisible(true);
-                        die5.setSelected(true);
-                        die5.setDisable(true);
-                        if(current.name.equals("Greg Digger"))
-                            current.heal(2);
-                        else
-                            current.heal(1);
-                        action.setText(action.getText()+current.name+" healed his/herself.");
+                else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
+                    if(dice.get(i).dice == 1) {
+                        dc6.setLayoutX(385);
+                        dc6.setVisible(true);
                     }
                 }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
-                if(dice.get(i).dice == 2){
-                    if(dice.get(i).equals(RD4)){
-                        du5.setLayoutX(555);
-                        du5.setVisible(true);
+                else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+                    if(dice.get(i).dice == 0){
+                        if(dice.get(i).equals(RD1)){
+                            d6.setLayoutX(300);
+                            d6.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD2)){
+                            d62.setLayoutX(385);
+                            d62.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD3)){
+                            d63.setLayoutX(470);
+                            d63.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD4)){
+                            d64.setLayoutX(555);
+                            d64.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD5)){
+                            d65.setLayoutX(640);
+                            d65.setVisible(true);
+                        }
                     }
-                    if(dice.get(i).equals(RD5)){
-                        du52.setLayoutX(640);
-                        du52.setVisible(true);
+                    else if(dice.get(i).dice == 2){
+                        if(dice.get(i).equals(RD4)){
+                            du4.setLayoutX(555);
+                            du4.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD5)){
+                            du42.setLayoutX(640);
+                            du42.setVisible(true);
+                        }
                     }
                 }
-                if(dice.get(i).dice == 2){
-                    if(dice.get(i).equals(RD4)){
-                        du6.setLayoutX(555);
-                        du6.setVisible(true);
-                    }
-                    if(dice.get(i).equals(RD5)){
-                        du62.setLayoutX(640);
-                        du62.setVisible(true);
+                else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
+                    if(dice.get(i).dice == 1) {
+                        dl6.setLayoutX(385);
+                        dl6.setVisible(true);
                     }
                 }
-            }
-        }rollCount++;
-    }
-    if(rollCount != 4)
-        rollDice.setOnAction(e->{
-            reroll2();
-        });
-
-    }
-    public void dynamiteAction(){
-        if(dynamiteCount > 3){
-            current.damage(1);
-            rollCount = 0;
-            play_order.add(play_order.get(0));
-            play_order.remove(0);
-            dynamiteCount = 0;
-            rollDiceGo();
-            
-            action.setText(action.getText()+"Previous turn ended due to "
-                    + "dynamite explosion.\n");
+                else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
+                    if(dice.get(i).dice == 2){
+                        if(dice.get(i).equals(RD4)){
+                            du5.setLayoutX(555);
+                            du5.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD5)){
+                            du52.setLayoutX(640);
+                            du52.setVisible(true);
+                        }
+                    }
+                    if(dice.get(i).dice == 2){
+                        if(dice.get(i).equals(RD4)){
+                            du6.setLayoutX(555);
+                            du6.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD5)){
+                            du62.setLayoutX(640);
+                            du62.setVisible(true);
+                        }
+                    }
+                }
+            }rollCount++;
         }
-        dynamiteCount++;
+        if(rollCount != 4)
+            rollDice.setOnAction(e->{
+                reroll2();
+            });
+
     }
     
     public void reroll2(){
-                action.setText("");
+        
         if(rollCount != 4) {
             
             finalDice.clear();
@@ -3253,98 +3113,7 @@ public class BangFX extends Application {
 
             } 
             for(int i=0; i<5; i++) {
-                if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
-                    if(dice.get(i).dice == 0){
-                        if(dice.get(i).equals(RD1)){
-                            d2.setLayoutX(300);
-                            d2.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die1.setDisable(false);
-                            else
-                                die1.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD2)){
-                            d22.setLayoutX(385);
-                            d22.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die2.setDisable(false);
-                            else
-                                die2.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD3)){
-                            d23.setLayoutX(470);
-                            d23.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die3.setDisable(false);
-                            else
-                                die3.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD4)){
-                            d24.setLayoutX(555);
-                            d24.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die4.setDisable(false);
-                            else
-                                die4.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD5)){
-                            d25.setLayoutX(640);
-                            d25.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die5.setDisable(false);
-                            else
-                                die5.setDisable(current.computer);
-                        }
-                    }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
-                        if(dice.get(i).equals(RD2)){
-                            dl3.setLayoutX(385);
-                            dl3.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die2.setDisable(false);
-                            else
-                                die2.setDisable(current.computer);
-                        }
-                    }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
-                        if(dice.get(i).equals(RD2)){
-                            dc3.setLayoutX(385);
-                            dc3.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die2.setDisable(false);
-                            else
-                                die2.setDisable(current.computer);
-                        }
-                    }
-                    else if(dice.get(i).dice == 2){
-                        if(dice.get(i).equals(RD4)){
-                            du2.setLayoutX(555);
-                            du2.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die4.setDisable(false);
-                            else
-                                die4.setDisable(current.computer);
-                        }
-                        if(dice.get(i).equals(RD5)){
-                            du22.setLayoutX(640);
-                            du22.setVisible(true);
-                            dynamiteAction();
-                            if(current.name == "Black Jack")
-                                die5.setDisable(false);
-                            else
-                                die5.setDisable(current.computer);
-                        }
-                    }
-                }
-                else if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
+                if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d1.setLayoutX(300);
@@ -3418,92 +3187,155 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+                else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
+                    if(dice.get(i).dice == 1) {
+                        dc2.setLayoutX(385);
+                        dc2.setVisible(true);
+                        die2.setSelected(true);
+                        die2.setDisable(true);
+                        barrowAction();
+                    }
+                }
+                else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
+                    if(dice.get(i).dice == 1) {
+                        dl2.setLayoutX(385);
+                        dl2.setVisible(true);
+                        die2.setSelected(true);
+                        die2.setDisable(true);
+                        bulletAction();
+                    }
+                }
+                else if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
-                            d6.setLayoutX(300);
-                            d6.setVisible(true);
+                            d2.setLayoutX(300);
+                            d2.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD2)){
-                            d62.setLayoutX(385);
-                            d62.setVisible(true);
+                            d22.setLayoutX(385);
+                            d22.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD3)){
-                            d63.setLayoutX(470);
-                            d63.setVisible(true);
+                            d23.setLayoutX(470);
+                            d23.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD4)){
-                            d64.setLayoutX(555);
-                            d64.setVisible(true);
+                            d24.setLayoutX(555);
+                            d24.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD5)){
-                            d65.setLayoutX(640);
-                            d65.setVisible(true);
+                            d25.setLayoutX(640);
+                            d25.setVisible(true);
+                            dynamiteAction(i);
+                        }
+                    }
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                        if(dice.get(i).equals(RD2)){
+                            dl3.setLayoutX(385);
+                            dl3.setVisible(true);
+                            dynamiteAction(i);
+                        }
+                    }
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                        if(dice.get(i).equals(RD2)){
+                            dc3.setLayoutX(385);
+                            dc3.setVisible(true);
+                            dynamiteAction(i);
                         }
                     }
                     else if(dice.get(i).dice == 2){
                         if(dice.get(i).equals(RD4)){
-                            du4.setLayoutX(555);
-                            du4.setVisible(true);
+                            du2.setLayoutX(555);
+                            du2.setVisible(true);
+                            dynamiteAction(i);
                         }
                         if(dice.get(i).equals(RD5)){
-                            du42.setLayoutX(640);
-                            du42.setVisible(true);
+                            du22.setLayoutX(640);
+                            du22.setVisible(true);
+                            dynamiteAction(i);
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1") {
-                    if(dice.get(i).dice == 0){
-                        if(dice.get(i).equals(RD1)){
-                            d3.setLayoutX(300);
-                            d3.setVisible(true);
-                        }
-                        if(dice.get(i).equals(RD2)){
-                            d32.setLayoutX(385);
-                            d32.setVisible(true);
-                        }
-                        if(dice.get(i).equals(RD3)){
-                            d33.setLayoutX(470);
-                            d33.setVisible(true);
-                        }
+                else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
+                    if(dice.get(i).dice == 2){
                         if(dice.get(i).equals(RD4)){
-                            d34.setLayoutX(555);
-                            d34.setVisible(true);
+                            du3.setLayoutX(555);
+                            du3.setVisible(true);
                         }
                         if(dice.get(i).equals(RD5)){
-                            d35.setLayoutX(640);
-                            d35.setVisible(true);
-                        }
-                    }
-                    else {
-                        if(dice.get(i).equals(RD2)){
-                            dc4.setLayoutX(385);
-                            dc4.setVisible(true);
+                            du32.setLayoutX(640);
+                            du32.setVisible(true);
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2") {
-                    if(dice.get(i).dice == 0){
-                        if(dice.get(i).equals(RD1)){
-                            d4.setLayoutX(300);
-                            d4.setVisible(true);
+                    else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1") {
+                        if(dice.get(i).dice == 0){
+                            if(dice.get(i).equals(RD1)){
+                                d3.setLayoutX(300);
+                                d3.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD2)){
+                                d32.setLayoutX(385);
+                                d32.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD3)){
+                                d33.setLayoutX(470);
+                                d33.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD4)){
+                                d34.setLayoutX(555);
+                                d34.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD5)){
+                                d35.setLayoutX(640);
+                                d35.setVisible(true);
+                            }
                         }
-                        if(dice.get(i).equals(RD2)){
-                            d42.setLayoutX(385);
-                            d42.setVisible(true);
+                        else {
+                            if(dice.get(i).equals(RD2)){
+                                dc4.setLayoutX(385);
+                                dc4.setVisible(true);
+                            }
                         }
-                        if(dice.get(i).equals(RD3)){
-                            d43.setLayoutX(470);
-                            d43.setVisible(true);
+                    }
+                    else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2") {
+                        if(dice.get(i).dice == 0){
+                            if(dice.get(i).equals(RD1)){
+                                d4.setLayoutX(300);
+                                d4.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD2)){
+                                d42.setLayoutX(385);
+                                d42.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD3)){
+                                d43.setLayoutX(470);
+                                d43.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD4)){
+                                d44.setLayoutX(555);
+                                d44.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD5)){
+                                d45.setLayoutX(640);
+                                d45.setVisible(true);
+                            }
                         }
-                        if(dice.get(i).equals(RD4)){
-                            d44.setLayoutX(555);
-                            d44.setVisible(true);
-                        }
-                        if(dice.get(i).equals(RD5)){
-                            d45.setLayoutX(640);
-                            d45.setVisible(true);
-                        }
+                    }
+                else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
+                    if(dice.get(i).dice == 1) {
+                        dl4.setLayoutX(385);
+                        dl4.setVisible(true);
+                    }
+                }
+                else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
+                    if(dice.get(i).dice == 1) {
+                        dl5.setLayoutX(385);
+                        dl5.setVisible(true);
                     }
                 }
                 else if(dice.get(i).sides[dice.get(i).side] == "Beer") {
@@ -3511,42 +3343,22 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD1)){
                             d5.setLayoutX(300);
                             d5.setVisible(true);
-                            die1.setSelected(true);
-                            die1.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                         if(dice.get(i).equals(RD2)){
                             d52.setLayoutX(385);
                             d52.setVisible(true);
-                            die2.setSelected(true);
-                            die2.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                         if(dice.get(i).equals(RD3)){
                             d53.setLayoutX(470);
                             d53.setVisible(true);
-                            die3.setSelected(true);
-                            die3.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                         if(dice.get(i).equals(RD4)){
                             d54.setLayoutX(555);
                             d54.setVisible(true);
-                            die4.setSelected(true);
-                            die4.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                         if(dice.get(i).equals(RD5)){
                             d55.setLayoutX(640);
                             d55.setVisible(true);
-                            die5.setSelected(true);
-                            die5.setDisable(true);
-                            current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                     }
                     else {
@@ -3556,108 +3368,79 @@ public class BangFX extends Application {
                             die2.setSelected(true);
                             die2.setDisable(true);
                             current.selfBeer();
-                            action.setText(action.getText()+current.name+" drank a beer.");
                         }
                     }
                 }
-            else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
-                if(dice.get(i).dice == 1) {
-                    dl2.setLayoutX(385);
-                    dl2.setVisible(true);
-                    die2.setSelected(true);
-                    die2.setDisable(true);
-                    action.setText(action.getText()+current.name+" took a bullet.");
-                    bulletAction();
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
-                if(dice.get(i).dice == 1) {
-                    dl4.setLayoutX(385);
-                    dl4.setVisible(true);
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
-                if(dice.get(i).dice == 1) {
-                    dl5.setLayoutX(385);
-                    dl5.setVisible(true);
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
-                if(dice.get(i).dice == 1) {
-                    dl6.setLayoutX(385);
-                    dl6.setVisible(true);
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
-                if(dice.get(i).dice == 1) {
-                    dc6.setLayoutX(385);
-                    dc6.setVisible(true);
-                    die2.setSelected(true);
-                    die2.setDisable(true);
-                    current.selfBeer();
-                    current.selfBeer();
-                    action.setText(action.getText()+current.name+" drank 2 beers.");
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
-                if(dice.get(i).dice == 1) {
-                    dc2.setLayoutX(385);
-                    dc2.setVisible(true);
-                    die2.setSelected(true);
-                    die2.setDisable(true);
-                    barrowAction();
-                }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
-                if(dice.get(i).dice == 2){
-                    if(dice.get(i).equals(RD4)){
-                        du3.setLayoutX(555);
-                        du3.setVisible(true);
-                        die4.setSelected(true);
-                        die4.setDisable(true);
-                        if(current.name.equals("Greg Digger"))
-                            current.heal(2);
-                        else
-                            current.heal(1);
-                        action.setText(action.getText()+current.name+" healed his/herself.");
-                    }
-                    if(dice.get(i).equals(RD5)){
-                        du32.setLayoutX(640);
-                        du32.setVisible(true);
-                        die5.setSelected(true);
-                        die5.setDisable(true);
-                        if(current.name.equals("Greg Digger"))
-                            current.heal(2);
-                        else
-                            current.heal(1);
-                        action.setText(action.getText()+current.name+" healed his/herself.");
+                else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
+                    if(dice.get(i).dice == 1) {
+                        dc6.setLayoutX(385);
+                        dc6.setVisible(true);
                     }
                 }
-            }
-            else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
-                if(dice.get(i).dice == 2){
-                    if(dice.get(i).equals(RD4)){
-                        du5.setLayoutX(555);
-                        du5.setVisible(true);
+                else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+                        if(dice.get(i).dice == 0){
+                            if(dice.get(i).equals(RD1)){
+                                d6.setLayoutX(300);
+                                d6.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD2)){
+                                d62.setLayoutX(385);
+                                d62.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD3)){
+                                d63.setLayoutX(470);
+                                d63.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD4)){
+                                d64.setLayoutX(555);
+                                d64.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD5)){
+                                d65.setLayoutX(640);
+                                d65.setVisible(true);
+                            }
+                        }
+                        else if(dice.get(i).dice == 2){
+                            if(dice.get(i).equals(RD4)){
+                                du4.setLayoutX(555);
+                                du4.setVisible(true);
+                            }
+                            if(dice.get(i).equals(RD5)){
+                                du42.setLayoutX(640);
+                                du42.setVisible(true);
+                            }
+                        }
                     }
-                    if(dice.get(i).equals(RD5)){
-                        du52.setLayoutX(640);
-                        du52.setVisible(true);
+                else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
+                    if(dice.get(i).dice == 1) {
+                        dl6.setLayoutX(385);
+                        dl6.setVisible(true);
                     }
                 }
-                if(dice.get(i).dice == 2){
-                    if(dice.get(i).equals(RD4)){
-                        du6.setLayoutX(555);
-                        du6.setVisible(true);
+                else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
+                    if(dice.get(i).dice == 2){
+                        if(dice.get(i).equals(RD4)){
+                            du5.setLayoutX(555);
+                            du5.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD5)){
+                            du52.setLayoutX(640);
+                            du52.setVisible(true);
+                        }
                     }
-                    if(dice.get(i).equals(RD5)){
-                        du62.setLayoutX(640);
-                        du62.setVisible(true);
+                    if(dice.get(i).dice == 2){
+                        if(dice.get(i).equals(RD4)){
+                            du6.setLayoutX(555);
+                            du6.setVisible(true);
+                        }
+                        if(dice.get(i).equals(RD5)){
+                            du62.setLayoutX(640);
+                            du62.setVisible(true);
+                        }
                     }
                 }
-            }
-        }rollCount++;
-    }
+            }rollCount++;
+        }
         for(int i=0; i<finalDice.size(); i++){
             System.out.println(finalDice.get(i));
             }
@@ -3670,10 +3453,31 @@ public class BangFX extends Application {
         rollDice.setOnAction(e-> {
             arrCount = 0;
             rollDiceGo();
-            });
+        });
     }
     
-    public void arrowAction(int arr){
+    public void dynamiteAction(int i){
+        dynamiteCount++;
+        if(current.name == "Black Jack"||current.name == "Belle Star")
+            checkBoxes.get(i).setDisable(false);
+        else 
+            checkBoxes.get(i).setDisable(true);
+        if(dynamiteCount > 3){
+            mite.seek(Duration.ZERO);
+            mite.play();
+            current.damage(1);
+            rollCount = 0;
+            play_order.add(play_order.get(0));
+            play_order.remove(0);
+            dynamiteCount = 0;
+            rollDiceGo();
+            
+            action.setText(action.getText()+"Previous turn ended due to "
+                    + "dynamite explosion.\n");
+        }
+    }
+    
+    public void arrowAction(int arr) {
         if(chiefArrow){
             if(current.computer){ 
                 chiefY.setVisible(true);
@@ -3688,11 +3492,24 @@ public class BangFX extends Application {
             rollDice.setDisable(true);
             }
         }
-        action.setText(action.getText()+current.name+" took "+arr+" arrow(s).");
+        action.setText(current.name+" took "+arr+" arrow(s).");
         current.arrows += arr;
         arrowCount -= arr;
         if(arrowCount <= 0){
-            action.setText(action.getText()+"\nIndians are attacking!");
+            indAtt.setDisable(false);
+            rollDice.setDisable(true);
+            attack.seek(Duration.ZERO);
+            attack.play();
+            attack.setOnEndOfMedia(()-> {
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                rollDice.setDisable(false);
+                indAtt.setDisable(true);
+                attack.stop();
+            });
             indianAttack();
         }
     }
@@ -3702,7 +3519,7 @@ public class BangFX extends Application {
             Random rand = new Random();
             int pick = (rand.nextInt(100000000)%cSel);
             if(play_order.get(pick).arrows > 0) {
-                action.setText(action.getText()+play_order.get(pick).name+" returned an arrow.");
+                action.setText(play_order.get(pick).name+" returned an arrow.");
                 play_order.get(pick).arrows -= 1;
                 arrowCount += 1;
             }
@@ -3710,7 +3527,7 @@ public class BangFX extends Application {
                 barrowAction();
         }else 
             current.arrows -= 1;
-            action.setText(action.getText()+current.name+" returned an arrow.");
+            action.setText(current.name+" returned an arrow.");
             arrowCount += 1;
     }
     
@@ -3718,8 +3535,21 @@ public class BangFX extends Application {
         current.damage(1);
     }
     
+    public void getDrunk(){
+        if(current.health < current.maxHealth)
+            current.selfBeer();
+        
+    }
+    
+    public void gatAttack(){
+        
+    }
+    
+    public void bullshit(){
+        
+    }
+    
     public static void indianAttack() {
-        System.out.println("The Indians have attacked!");
         int most = 0;
         int index = 0;
         boolean safe = false;

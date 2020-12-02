@@ -39,6 +39,7 @@ public class Player {
     CharCards c; //team assign
 
     public Player(String name, int health, String role, boolean comp) {
+        this.rolls = 3;
         this.name = name;
         this.displayName = name;
         this.health = health;
@@ -49,9 +50,6 @@ public class Player {
         this.t_bul = (health - this.s_bul) / 3;
         this.arrows = 0;
         this.shown = false;
-        if (this.name.equals("Black Jack")) {
-            this.dynamiteReroll = true;
-        }
         if (this.role.equals("Sheriff") || this.role.equals("Deputy")) {
             this.team = 0;
         } else if (this.role.equals("Outlaw")) {

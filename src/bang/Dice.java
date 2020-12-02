@@ -37,7 +37,7 @@ public class Dice {
     
     public String roll(){
         Random rand = new Random();  
-        this.side = (rand.nextInt(10000000)%6);
+        this.side = (rand.nextInt(1000000000)%6);
         return sides[side];
     }
 }

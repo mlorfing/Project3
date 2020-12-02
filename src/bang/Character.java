@@ -296,17 +296,3 @@ public class Character {
 
 // Note on terminology: Players are the group, the human running the program is the user and the AI are called computers
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
