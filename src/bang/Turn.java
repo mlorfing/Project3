@@ -130,10 +130,50 @@ public class Turn {
     out: who won. 
     */
     
-    public ArrayList<Player> winCheck(ArrayList<Player> l, int p){
+    public int winCheck(ArrayList<Player> l, int p){
+        int sheriffCheck=0;
+        int deputyCount=0;
+        int outlawCount=0;
+        int renegadeCount=0;
+        Player currPlayer;
         
+        for(int i=0; i<l.size(); i++){
+            currPlayer=l.get(i);
+            if (!currPlayer.isDead()){
+                switch(currPlayer.role){
+                    case("Sheriff"):
+                        sheriffCheck=1;
+                        break;
+                    case("Deputy"):
+                        deputyCount++;
+                        break;
+                    case("Outlaw"):
+                        outlawCount++;
+                        break;
+                    case("Renegade"):
+                        renegadeCount++;
+                        break;
+                }
+                    
+            }
+        }
+        if(sheriffCheck==0){
+            if (outlawCount==0&&deputyCount==0){
+                //renegade wins team 2
+                return 2;
+            }
+            else{
+                //outlaws win team 1
+                return 1;
+            }
+            
+        }
+        else if(outlawCount==0&&renegadeCount==0){
+            //Sheriff and Deputy win team 0
+            return 0;
+        }
         
-        return l;
+        return -1;
     }
     
     /*
@@ -238,7 +278,7 @@ public class Turn {
         else{
             //player choice
             System.out.println("chose player to heal");
-            for (int i=0; i>l.size(); i++){
+            for (int i=0; i<l.size(); i++){
                 if (l.get(i).isDead()){
                     System.out.print(i);
                     System.out.println(l.get(i).name);
@@ -246,7 +286,7 @@ public class Turn {
             }
             Scanner scan = new Scanner(System.in);
 	    choice = scan.nextInt();
-            for (int i=0; i>l.size(); i++){
+            for (int i=0; i<l.size(); i++){
                 if(choice==p) l.get(p).selfBeer();
                 else{
                     l.get(choice).health=l.get(choice).health+1;
