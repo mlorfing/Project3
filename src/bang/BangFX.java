@@ -1932,12 +1932,13 @@ public class BangFX extends Application {
         
         group3.getChildren().clear();
         group3.getChildren()
-                .addAll(background, musicToggle, rollDice, d1, d2, d3, d4, 
-                        d5, d6, d12, d22, d32, d42, d52, d62, d13, d23, d33, 
-                        d43, d53, d63, d14, d24, d34, d44, d54, d64, d15, 
-                        d25, d35, d45, d55, d65,  dc1, dc2, dc3, dc4, dc5,
-                        dc6, dl1, dl2, dl3, dl4, dl5, dl6, du1, du2, du3, 
-                        du4, du5, du6, du12, du22, du32, du42, du52, du62);
+                .addAll(background, musicToggle, character, rollDice, d1, 
+                        d2, d3, d4, d5, d6, d12, d22, d32, d42, d52, d62, 
+                        d13, d23, d33, d43, d53, d63, d14, d24, d34, d44, 
+                        d54, d64, d15, d25, d35, d45, d55, d65,  dc1, 
+                        dc2, dc3, dc4, dc5, dc6, dl1, dl2, dl3, dl4, dl5, 
+                        dl6, du1, du2, du3, du4, du5, du6, du12, du22, 
+                        du32, du42, du52, du62);
         if((undInc.isSelected())){
             group3.getChildren()
                     .addAll(bDie_img, bDie2_img);
@@ -2048,8 +2049,29 @@ public class BangFX extends Application {
     }
     
     public void rollDiceGo(){
+        group3.getChildren().remove(character);
+        //Start of play order
+        character.setText("Players: \n");
+
+        for (int j = 0; j < play_order.size(); j++) {
+            character.setText(character.getText()+ (j + 1) + ") " + play_order.get(j).name 
+                    + "\n"+"Health: "+play_order.get(j).health
+                    +".\n"+"Arrows: "+play_order.get(j).arrows);
+            if(play_order.get(j).chiefArrow == true)
+            {
+            character.setText(character.getText()
+                    +".\n"+"Player Has Chief Arrow"
+                    +".\n\n");
+            }
+            else
+            {
+                character.setText(character.getText()+".\n\n");
+            }
+        }
+        group3.getChildren().add(character);
         
-        reset();
+        resetDieFace();
+        
         for (int roll = 0; roll < 5; roll++)
                 dice.get(roll).roll();
         for (int rolls = 0; rolls < play_order.get(0).rolls - 1; rolls++) {
@@ -2061,7 +2083,6 @@ public class BangFX extends Application {
             System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
         }
         
-        reset();
         for(int i=0; i<5; i++) {
             if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
                 if(dice.get(i).dice == 0){
@@ -2346,7 +2367,7 @@ public class BangFX extends Application {
     }
     
     }
-    public void reset(){
+    public void resetDieFace(){
         
         d1.setVisible(false);
         d2.setVisible(false);
@@ -2413,7 +2434,13 @@ public class BangFX extends Application {
         
     }
     
+    public void dynamiteAction(){
+        
+    }
     
+    public void arrowAction(){
+        
+    }
     
     //end of file
 }
