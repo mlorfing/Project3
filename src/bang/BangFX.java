@@ -26,6 +26,7 @@ import javafx.util.Duration;
 /**
  *
  * @author ctaylor
+ * @author Seth
  */
 public class BangFX extends Application {
 
@@ -76,6 +77,7 @@ public class BangFX extends Application {
     Label indAtt = new Label();
     Label dynExp = new Label();
     Label drank = new Label();
+    Label belleQ = new Label();
     Group group1 = new Group();
     Group group2 = new Group();
     Group group3 = new Group();
@@ -106,6 +108,8 @@ public class BangFX extends Application {
     Button dEffects = new Button();
     Button chiefY = new Button();
     Button chiefN = new Button();
+    Button belleY = new Button();
+    Button belleN = new Button();
     RadioButton salInc = new RadioButton();
     RadioButton undInc = new RadioButton();
     RadioButton loudmouth = new RadioButton();
@@ -118,7 +122,7 @@ public class BangFX extends Application {
     
     
     ToggleButton musicToggle = new ToggleButton();
-    Boolean isSelected, cDSelect, lDSelect, sher, reroll;
+    Boolean isSelected, cDSelect, lDSelect, sher, reroll, belleSpec;
     ComboBox players = new ComboBox();
     int cSel, pageNum=0, dynamiteCount = 0, rollCount = 0, arrCount = 0,
             gatCount = 0, BE1, BE2;
@@ -1843,7 +1847,6 @@ public class BangFX extends Application {
         }
         character.setText(character.getText()+"\n");
         
-        
         left1 = play_order.get(1);
         right1 = play_order.get(play_order.size() - 1);
         try {
@@ -2084,7 +2087,7 @@ public class BangFX extends Application {
                         dc2, dc3, dc4, dc5, dc6, dl1, dl2, dl3, dl4, dl5, 
                         dl6, du1, du2, du3, du4, du5, du6, du12, du22, 
                         du32, du42, du52, du62, die1, die2, die3, die4, die5,
-                        action, indAtt, dynExp);
+                        action, indAtt, dynExp, drank, belleQ, belleY, belleN);
         if((undInc.isSelected())){
             group3.getChildren()
                     .addAll(bDie_img, bDie2_img);
@@ -2293,10 +2296,11 @@ public class BangFX extends Application {
         BE1 = 0;
         BE2 = 0;
         dynamiteCount = 0;
+        gatCount = 0;
         finalDice.clear();
         action.setText("");
         rollCount = 0;
-        //curent(player object) for easier referencing 
+        //current(player object) for easier referencing 
         current = play_order.get(0);
         
         group3.getChildren().remove(character);
@@ -3494,14 +3498,11 @@ public class BangFX extends Application {
                 }
             }rollCount++;
         }
+        int lifejuice = 0;
         for(int i=0; i<finalDice.size(); i++){
             System.out.println(finalDice.get(i));
-            if(dice.get(i).sides[dice.get(i).side] == "Beer" ||
-                    dice.get(i).sides[dice.get(i).side] == "Whiskey" ||
-                    dice.get(i).sides[dice.get(i).side] == "Double Beer")
-                getDrunk(i);
-            if(dice.get(i).sides[dice.get(i).side] == "Dynamite")
-                dynamiteAction(i, dynamiteCount);
+            if(dice.get(i).sides[dice.get(i).side] == "Whiskey") 
+                getDrunk(1);
             if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1")
                 BE1++;
             if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2")
@@ -3510,16 +3511,52 @@ public class BangFX extends Application {
                 BE1 += 2;
             if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2")
                 BE2 += 2;
-            }
-        
-        System.out.println(BE1 + " "+ BE2);
-        beAction(BE1, BE2);
+            if(dice.get(i).sides[dice.get(i).side] == "Beer")
+                lifejuice++;
+            if(dice.get(i).sides[dice.get(i).side] == "Double Beer")
+                lifejuice += 2;
+            if(dice.get(i).sides[dice.get(i).side] == "Gatling")
+                gatCount++;
+            if(dice.get(i).sides[dice.get(i).side] == "Double Gatling")
+                gatCount += 2;
+        }
         if(arrCount != 0){
             arrowAction(arrCount);
             }
+        
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        } 
+        
+        if(current.name == "Suzy Lafayette" && BE1 == 0 && BE2 == 0)
+            current.heal(2);
+        beAction(BE1, BE2);
+        
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        } 
+        
+        for(int i=0; i<lifejuice; i++) {
+            getDrunk(2);
+        }
+        
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        } 
+        
+        gatAttack(gatCount);
+        
+        for(int i=0; i<checkBoxes.size(); i++){
+            checkBoxes.get(i).setDisable(true);
+        }
         play_order.add(play_order.get(0));
         play_order.remove(0);
-        dynamiteCount = 0;
         rollDice.setOnAction(e-> {
             rollS.seek(Duration.ZERO);
             rollS.play();
@@ -3531,13 +3568,13 @@ public class BangFX extends Application {
     
     public void dynamiteAction(int i, int count){
         dynExp.setText(current.name+"'s turn ended due to dynamite explosion.");
-        if(current.name == "Black Jack"||current.name == "Belle Star") {
+        if(current.name == "Black Jack") {
                 if(current.computer == false){
                     checkBoxes.get(i).setSelected(true);
                     checkBoxes.get(i).setDisable(false);
                 }
                 else {
-                    checkBoxes.get(i).setSelected(false);
+                    checkBoxes.get(i).setSelected(true);
                     checkBoxes.get(i).setDisable(true);
                 }
         }
@@ -3568,6 +3605,9 @@ public class BangFX extends Application {
                 
             });
         }
+        if(current.name == "Belle Star"){
+            
+        }
     }
     
     public void arrowAction(int arr) {
@@ -3594,7 +3634,7 @@ public class BangFX extends Application {
             attack.play();
             attack.setOnEndOfMedia(()-> {
                 try {
-                    TimeUnit.SECONDS.sleep(3);
+                    TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
@@ -3628,84 +3668,59 @@ public class BangFX extends Application {
         eye.play();
         current.damage(1);
     }
-    
     public void getDrunk(int i){
         clink.seek(Duration.ZERO);
         clink.play();
-        if(dice.get(i).sides[dice.get(i).side] == "Beer"){
+        if(i == 2){
             if(current.JJ && current.health < 5){
                 current.heal(2);
-                System.out.println(current.name+" healed.");
+                drank.setText(current.name+" healed.");
+                drank.setVisible(true);
             }
             else if(current.health < current.maxHealth){
                 current.selfBeer();
-                System.out.println(current.name+" healed.");
+                drank.setText(current.name+" healed.");
+                drank.setVisible(true);
             }
             else{
                 Random rand = new Random();
-                int pick = (rand.nextInt(100000000)%cSel);
+                int pick;
+                do{
+                    pick = (rand.nextInt(100000000)%cSel);
+                }while(play_order.get(pick).name == current.name)
+                
                 if(play_order.get(pick).arrows > 0) {
-                    System.out.println(current.name+" healed "
+                    drank.setText(current.name+" healed "
                             +play_order.get(pick).name+".");
+                    drank.setVisible(true);
                     play_order.get(pick).heal(1);
                 }
             }
             
         }
-        if(dice.get(i).sides[dice.get(i).side] == "Whiskey"){
+        else if(i == 1){
             if(current.name == "Greg Digger")
                 current.heal(2);
             else
                 current.heal(1);
-            
-        }
-        if(dice.get(i).sides[dice.get(i).side] == "Double Beer"){
-            if(current.JJ && current.health < 5){
-                current.heal(4);
-                System.out.println(current.name+" healed.");
-            }
-            else if(current.health < current.maxHealth-1)
-                current.heal(2);
-            else if(current.health < current.maxHealth){
-                current.heal(1);
-                Random rand = new Random();
-                int pick = (rand.nextInt(100000000)%cSel);
-                if(play_order.get(pick).arrows > 0) {
-                    System.out.println(current.name+" healed "
-                            +play_order.get(pick).name+".");
-                    play_order.get(pick).heal(1);
-                }
-            }
-            else {
-                Random rand = new Random();
-                int pick = (rand.nextInt(100000000)%cSel);
-                if(play_order.get(pick).arrows > 0) {
-                    System.out.println(current.name+" healed "
-                            +play_order.get(pick).name+".");
-                    play_order.get(pick).heal(1);
-                }
-                pick = (rand.nextInt(100000000)%cSel);
-                if(play_order.get(pick).arrows > 0) {
-                    System.out.println(current.name+" healed "
-                            +play_order.get(pick).name+".");
-                    play_order.get(pick).heal(1);
-                }
-            }
-            
         }
         
     }
     
     public void beAction(int be1, int be2){
-        
+        eye.seek(Duration.ZERO);
+        eye.play();
         while(be1 > 0){
             Random rand = new Random();
             int pick = (rand.nextInt(100)%2);
             if(pick == 0) {
                 play_order.get(1).damage(1);
+                System.out.println("shot "+play_order.get(1).name);
             }
             else{
                 play_order.get(play_order.size()-1).damage(1);
+                System.out.println("shot "
+                        +play_order.get(play_order.size()-1).name);
             }
             be1--;
         }
@@ -3714,18 +3729,30 @@ public class BangFX extends Application {
             int pick = (rand.nextInt(100)%2);
             if(pick == 0) {
                 play_order.get(2).damage(1);
+                System.out.println("shot "+play_order.get(2).name);
             }
             else{
                 play_order.get(play_order.size()-2).damage(1);
+                System.out.println("shot "
+                        +play_order.get(play_order.size()-2).name);
             }
             be2--;
         }
         
     }
-    
-    public void gatAttack(){
-        ling.seek(Duration.ZERO);
-        ling.play();
+
+    public void gatAttack(int gat){
+        if(gat > 2) {
+            ling.seek(Duration.ZERO);
+            ling.play();
+            for(int k=1; k < play_order.size(); k++) {
+                if(play_order.get(k).name == "Paul Regret")
+                    play_order.get(k).damage(0);
+                else 
+                    play_order.get(k).damage(1);
+            }
+        }
+        play_order.get(0).arrowReset();
     }
     
     public void dueling(){
@@ -3760,7 +3787,7 @@ public class BangFX extends Application {
                 play_order.get(j).arrowReset();
                 play_order.get(j).chiefArrow = false;
                 if (play_order.get(j).health <= 0) {
-                    //action.setText(play_order.get(j).name+ " has died.");
+                    action.setText(play_order.get(j).name+ " has died.");
                 }
             } else {
                 play_order.get(j).arrowReset();
