@@ -62,7 +62,7 @@ public class Player {
         if(name.equals("Pedro Ramirez"))
         	pedro = true;
         if(name.equals("Jourdonnais"))
-        	jourdonnais = true;
+        	this.jourdonnais = true;
         if(name.equals("Jesse Jones"))
         	JJ = true;
     }

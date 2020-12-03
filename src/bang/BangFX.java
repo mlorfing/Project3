@@ -2198,7 +2198,7 @@ public class BangFX extends Application {
                 dice.remove(RD2);
                 RD2 = new Dice(1, 0, "Indian Arrow", "Broken Arrow", "Dynamite",
                         "Bull's Eye 1", "Beer", "Double Beer");
-                dice.add(RD2)
+                dice.add(RD2);
                 coward.setText("Coward Die in use");
                 loudmouth.setText("Use Loudmouth Die");
                 loudmouth.setSelected(false);
@@ -2347,7 +2347,7 @@ public class BangFX extends Application {
         for(int i=0; i<5; i++) {
             checkBoxes.get(i).setSelected(false);
             checkBoxes.get(i).setDisable(false);
-            if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
+            if(dice.get(i).sides[dice.get(i).side].equals("Indian Arrow")) {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
                         d1.setLayoutX(300);
@@ -2386,7 +2386,7 @@ public class BangFX extends Application {
                         arrCount++;
                     }
                 }
-                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Bullet")){
                     if(dice.get(i).equals(RD2)){
                         dl1.setLayoutX(385);
                         dl1.setVisible(true);
@@ -2395,7 +2395,7 @@ public class BangFX extends Application {
                         arrCount++;
                     }
                 }
-                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Broken Arrow")){
                     if(dice.get(i).equals(RD2)){
                         dc1.setLayoutX(385);
                         dc1.setVisible(true);
@@ -2421,7 +2421,7 @@ public class BangFX extends Application {
                     }
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Broken Arrow")) {
                 if(dice.get(i).dice == 1) {
                     dc2.setLayoutX(385);
                     dc2.setVisible(true);
@@ -2430,7 +2430,7 @@ public class BangFX extends Application {
                     barrowAction();
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Bullet")) {
                 if(dice.get(i).dice == 1) {
                     dl2.setLayoutX(385);
                     dl2.setVisible(true);
@@ -2439,7 +2439,7 @@ public class BangFX extends Application {
                     bulletAction();
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
                         d2.setLayoutX(300);
@@ -2467,14 +2467,14 @@ public class BangFX extends Application {
                         dynamiteCount++;
                     }
                 }
-                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Bullet")){
                     if(dice.get(i).equals(RD2)){
                         dl3.setLayoutX(385);
                         dl3.setVisible(true);
                         dynamiteCount++;
                     }
                 }
-                else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Broken Arrow")){
                     if(dice.get(i).equals(RD2)){
                         dc3.setLayoutX(385);
                         dc3.setVisible(true);
@@ -2495,7 +2495,7 @@ public class BangFX extends Application {
                 }
                 dynamiteAction(i, dynamiteCount);
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) {
                 if(dice.get(i).dice == 2){
                     if(dice.get(i).equals(RD4)){
                         du3.setLayoutX(555);
@@ -2507,7 +2507,7 @@ public class BangFX extends Application {
                     }
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 1")) {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
                         d3.setLayoutX(300);
@@ -2537,7 +2537,7 @@ public class BangFX extends Application {
                     }
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 2")) {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
                         d4.setLayoutX(300);
@@ -2561,19 +2561,19 @@ public class BangFX extends Application {
                     }
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 1")) {
                 if(dice.get(i).dice == 1) {
                     dl4.setLayoutX(385);
                     dl4.setVisible(true);
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 2")) {
                 if(dice.get(i).dice == 1) {
                     dl5.setLayoutX(385);
                     dl5.setVisible(true);
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Beer") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Beer")) {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
                         d5.setLayoutX(300);
@@ -2603,13 +2603,13 @@ public class BangFX extends Application {
                     }
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Double Beer")) {
                 if(dice.get(i).dice == 1) {
                     dc6.setLayoutX(385);
                     dc6.setVisible(true);
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Gatling")) {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
                         d6.setLayoutX(300);
@@ -2643,13 +2643,13 @@ public class BangFX extends Application {
                     }
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
+            else if(dice.get(i).sides[dice.get(i).side].equals("Double Gatling")) {
                 if(dice.get(i).dice == 1) {
                     dl6.setLayoutX(385);
                     dl6.setVisible(true);
                 }
             }
-            else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
+            else if(dice.get(i).sides[dice.get(i).side].equals("Duel")){
                 if(dice.get(i).dice == 2){
                     if(dice.get(i).equals(RD4)){
                         du5.setLayoutX(555);
@@ -2765,7 +2765,7 @@ public class BangFX extends Application {
 
             } 
             for(int i=0; i<5; i++) {
-                if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
+                if(dice.get(i).sides[dice.get(i).side].equals("Indian Arrow")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d1.setLayoutX(300);
@@ -2804,7 +2804,7 @@ public class BangFX extends Application {
                             arrCount++;
                         }
                     }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Bullet")){
                         if(dice.get(i).equals(RD2)){
                             dl1.setLayoutX(385);
                             dl1.setVisible(true);
@@ -2813,7 +2813,7 @@ public class BangFX extends Application {
                             arrCount++;
                         }
                     }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Broken Arrow")){
                         if(dice.get(i).equals(RD2)){
                             dc1.setLayoutX(385);
                             dc1.setVisible(true);
@@ -2839,7 +2839,7 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Broken Arrow")) {
                     if(dice.get(i).dice == 1) {
                         dc2.setLayoutX(385);
                         dc2.setVisible(true);
@@ -2848,7 +2848,7 @@ public class BangFX extends Application {
                         barrowAction();
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Bullet")) {
                     if(dice.get(i).dice == 1) {
                         dl2.setLayoutX(385);
                         dl2.setVisible(true);
@@ -2857,7 +2857,7 @@ public class BangFX extends Application {
                         bulletAction();
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d2.setLayoutX(300);
@@ -2885,14 +2885,14 @@ public class BangFX extends Application {
                             dynamiteCount++;
                         }
                     }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Broken Arrow")){
                         if(dice.get(i).equals(RD2)){
                             dc3.setLayoutX(385);
                             dc3.setVisible(true);
                             dynamiteCount++;
                         }
                     }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Bullet")){
                         if(dice.get(i).equals(RD2)){
                             dl3.setLayoutX(385);
                             dl3.setVisible(true);
@@ -2913,7 +2913,7 @@ public class BangFX extends Application {
                     }
                     dynamiteAction(i, dynamiteCount);
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) {
                     if(dice.get(i).dice == 2){
                         if(dice.get(i).equals(RD4)){
                             du3.setLayoutX(555);
@@ -2925,7 +2925,7 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 1")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d3.setLayoutX(300);
@@ -2955,7 +2955,7 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 2")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d4.setLayoutX(300);
@@ -2979,19 +2979,19 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 1")) {
                     if(dice.get(i).dice == 1) {
                         dl4.setLayoutX(385);
                         dl4.setVisible(true);
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 2")) {
                     if(dice.get(i).dice == 1) {
                         dl5.setLayoutX(385);
                         dl5.setVisible(true);
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Beer") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Beer")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d5.setLayoutX(300);
@@ -3021,13 +3021,13 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Double Beer")) {
                     if(dice.get(i).dice == 1) {
                         dc6.setLayoutX(385);
                         dc6.setVisible(true);
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Gatling")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d6.setLayoutX(300);
@@ -3061,13 +3061,13 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Double Gatling")) {
                     if(dice.get(i).dice == 1) {
                         dl6.setLayoutX(385);
                         dl6.setVisible(true);
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
+                else if(dice.get(i).sides[dice.get(i).side].equals("Duel")){
                     if(dice.get(i).dice == 2){
                         if(dice.get(i).equals(RD4)){
                             du5.setLayoutX(555);
@@ -3144,9 +3144,11 @@ public class BangFX extends Application {
                 if(checkBoxes.get(roll).isSelected())
                     dice.get(roll).roll();
             }
+            
             for (int roll = 0; roll < 5; roll++) {
                 finalDice.add(dice.get(roll).keep());
             }
+            
             System.out.println("Roll " + (rollCount + 1) + " results:");
             System.out.println("Dice 1 : " + RD1.sides[RD1.side]);
             System.out.println("Dice 2 : " + RD2.sides[RD2.side]);
@@ -3172,7 +3174,7 @@ public class BangFX extends Application {
 
             } 
             for(int i=0; i<5; i++) {
-                if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
+                if(dice.get(i).sides[dice.get(i).side].equals("Indian Arrow")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d1.setLayoutX(300);
@@ -3211,7 +3213,7 @@ public class BangFX extends Application {
                             arrCount++;
                         }
                     }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Bullet")){
                         if(dice.get(i).equals(RD2)){
                             dl1.setLayoutX(385);
                             dl1.setVisible(true);
@@ -3220,7 +3222,7 @@ public class BangFX extends Application {
                             arrCount++;
                         }
                     }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Broken Arrow")){
                         if(dice.get(i).equals(RD2)){
                             dc1.setLayoutX(385);
                             dc1.setVisible(true);
@@ -3246,7 +3248,7 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Broken Arrow") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Broken Arrow")) {
                     if(dice.get(i).dice == 1) {
                         dc2.setLayoutX(385);
                         dc2.setVisible(true);
@@ -3255,7 +3257,7 @@ public class BangFX extends Application {
                         barrowAction();
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Bullet") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Bullet")) {
                     if(dice.get(i).dice == 1) {
                         dl2.setLayoutX(385);
                         dl2.setVisible(true);
@@ -3264,7 +3266,7 @@ public class BangFX extends Application {
                         bulletAction();
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Dynamite") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d2.setLayoutX(300);
@@ -3292,14 +3294,14 @@ public class BangFX extends Application {
                             dynamiteCount++;
                         }
                     }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Bullet"){
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Bullet")){
                         if(dice.get(i).equals(RD2)){
                             dl3.setLayoutX(385);
                             dl3.setVisible(true);
                             dynamiteCount++;
                         }
                     }
-                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1] == "Broken Arrow"){
+                    else if(dice.get(i).dice == 1 && dice.get(i).sides[1].equals("Broken Arrow")){
                         if(dice.get(i).equals(RD2)){
                             dc3.setLayoutX(385);
                             dc3.setVisible(true);
@@ -3320,7 +3322,7 @@ public class BangFX extends Application {
                     }
                     dynamiteAction(i, dynamiteCount);
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Whiskey") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) {
                     if(dice.get(i).dice == 2){
                         if(dice.get(i).equals(RD4)){
                             du3.setLayoutX(555);
@@ -3332,7 +3334,7 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 1")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d3.setLayoutX(300);
@@ -3362,7 +3364,7 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 2")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d4.setLayoutX(300);
@@ -3386,19 +3388,19 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 1")) {
                     if(dice.get(i).dice == 1) {
                         dl4.setLayoutX(385);
                         dl4.setVisible(true);
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 2")) {
                     if(dice.get(i).dice == 1) {
                         dl5.setLayoutX(385);
                         dl5.setVisible(true);
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Beer") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Beer")) {
                     if(dice.get(i).dice == 0){
                         if(dice.get(i).equals(RD1)){
                             d5.setLayoutX(300);
@@ -3428,13 +3430,13 @@ public class BangFX extends Application {
                         }
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Double Beer") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Double Beer")) {
                     if(dice.get(i).dice == 1) {
                         dc6.setLayoutX(385);
                         dc6.setVisible(true);
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Gatling") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Gatling")) {
                         if(dice.get(i).dice == 0){
                             if(dice.get(i).equals(RD1)){
                                 d6.setLayoutX(300);
@@ -3468,13 +3470,13 @@ public class BangFX extends Application {
                             }
                         }
                     }
-                else if(dice.get(i).sides[dice.get(i).side] == "Double Gatling") {
+                else if(dice.get(i).sides[dice.get(i).side].equals("Double Gatling")) {
                     if(dice.get(i).dice == 1) {
                         dl6.setLayoutX(385);
                         dl6.setVisible(true);
                     }
                 }
-                else if(dice.get(i).sides[dice.get(i).side] == "Duel"){
+                else if(dice.get(i).sides[dice.get(i).side].equals("Duel")){
                     if(dice.get(i).dice == 2){
                         if(dice.get(i).equals(RD4)){
                             du5.setLayoutX(555);
@@ -3499,26 +3501,32 @@ public class BangFX extends Application {
             }rollCount++;
         }
         int lifejuice = 0;
+        int duelCount = 0;
+        dynamiteCount = 0;
         for(int i=0; i<finalDice.size(); i++){
             System.out.println(finalDice.get(i));
-            if(dice.get(i).sides[dice.get(i).side] == "Whiskey") 
+            if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) 
                 getDrunk(1);
-            if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1")
+            if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) 
+                dynamiteCount++;
+            if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 1"))
                 BE1++;
-            if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2")
+            if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 2"))
                 BE2++;
-            if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1")
+            if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 1"))
                 BE1 += 2;
-            if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2")
+            if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 2"))
                 BE2 += 2;
-            if(dice.get(i).sides[dice.get(i).side] == "Beer")
+            if(dice.get(i).sides[dice.get(i).side].equals("Beer"))
                 lifejuice++;
-            if(dice.get(i).sides[dice.get(i).side] == "Double Beer")
+            if(dice.get(i).sides[dice.get(i).side].equals("Double Beer"))
                 lifejuice += 2;
-            if(dice.get(i).sides[dice.get(i).side] == "Gatling")
+            if(dice.get(i).sides[dice.get(i).side].equals("Gatling"))
                 gatCount++;
-            if(dice.get(i).sides[dice.get(i).side] == "Double Gatling")
+            if(dice.get(i).sides[dice.get(i).side].equals("Double Gatling"))
                 gatCount += 2;
+            if(dice.get(i).sides[dice.get(i).side].equals("Duel"))
+                duelCount++;
         }
         if(arrCount != 0){
             arrowAction(arrCount);
@@ -3530,27 +3538,51 @@ public class BangFX extends Application {
             Thread.currentThread().interrupt();
         } 
         
-        if(current.name == "Suzy Lafayette" && BE1 == 0 && BE2 == 0)
-            current.heal(2);
-        beAction(BE1, BE2);
-        
-        try {
-            TimeUnit.MILLISECONDS.sleep(500);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        } 
-        
-        for(int i=0; i<lifejuice; i++) {
-            getDrunk(2);
+        for(int i=0; i<finalDice.size(); i++){
+            if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) 
+                dynamiteAction(i, dynamiteCount);
         }
         
-        try {
-            TimeUnit.MILLISECONDS.sleep(500);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        } 
-        
-        gatAttack(gatCount);
+        if(dynamiteCount < 3) {
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            } 
+
+            if(current.name.equals("Suzy Lafayette") && BE1 == 0 && BE2 == 0)
+                current.heal(2);
+            beAction(BE1, BE2);
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            } 
+
+            for(int i=0; i<lifejuice; i++) {
+                getDrunk(2);
+            }
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            } 
+
+            gatAttack(gatCount);
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            } 
+
+            for(int i=0; i<duelCount; i++) {
+                dueling();
+            }
+        }
         
         for(int i=0; i<checkBoxes.size(); i++){
             checkBoxes.get(i).setDisable(true);
@@ -3560,6 +3592,7 @@ public class BangFX extends Application {
         rollDice.setOnAction(e-> {
             rollS.seek(Duration.ZERO);
             rollS.play();
+            dynamiteCount = 0;
             arrCount = 0;
             rollDiceGo();
         });
@@ -3568,7 +3601,7 @@ public class BangFX extends Application {
     
     public void dynamiteAction(int i, int count){
         dynExp.setText(current.name+"'s turn ended due to dynamite explosion.");
-        if(current.name == "Black Jack") {
+        if(current.name.equals("Black Jack")) {
                 if(current.computer == false){
                     checkBoxes.get(i).setSelected(true);
                     checkBoxes.get(i).setDisable(false);
@@ -3605,7 +3638,7 @@ public class BangFX extends Application {
                 
             });
         }
-        if(current.name == "Belle Star"){
+        if(current.name.equals("Belle Star")){
             
         }
     }
@@ -3659,8 +3692,8 @@ public class BangFX extends Application {
                 barrowAction();
         }else 
             current.arrows -= 1;
-            System.out.println(current.name+" returned an arrow.");
-            arrowCount += 1;
+        System.out.println(current.name+" returned an arrow.");
+        arrowCount += 1;
     }
     
     public void bulletAction(){
@@ -3668,38 +3701,36 @@ public class BangFX extends Application {
         eye.play();
         current.damage(1);
     }
+                
     public void getDrunk(int i){
         clink.seek(Duration.ZERO);
         clink.play();
         if(i == 2){
             if(current.JJ && current.health < 5){
                 current.heal(2);
-                drank.setText(current.name+" healed.");
-                drank.setVisible(true);
+                System.out.println(current.name+" healed.");
             }
             else if(current.health < current.maxHealth){
                 current.selfBeer();
-                drank.setText(current.name+" healed.");
-                drank.setVisible(true);
+                System.out.println(current.name+" healed.");
             }
             else{
                 Random rand = new Random();
                 int pick;
                 do{
                     pick = (rand.nextInt(100000000)%cSel);
-                }while(play_order.get(pick).name == current.name)
+                }while(play_order.get(pick).name.equals(current.name));
                 
                 if(play_order.get(pick).arrows > 0) {
-                    drank.setText(current.name+" healed "
+                    System.out.println(current.name+" healed "
                             +play_order.get(pick).name+".");
-                    drank.setVisible(true);
                     play_order.get(pick).heal(1);
                 }
             }
             
         }
         else if(i == 1){
-            if(current.name == "Greg Digger")
+            if(current.name.equals("Greg Digger"))
                 current.heal(2);
             else
                 current.heal(1);
@@ -3715,11 +3746,11 @@ public class BangFX extends Application {
             int pick = (rand.nextInt(100)%2);
             if(pick == 0) {
                 play_order.get(1).damage(1);
-                System.out.println("shot "+play_order.get(1).name);
+                System.out.println(current.name +" shot "+play_order.get(1).name);
             }
             else{
                 play_order.get(play_order.size()-1).damage(1);
-                System.out.println("shot "
+                System.out.println(current.name +" shot "
                         +play_order.get(play_order.size()-1).name);
             }
             be1--;
@@ -3729,11 +3760,11 @@ public class BangFX extends Application {
             int pick = (rand.nextInt(100)%2);
             if(pick == 0) {
                 play_order.get(2).damage(1);
-                System.out.println("shot "+play_order.get(2).name);
+                System.out.println(current.name +" shot "+play_order.get(2).name);
             }
             else{
                 play_order.get(play_order.size()-2).damage(1);
-                System.out.println("shot "
+                System.out.println(current.name +" shot "
                         +play_order.get(play_order.size()-2).name);
             }
             be2--;
@@ -3746,7 +3777,7 @@ public class BangFX extends Application {
             ling.seek(Duration.ZERO);
             ling.play();
             for(int k=1; k < play_order.size(); k++) {
-                if(play_order.get(k).name == "Paul Regret")
+                if(play_order.get(k).name.equals("Paul Regret"))
                     play_order.get(k).damage(0);
                 else 
                     play_order.get(k).damage(1);
@@ -3757,6 +3788,21 @@ public class BangFX extends Application {
     
     public void dueling(){
         
+        Random rand = new Random();
+        int pick, pick2;
+        do {
+            pick = (rand.nextInt(100000000)%cSel);
+        }while(play_order.get(pick).name.equals(current.name));
+        
+        pick2 = (rand.nextInt(100)%2);
+        if(pick2 == 0) {
+            play_order.get(pick).damage(1);
+            System.out.println(play_order.get(pick).name +" was shot in the duel\n");
+        }
+        if(pick2 == 1) {
+            current.damage(1);
+            System.out.println(current.name +" was shot in the duel\n");
+        }
     }
     
     public static void indianAttack() {
@@ -3775,7 +3821,7 @@ public class BangFX extends Application {
         }
         for (int j = 0; j < play_order.size(); j++) {
             if (play_order.get(j).chiefArrow == false || j != index) {
-                if (play_order.get(j).name.equals("Jourdonnais") && play_order.get(j).arrows > 0) {
+                if ((play_order.get(j).jourdonnais == true) && (play_order.get(j).arrows > 0)) {
                     play_order.get(j).arrows = 1;
                 }
                 play_order.get(j).damage(play_order.get(j).arrows);
@@ -3787,7 +3833,7 @@ public class BangFX extends Application {
                 play_order.get(j).arrowReset();
                 play_order.get(j).chiefArrow = false;
                 if (play_order.get(j).health <= 0) {
-                    action.setText(play_order.get(j).name+ " has died.");
+                    //action.setText(play_order.get(j).name+ " has died.");
                 }
             } else {
                 play_order.get(j).arrowReset();
