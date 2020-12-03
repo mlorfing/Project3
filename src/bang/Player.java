@@ -35,6 +35,7 @@ public class Player {
     public boolean pedro = false; // special ability for pedro
     public boolean jourdonnais = false; // special ability for jourdonnais
     public boolean JJ = false; // special ability for jesse jones
+    public boolean dynToGat= false; // special ability for Belle Star
 
     CharCards c; //team assign
 
@@ -65,6 +66,10 @@ public class Player {
         	this.jourdonnais = true;
         if(name.equals("Jesse Jones"))
         	JJ = true;
+        if(name.equals("Jose Delgado") || name.equals("Tequila Joe"))
+        	numDice = 6;
+        if(name.equals("Belle Star"))
+                dynToGat=true;
     }
 
     public CharCards getCharacter() { //calling characters class from bang.java
@@ -163,5 +168,16 @@ public class Player {
  		else
  			health += healthAdded;
  	}
+    //disables abilities if used
+    public void usedAbility(){
+            if(name.equals("Belle Star"))
+            dynToGat=false;
+    }
+
+    //resets player ability
+    public void resetAbility(){
+            if(name.equals("Belle Star"))
+            dynToGat=true;
+    }
 }
 

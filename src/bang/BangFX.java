@@ -2377,6 +2377,8 @@ public class BangFX extends Application {
         rollCount = 0;
         //current(player object) for easier referencing 
         current = play_order.get(0);
+        current.resetAbility();
+      
         coward.setDisable(current.computer);
         loudmouth.setDisable(current.computer);
         coward.setSelected(false);
@@ -2787,6 +2789,7 @@ public class BangFX extends Application {
     public void reroll(){  
         dynamiteCount = 0;
         action.setText("");
+        current.resetAbility();
         if(rollCount != 4) {
             
             finalDice.clear();
@@ -3189,6 +3192,7 @@ public class BangFX extends Application {
     
     public void reroll2(){
         dynamiteCount = 0;
+        current.resetAbility();
         if(rollCount != 4) {
             
             finalDice.clear();
@@ -3728,7 +3732,8 @@ public class BangFX extends Application {
                 
             });
         }
-        if(current.name.equals("Belle Star")){
+        if(current.name.equals("Belle Star")&&current.dynToGat){
+            current.usedAbility();
             
         }
     }
