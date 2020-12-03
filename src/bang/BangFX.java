@@ -121,7 +121,7 @@ public class BangFX extends Application {
     Boolean isSelected, cDSelect, lDSelect, sher, reroll;
     ComboBox players = new ComboBox();
     int cSel, pageNum=0, dynamiteCount = 0, rollCount = 0, arrCount = 0,
-            gatCount = 0;
+            gatCount = 0, BE1, BE2;
     
     static Scanner scan;
     String answer;
@@ -2290,7 +2290,8 @@ public class BangFX extends Application {
     }
     
     public void rollDiceGo(){
-        
+        BE1 = 0;
+        BE2 = 0;
         dynamiteCount = 0;
         finalDice.clear();
         action.setText("");
@@ -2328,9 +2329,9 @@ public class BangFX extends Application {
         
         resetDieFace();
         
-        for (int roll = 0; roll < 5; roll++) 
+        for (int roll = 0; roll < 5; roll++) {
             dice.get(roll).roll();
-            
+        }
         
         System.out.println("Roll " + (rollCount + 1) + " results:");
         System.out.println("Dice 1 : " + RD1.sides[RD1.side]);
@@ -2340,6 +2341,7 @@ public class BangFX extends Application {
         System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
         
         for(int i=0; i<5; i++) {
+            checkBoxes.get(i).setSelected(false);
             checkBoxes.get(i).setDisable(false);
             if(dice.get(i).sides[dice.get(i).side] == "Indian Arrow") {
                 if(dice.get(i).dice == 0){
@@ -2673,8 +2675,9 @@ public class BangFX extends Application {
         for (int i = 0; i < 5; i++) {                                    
             checkBoxes.get(i).setFont(Font.font("Copperplate", 10)); 
             checkBoxes.get(i).setLayoutX((i * 85) + 300);   
-            checkBoxes.get(i).setLayoutY(275);           
-            checkBoxes.get(i).setDisable(current.computer);    
+            checkBoxes.get(i).setLayoutY(275); 
+            if(current.computer)
+                checkBoxes.get(i).setDisable(true);    
 
         } 
         if(arrCount != 0)
@@ -3156,12 +3159,12 @@ public class BangFX extends Application {
             loudmouth.setDisable(current.computer);
             coward.setSelected(false);
             loudmouth.setSelected(false);
-            for (int i = 0; i < 5; i++) {                                     //For the size of all the check boxes for the dice selection
+            for (int i = 0; i < 5; i++) {                                    
                 checkBoxes.get(i).setFont(Font.font("Copperplate", 10));
-                checkBoxes.get(i).setSelected(false);                             //Set all to not selected
-                checkBoxes.get(i).setLayoutX((i * 85) + 300);                    //Layout X
-                checkBoxes.get(i).setLayoutY(275);                                //Layout Y
-                checkBoxes.get(i).setDisable(current.computer);         //Only enabled if current player is not a computer
+                checkBoxes.get(i).setSelected(false);                     
+                checkBoxes.get(i).setLayoutX((i * 85) + 300);                 
+                checkBoxes.get(i).setLayoutY(275);                        
+                checkBoxes.get(i).setDisable(current.computer);    
 
             } 
             for(int i=0; i<5; i++) {
@@ -3493,14 +3496,24 @@ public class BangFX extends Application {
         }
         for(int i=0; i<finalDice.size(); i++){
             System.out.println(finalDice.get(i));
-            String str = finalDice.get(i);
             if(dice.get(i).sides[dice.get(i).side] == "Beer" ||
                     dice.get(i).sides[dice.get(i).side] == "Whiskey" ||
                     dice.get(i).sides[dice.get(i).side] == "Double Beer")
                 getDrunk(i);
             if(dice.get(i).sides[dice.get(i).side] == "Dynamite")
                 dynamiteAction(i, dynamiteCount);
+            if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 1")
+                BE1++;
+            if(dice.get(i).sides[dice.get(i).side] == "Bull's Eye 2")
+                BE2++;
+            if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 1")
+                BE1 += 2;
+            if(dice.get(i).sides[dice.get(i).side] == "Double Bull's Eye 2")
+                BE2 += 2;
             }
+        
+        System.out.println(BE1 + " "+ BE2);
+        beAction(BE1, BE2);
         if(arrCount != 0){
             arrowAction(arrCount);
             }
@@ -3663,7 +3676,7 @@ public class BangFX extends Application {
                     play_order.get(pick).heal(1);
                 }
             }
-            else{
+            else {
                 Random rand = new Random();
                 int pick = (rand.nextInt(100000000)%cSel);
                 if(play_order.get(pick).arrows > 0) {
@@ -3679,6 +3692,33 @@ public class BangFX extends Application {
                 }
             }
             
+        }
+        
+    }
+    
+    public void beAction(int be1, int be2){
+        
+        while(be1 > 0){
+            Random rand = new Random();
+            int pick = (rand.nextInt(100)%2);
+            if(pick == 0) {
+                play_order.get(1).damage(1);
+            }
+            else{
+                play_order.get(play_order.size()-1).damage(1);
+            }
+            be1--;
+        }
+        while(be2 > 0){
+            Random rand = new Random();
+            int pick = (rand.nextInt(100)%2);
+            if(pick == 0) {
+                play_order.get(2).damage(1);
+            }
+            else{
+                play_order.get(play_order.size()-2).damage(1);
+            }
+            be2--;
         }
         
     }
@@ -3727,7 +3767,7 @@ public class BangFX extends Application {
                 play_order.get(j).chiefArrow = false;
             }
         }
-        if(chief){
+        if(chief) {
             arrowCount = 10;
             chiefArrow = true;
         } else {
