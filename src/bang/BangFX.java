@@ -2302,6 +2302,7 @@ public class BangFX extends Application {
         rollCount = 0;
         //current(player object) for easier referencing 
         current = play_order.get(0);
+        current.resetAbility();
         
         group3.getChildren().remove(character);
         //Start of play order
@@ -2701,6 +2702,7 @@ public class BangFX extends Application {
     public void reroll(){  
         dynamiteCount = 0;
         action.setText("");
+        current.resetAbility();
         if(rollCount != 4) {
             
             finalDice.clear();
@@ -3106,6 +3108,7 @@ public class BangFX extends Application {
     
     public void reroll2(){
         dynamiteCount = 0;
+        current.resetAbility();
         if(rollCount != 4) {
             
             finalDice.clear();
@@ -3639,6 +3642,7 @@ public class BangFX extends Application {
             });
         }
         if(current.name.equals("Belle Star")){
+            current.usedAbility();
             
         }
     }
