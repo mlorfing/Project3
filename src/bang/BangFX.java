@@ -3781,6 +3781,8 @@ public class BangFX extends Application {
                     play_order.get(k).damage(0);
                 else 
                     play_order.get(k).damage(1);
+                 if(play_order.get(k).name.equals("El Gringo"))
+                	currPlayer.arrows++;
             }
         }
         play_order.get(0).arrowReset();
