@@ -65,8 +65,6 @@ public class Player {
         	this.jourdonnais = true;
         if(name.equals("Jesse Jones"))
         	JJ = true;
-        if(name.equals("Jose Delgado") || name.equals("Tequila Joe"))
-        	numDice = 6;
     }
 
     public CharCards getCharacter() { //calling characters class from bang.java
@@ -96,7 +94,7 @@ public class Player {
         } else {
             this.health = 0;
         }
-        if(pedro)
+        if(pedro && this.arrows > 0)
             this.arrows--;
         bulletUpdate();
     }
