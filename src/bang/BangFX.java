@@ -36,6 +36,8 @@ public class BangFX extends Application {
     Stage char_desc = new Stage();
     Stage dice_n = new Stage();
     Stage dice_d = new Stage();
+    
+    //image loading
     Image bground, logo, mheader;
     Image black, gringo, jesse, jour, paul,
             pedro, suzy, vulture;
@@ -63,6 +65,8 @@ public class BangFX extends Application {
             rDie2_img, rDie3_img, rDie4_img, rDie5_img;
     Scene scene1, expScene, charScene, diceScene, ddScene, 
             initScene, scene2;
+    
+    //text initializations
     TextArea charDesc = new TextArea();
     VBox cD = new VBox(charDesc);
     Label diceNames = new Label();
@@ -76,7 +80,6 @@ public class BangFX extends Application {
     Label action = new Label();
     Label indAtt = new Label();
     Label dynExp = new Label();
-    Label drank = new Label();
     Label belleQ = new Label();
     Group group1 = new Group();
     Group group2 = new Group();
@@ -87,8 +90,12 @@ public class BangFX extends Application {
     Group diceGroup2 = new Group();
     Group initGroup = new Group();
     
+    //music initialization
     Media bgM, bulls, glass, un, dieS, dyna, arrS, ind, gat;
     MediaPlayer bMusic, eye, clink, dead, rollS, mite, swoosh, attack, ling;
+    ToggleButton musicToggle = new ToggleButton();
+    
+    //button initialization
     Button go = new Button();
     Button rules = new Button();
     Button charAbilities = new Button();
@@ -114,16 +121,16 @@ public class BangFX extends Application {
     RadioButton undInc = new RadioButton();
     RadioButton loudmouth = new RadioButton();
     RadioButton coward = new RadioButton();
+    
+    //checkbox for rolls
     CheckBox die1 = new CheckBox();
     CheckBox die2 = new CheckBox();
     CheckBox die3 = new CheckBox();
     CheckBox die4 = new CheckBox();
     CheckBox die5 = new CheckBox();
     
-    
-    ToggleButton musicToggle = new ToggleButton();
+    //variables for background data
     Boolean isSelected, cDSelect, lDSelect, sher, reroll, belleSpec;
-    ComboBox players = new ComboBox();
     int cSel, pageNum=0, dynamiteCount = 0, rollCount = 0, arrCount = 0,
             gatCount = 0, BE1, BE2;
     
@@ -132,7 +139,9 @@ public class BangFX extends Application {
     static int arrowCount = 9;
     static boolean chiefArrow = false;
     static boolean chief = false;
+    
     //initialization of game variables
+    ComboBox players = new ComboBox();
     ArrayList<CharCards> char_cards = new ArrayList();
     ArrayList<Dice> dice = new ArrayList();
     ArrayList<Roles> role_cards = new ArrayList();
@@ -142,6 +151,7 @@ public class BangFX extends Application {
     static ArrayList<Player> temp_play_order = new ArrayList();
     static ArrayList<Player> temp_play_order2 = new ArrayList();
     
+    //dice initialization
     Dice RD1 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
             "Bull's Eye 2", "Beer", "Gatling");
     Dice RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
@@ -153,7 +163,7 @@ public class BangFX extends Application {
     Dice RD5 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
             "Bull's Eye 2", "Beer", "Gatling");
         
-        
+    //player initialization and reference variables  
     Player current;
     Player left1;
     Player right1;
@@ -175,6 +185,7 @@ public class BangFX extends Application {
         launch(args);
     }
     //sets the buttons to go forward to next screen
+    //DO NOT EDIT
     @Override
     public void start(Stage primaryStage) throws Exception {
         scan  = new Scanner(System.in);
@@ -223,6 +234,7 @@ public class BangFX extends Application {
         
     }
     //sets initial welcome screen, asks for user input
+    //DO NOT EDIT
     public void setWelcomeScreen() throws Exception{
         bground = new Image(
                 new FileInputStream("src/bang/media/tabletop.jpg"));
@@ -482,6 +494,7 @@ public class BangFX extends Application {
         window.show();
     }
     //sets character/dice/rule windows and images
+    //DO NOT EDIT
     public void setSecondaryScreens() throws Exception{
         close.setText("Close");
         close.setFont(Font.font("Copperplate", 15));
@@ -1201,6 +1214,7 @@ public class BangFX extends Application {
         
     }
     //sets character tooltips
+    //DO NOT EDIT
     public void charTooltips(){
         Tooltip t = new Tooltip("Black Jack");
         t.setFont(Font.font ("Copperplate"));
@@ -1249,6 +1263,7 @@ public class BangFX extends Application {
         Tooltip.install(dg3, t14);
     }
     //sets window for dice
+    //DO NOT EDIT
     public void diceEffects(){
         close.setLayoutX(120);
         close.setLayoutY(410);
@@ -1270,6 +1285,7 @@ public class BangFX extends Application {
         dice_n.show();
     } 
     //window for regular dice
+    //DO NOT EDIT
     public void dGroup1(){
         close2.setLayoutX(55);
         close2.setLayoutY(310);
@@ -1293,6 +1309,7 @@ public class BangFX extends Application {
         dice_d.show();
     }
     //window for Old Saloon dice
+    //DO NOT EDIT
     public void dGroup2(){
         close2.setLayoutX(55);
         close2.setLayoutY(310);
@@ -1316,6 +1333,7 @@ public class BangFX extends Application {
         dice_d.show();
     }
     //window for Undead or Alive dice
+    //DO NOT EDIT
     public void dGroup3(){
         close2.setLayoutX(55);
         close2.setLayoutY(310);
@@ -1338,6 +1356,7 @@ public class BangFX extends Application {
         dice_d.show();
     }
     //sets dialog windows for the characer descriptions
+    //DO NOT EDIT
     public void blackDesc(){
         close2.setLayoutX(120);
         close2.setLayoutY(250);
@@ -1554,6 +1573,7 @@ public class BangFX extends Application {
         char_desc.show();
     }
     //sets dialog windows for the rules
+    //DO NOT EDIT
     public void regDesc(){
         char_desc.setTitle("Jose Delgado");
         
@@ -1674,6 +1694,7 @@ public class BangFX extends Application {
         }
     } 
     //assigns each AI and the user a character and role
+    //DO NOT EDIT
     public void assign(){
         //Sets the number of players in the game to how many AI there are going to be
         cSel = (int)players.getValue()-1; 
@@ -1744,6 +1765,7 @@ public class BangFX extends Application {
         }
     }
     //prob gonna remove this and add to assign() method, reveals roles
+    //DO NOT EDIT
     public void revealSheriff(){
             init.setText("You are the "+human.role+", playing as "+human.name+".\n");
             init.setFont(Font.font("Copperplate", 25));
@@ -1788,6 +1810,7 @@ public class BangFX extends Application {
             setPlayOrder();
     }
     //sets play order starting with sheriff
+    //DO NOT EDIT
     public void setPlayOrder(){
         //A temp list to store all players for UI, game mechanics, and more
         temp_play_order.add(human);
@@ -1870,7 +1893,8 @@ public class BangFX extends Application {
             right3 = play_order.get(0);
         }
     }  
-    //trying to implement a button for dice rolling initiative
+    //sets up screen for dice rolls/turns
+    //DO NOT EDIT
     public void diceSetup(){        
         checkBoxes.add(die1);
         checkBoxes.add(die2);
@@ -1878,6 +1902,8 @@ public class BangFX extends Application {
         checkBoxes.add(die4);
         checkBoxes.add(die5);
         
+        //placing dice images
+        //5 reg die w/ sides
         d1.setLayoutY(300);
         d2.setLayoutY(300);
         d3.setLayoutY(300);
@@ -1913,6 +1939,7 @@ public class BangFX extends Application {
         d55.setLayoutY(300);
         d65.setLayoutY(300);
         
+        //loudmouth die w/ sides
         dl1.setLayoutY(300);
         dl2.setLayoutY(300);
         dl3.setLayoutY(300);
@@ -1920,6 +1947,7 @@ public class BangFX extends Application {
         dl5.setLayoutY(300);
         dl6.setLayoutY(300);
         
+        //coward die w/ sides
         dc1.setLayoutY(300);
         dc2.setLayoutY(300);
         dc3.setLayoutY(300);
@@ -1927,6 +1955,7 @@ public class BangFX extends Application {
         dc5.setLayoutY(300);
         dc6.setLayoutY(300);
         
+        //LOOK AT ME die w/ sides
         du1.setLayoutY(300);
         du2.setLayoutY(300);
         du3.setLayoutY(300);
@@ -1941,6 +1970,7 @@ public class BangFX extends Application {
         du52.setLayoutY(300);
         du62.setLayoutY(300);
         
+        //makes all die invisible on start
         d1.setVisible(false);
         d2.setVisible(false);
         d3.setVisible(false);
@@ -2004,6 +2034,8 @@ public class BangFX extends Application {
         du52.setVisible(false);
         du62.setVisible(false);
         
+        
+        //toggle buttons for special dice
         loudmouth.setLayoutX(300);
         loudmouth.setLayoutY(185);
         loudmouth.setFont(Font.font("Copperplate", 20));
@@ -2011,11 +2043,13 @@ public class BangFX extends Application {
         coward.setLayoutY(215);
         coward.setFont(Font.font("Copperplate", 20));
         
+        //roll button
         rollDice.setLayoutX(850);
         rollDice.setLayoutY(120);
         rollDice.setText("ROLL");
         rollDice.setFont(Font.font("Copperplate", 20));
         
+        //chief arrow check (ask y/n, returns boolean)
         chiefY.setLayoutX(850);
         chiefY.setLayoutY(400);
         chiefY.setText("Yes");
@@ -2033,7 +2067,27 @@ public class BangFX extends Application {
         chiefChoice.setText("Do you want the chief arrow?");
         chiefChoice.setVisible(false);
         chiefChoice.setFont(Font.font("Copperplate", 20));
+         
+        //belle special check (ask y/n, returns boolean)
+        belleY.setLayoutX(850);
+        belleY.setLayoutY(400);
+        belleY.setText("Yes");
+        belleY.setVisible(false);
+        belleY.setFont(Font.font("Copperplate", 20));
         
+        belleN.setLayoutX(950);
+        belleN.setLayoutY(400);
+        belleN.setText("No");
+        belleN.setVisible(false);
+        belleN.setFont(Font.font("Copperplate", 20));
+        
+        belleQ.setLayoutX(850);
+        belleQ.setLayoutY(350);
+        belleQ.setText("Do you want to switch Dynamite for Gatling?");
+        belleQ.setVisible(false);
+        belleQ.setFont(Font.font("Copperplate", 20));
+        
+        //haven't really done much with this one
         action.setLayoutX(300);
         action.setLayoutY(400);
         action.setWrapText(true);
@@ -2041,6 +2095,7 @@ public class BangFX extends Application {
         action.setVisible(true);
         action.setFont(Font.font("Copperplate", 20));
         
+        //alert for indian attack
         indAtt.setLayoutX(300);
         indAtt.setLayoutY(450);
         indAtt.setWrapText(true);
@@ -2048,18 +2103,14 @@ public class BangFX extends Application {
         indAtt.setVisible(false);
         indAtt.setFont(Font.font("Copperplate", 25));
         
+        //alert for death by dynamite
         dynExp.setLayoutX(300);
         dynExp.setLayoutY(450);
         dynExp.setWrapText(true);
         dynExp.setVisible(false);
         dynExp.setFont(Font.font("Copperplate", 25));
         
-        drank.setLayoutX(300);
-        drank.setLayoutY(450);
-        drank.setWrapText(true);
-        drank.setVisible(false);
-        drank.setFont(Font.font("Copperplate", 25));
-            
+        //sets action for y/n buttons for chiefArrow and Belle
         chiefY.setOnAction(e-> {
             rollDice.setDisable(false);
             current.chiefArrow = true;
@@ -2077,7 +2128,24 @@ public class BangFX extends Application {
             chiefN.setVisible(false);
             chiefChoice.setVisible(false);
         });
+            
+        belleY.setOnAction(e-> {
+            rollDice.setDisable(false);
+            belleSpec = true;
+            belleY.setVisible(false);
+            belleN.setVisible(false);
+            belleQ.setVisible(false);
+        });
+
+        belleN.setOnAction(e-> {
+            rollDice.setDisable(false);
+            belleSpec = false;
+            belleY.setVisible(false);
+            belleN.setVisible(false);
+            belleQ.setVisible(false);
+        });
         
+        //adds all elements to group
         group3.getChildren().clear();
         group3.getChildren()
                 .addAll(background, musicToggle, character, rollDice, d1, 
@@ -2087,7 +2155,7 @@ public class BangFX extends Application {
                         dc2, dc3, dc4, dc5, dc6, dl1, dl2, dl3, dl4, dl5, 
                         dl6, du1, du2, du3, du4, du5, du6, du12, du22, 
                         du32, du42, du52, du62, die1, die2, die3, die4, die5,
-                        action, indAtt, dynExp, drank, belleQ, belleY, belleN);
+                        action, indAtt, dynExp, belleQ, belleY, belleN);
         if((undInc.isSelected())){
             group3.getChildren()
                     .addAll(bDie_img, bDie2_img);
@@ -2218,6 +2286,13 @@ public class BangFX extends Application {
             }
         });
         
+         
+        current = play_order.get(0);
+        coward.setDisable(current.computer);
+        loudmouth.setDisable(current.computer);
+        coward.setSelected(false);
+        loudmouth.setSelected(false);
+        
         rollDice.setOnAction(e-> {
             rollS.seek(Duration.ZERO);
             rollS.play();
@@ -2303,6 +2378,11 @@ public class BangFX extends Application {
         //current(player object) for easier referencing 
         current = play_order.get(0);
         current.resetAbility();
+      
+        coward.setDisable(current.computer);
+        loudmouth.setDisable(current.computer);
+        coward.setSelected(false);
+        loudmouth.setSelected(false);
         
         group3.getChildren().remove(character);
         //Start of play order
@@ -2311,7 +2391,8 @@ public class BangFX extends Application {
 
         for (int j = 0; j < play_order.size(); j++) {
             if(play_order.get(j).computer == false){
-                character.setText(character.getText()+ (j + 1) + ") You " 
+                character.setText(character.getText()+ (j + 1) + ") You (" 
+                    +play_order.get(j).name+")"
                     + "\nHealth: "+play_order.get(j).health
                     +"\nArrows: "+play_order.get(j).arrows);
             } else {
@@ -2335,8 +2416,15 @@ public class BangFX extends Application {
         resetDieFace();
         
         for (int roll = 0; roll < 5; roll++) {
+            checkBoxes.get(roll).setSelected(false);
+            checkBoxes.get(roll).setDisable(false);
+        }
+        
+        for (int roll = 0; roll < 5; roll++) {
             dice.get(roll).roll();
         }
+        
+        current = play_order.get(0);
         
         System.out.println("Roll " + (rollCount + 1) + " results:");
         System.out.println("Dice 1 : " + RD1.sides[RD1.side]);
@@ -2673,10 +2761,12 @@ public class BangFX extends Application {
                 }
             }
         }
-        coward.setDisable(current.computer);
-        loudmouth.setDisable(current.computer);
-        coward.setSelected(false);
-        loudmouth.setSelected(false);
+        
+        if(arrCount != 0){
+            System.out.println("r1");
+            arrowAction(arrCount);
+        }
+        
         for (int i = 0; i < 5; i++) {                                    
             checkBoxes.get(i).setFont(Font.font("Copperplate", 10)); 
             checkBoxes.get(i).setLayoutX((i * 85) + 300);   
@@ -2685,14 +2775,11 @@ public class BangFX extends Application {
                 checkBoxes.get(i).setDisable(true);    
 
         } 
-        if(arrCount != 0)
-            arrowAction(arrCount);
+        
         rollDice.setOnAction(e-> {
             rollS.seek(Duration.ZERO);
             rollS.play();
-            if(arrCount != 0){
-                arrCount = 0;
-            }
+            arrCount = 0;
             rollCount++;
             reroll();
         });
@@ -2714,7 +2801,8 @@ public class BangFX extends Application {
 
             for (int j = 0; j < play_order.size(); j++) {
                 if(play_order.get(j).computer == false){
-                    character.setText(character.getText()+ (j + 1) + ") You " 
+                    character.setText(character.getText()+ (j + 1) + ") You (" 
+                        +play_order.get(j).name+")"
                         + "\nHealth: "+play_order.get(j).health
                         +"\nArrows: "+play_order.get(j).arrows);
                 } else {
@@ -2725,9 +2813,9 @@ public class BangFX extends Application {
                 }
                 if(play_order.get(j).chiefArrow == true)
                 {
-                character.setText(character.getText()
-                        +"\nHas Chief Arrow"
-                        +"\n\n");
+                    character.setText(character.getText()
+                            +"\nHas Chief Arrow"
+                            +"\n\n");
                 }
                 else {
                     character.setText(character.getText()+".\n\n");
@@ -2749,23 +2837,11 @@ public class BangFX extends Application {
             System.out.println("Dice 4 : " + RD4.sides[RD4.side]);
             System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
 
-            for(int i=0; i<5; i++) {
+            for(int i=0; i<5; i++){
                 checkBoxes.get(i).setSelected(false);
                 checkBoxes.get(i).setDisable(false);
-            } 
-            current = play_order.get(0);
-            coward.setDisable(current.computer);
-            loudmouth.setDisable(current.computer);
-            coward.setSelected(false);
-            loudmouth.setSelected(false);
-            for (int i = 0; i < 5; i++) {                                     //For the size of all the check boxes for the dice selection
-                checkBoxes.get(i).setFont(Font.font("Copperplate", 10));
-                checkBoxes.get(i).setSelected(false);                             //Set all to not selected
-                checkBoxes.get(i).setLayoutX((i * 85) + 300);                    //Layout X
-                checkBoxes.get(i).setLayoutY(275);                                //Layout Y
-                checkBoxes.get(i).setDisable(current.computer);         //Only enabled if current player is not a computer
-
-            } 
+            }
+            
             for(int i=0; i<5; i++) {
                 if(dice.get(i).sides[dice.get(i).side].equals("Indian Arrow")) {
                     if(dice.get(i).dice == 0){
@@ -3093,9 +3169,17 @@ public class BangFX extends Application {
                 }
             }rollCount++;
         }
+        
         if(arrCount != 0){
+            System.out.println("rr1");
             arrowAction(arrCount);
             }
+        
+        for (int i = 0; i < 5; i++) {                                    
+            if(current.computer)
+                checkBoxes.get(i).setDisable(true);    
+        } 
+        
         if(rollCount != 4)
             rollDice.setOnAction(e->{
                 rollS.seek(Duration.ZERO);
@@ -3120,7 +3204,8 @@ public class BangFX extends Application {
 
             for (int j = 0; j < play_order.size(); j++) {
                 if(play_order.get(j).computer == false){
-                    character.setText(character.getText()+ (j + 1) + ") You " 
+                    character.setText(character.getText()+ (j + 1) + ") You (" 
+                        +play_order.get(j).name+")"
                         + "\nHealth: "+play_order.get(j).health
                         +"\nArrows: "+play_order.get(j).arrows);
                 } else {
@@ -3144,8 +3229,9 @@ public class BangFX extends Application {
             resetDieFace();
 
             for (int roll = 0; roll < 5; roll++) {
-                if(checkBoxes.get(roll).isSelected())
+                if(checkBoxes.get(roll).isSelected()) {
                     dice.get(roll).roll();
+                }
             }
             
             for (int roll = 0; roll < 5; roll++) {
@@ -3159,23 +3245,7 @@ public class BangFX extends Application {
             System.out.println("Dice 4 : " + RD4.sides[RD4.side]);
             System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
 
-            for(int i=0; i<5; i++) {
-                checkBoxes.get(i).setSelected(false);
-                checkBoxes.get(i).setDisable(false);
-            } 
-            current = play_order.get(0);
-            coward.setDisable(current.computer);
-            loudmouth.setDisable(current.computer);
-            coward.setSelected(false);
-            loudmouth.setSelected(false);
-            for (int i = 0; i < 5; i++) {                                    
-                checkBoxes.get(i).setFont(Font.font("Copperplate", 10));
-                checkBoxes.get(i).setSelected(false);                     
-                checkBoxes.get(i).setLayoutX((i * 85) + 300);                 
-                checkBoxes.get(i).setLayoutY(275);                        
-                checkBoxes.get(i).setDisable(current.computer);    
-
-            } 
+            
             for(int i=0; i<5; i++) {
                 if(dice.get(i).sides[dice.get(i).side].equals("Indian Arrow")) {
                     if(dice.get(i).dice == 0){
@@ -3503,6 +3573,12 @@ public class BangFX extends Application {
                 }
             }rollCount++;
         }
+        
+        rollDice.setDisable(true);
+        for(int i=0; i<checkBoxes.size(); i++){
+            checkBoxes.get(i).setDisable(true);
+        }
+        
         int lifejuice = 0;
         int duelCount = 0;
         dynamiteCount = 0;
@@ -3517,21 +3593,23 @@ public class BangFX extends Application {
             if(dice.get(i).sides[dice.get(i).side].equals("Bull's Eye 2"))
                 BE2++;
             if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 1"))
-                BE1 += 2;
+                BE1 = BE1 + 2;
             if(dice.get(i).sides[dice.get(i).side].equals("Double Bull's Eye 2"))
-                BE2 += 2;
+                BE2 = BE2 + 2;
             if(dice.get(i).sides[dice.get(i).side].equals("Beer"))
                 lifejuice++;
             if(dice.get(i).sides[dice.get(i).side].equals("Double Beer"))
-                lifejuice += 2;
+                lifejuice = lifejuice + 2;
             if(dice.get(i).sides[dice.get(i).side].equals("Gatling"))
                 gatCount++;
             if(dice.get(i).sides[dice.get(i).side].equals("Double Gatling"))
-                gatCount += 2;
+                gatCount = gatCount + 2;
             if(dice.get(i).sides[dice.get(i).side].equals("Duel"))
                 duelCount++;
         }
+        
         if(arrCount != 0){
+            System.out.println("rr2");
             arrowAction(arrCount);
             }
         
@@ -3587,16 +3665,26 @@ public class BangFX extends Application {
             }
         }
         
-        for(int i=0; i<checkBoxes.size(); i++){
-            checkBoxes.get(i).setDisable(true);
-        }
         play_order.add(play_order.get(0));
         play_order.remove(0);
+        
+        current = play_order.get(0);
+        
+        for(int i=0; i<5; i++) {
+            if(current.computer)
+                checkBoxes.get(i).setDisable(true);   
+        }
+        coward.setDisable(current.computer);
+        loudmouth.setDisable(current.computer);
+        coward.setSelected(false);
+        loudmouth.setSelected(false);
+        rollDice.setDisable(false);
+        
         rollDice.setOnAction(e-> {
             rollS.seek(Duration.ZERO);
             rollS.play();
-            dynamiteCount = 0;
             arrCount = 0;
+            dynamiteCount = 0;
             rollDiceGo();
         });
     
@@ -3604,7 +3692,7 @@ public class BangFX extends Application {
     
     public void dynamiteAction(int i, int count){
         dynExp.setText(current.name+"'s turn ended due to dynamite explosion.");
-        if(current.name.equals("Black Jack")) {
+        if(play_order.get(0).name.equals("Black Jack")) {
                 if(current.computer == false){
                     checkBoxes.get(i).setSelected(true);
                     checkBoxes.get(i).setDisable(false);
@@ -3618,6 +3706,7 @@ public class BangFX extends Application {
             checkBoxes.get(i).setDisable(true);
             checkBoxes.get(i).setSelected(false);
         }
+        
         if(count > 2){
             dynExp.setVisible(true);
             rollDice.setDisable(true);
@@ -3628,15 +3717,17 @@ public class BangFX extends Application {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
-                }            
+                }
+            rollDice.setOnAction(e -> {
                 current.damage(1);
                 rollCount = 0;
                 play_order.add(play_order.get(0));
                 play_order.remove(0);
                 dynamiteCount = 0;
                 dynExp.setVisible(false);
-                rollDice.setDisable(false);
                 rollDiceGo();
+            });            
+                rollDice.setDisable(false);
                 mite.stop();
                 
             });
@@ -3681,23 +3772,27 @@ public class BangFX extends Application {
             });
             indianAttack();
         }
+        System.out.println(arrowCount+" arrows left in pile.");
     }
     
     public void barrowAction(){
-        if(current.arrows == 0) {
-            Random rand = new Random();
-            int pick = (rand.nextInt(100000000)%cSel);
-            if(play_order.get(pick).arrows > 0) {
-                System.out.println(play_order.get(pick).name+" returned an arrow.");
-                play_order.get(pick).arrows -= 1;
-                arrowCount += 1;
+        boolean arrC = false;
+        for(int i=0; i<cSel; i++){
+            if(play_order.get(i).arrows > 0) {
+                System.out.println(arrowCount+" arrows in the pile.");
+                arrC = true;
             }
-            else
-                barrowAction();
-        }else 
-            current.arrows -= 1;
-        System.out.println(current.name+" returned an arrow.");
-        arrowCount += 1;
+        }
+        if(arrC){
+            Random rand = new Random();
+            int pick = 0;
+            while(play_order.get(pick).arrows == 0)
+                pick = (rand.nextInt(1000000)%cSel);
+            System.out.println(play_order.get(pick).name+" returned an arrow.");
+            play_order.get(pick).arrows -= 1;
+            arrowCount += 1;
+            System.out.println(arrowCount+" arrows in the pile.");
+        }
     }
     
     public void bulletAction(){
@@ -3745,55 +3840,85 @@ public class BangFX extends Application {
     public void beAction(int be1, int be2){
         eye.seek(Duration.ZERO);
         eye.play();
+        int dead;
+        int el = 0;
         while(be1 > 0){
             Random rand = new Random();
             int pick = (rand.nextInt(100)%2);
+            dead = 1;
+            while(play_order.get(dead).isDead())
+                dead++;
             if(pick == 0) {
-                play_order.get(1).damage(1);
-                System.out.println(current.name +" shot "+play_order.get(1).name);
+                play_order.get(dead).damage(1);
+                System.out.println(current.name +" shot "+play_order.get(dead).name);
+                if(play_order.get(dead).name.equals("El Gringo"))
+                    el++;
             }
             else{
-                play_order.get(play_order.size()-1).damage(1);
+                play_order.get(play_order.size()-dead).damage(1);
                 System.out.println(current.name +" shot "
-                        +play_order.get(play_order.size()-1).name);
+                        +play_order.get(play_order.size()-dead).name);
+                if(play_order.get(play_order.size()-dead).name.equals("El Gringo"))
+                    el++;
             }
             be1--;
         }
         while(be2 > 0){
+            dead = 2;
             Random rand = new Random();
             int pick = (rand.nextInt(100)%2);
+            while(play_order.get(dead).isDead())
+                dead++;
             if(pick == 0) {
-                play_order.get(2).damage(1);
-                System.out.println(current.name +" shot "+play_order.get(2).name);
+                play_order.get(dead).damage(1);
+                System.out.println(current.name +" shot "+play_order.get(dead).name);
+                if(play_order.get(dead).name.equals("El Gringo"))
+                    el++;
             }
             else{
-                play_order.get(play_order.size()-2).damage(1);
+                play_order.get(play_order.size()-dead).damage(1);
                 System.out.println(current.name +" shot "
-                        +play_order.get(play_order.size()-2).name);
+                        +play_order.get(play_order.size()-dead).name);
+                if(play_order.get(play_order.size()-dead).name.equals("El Gringo"))
+                    el++;
             }
             be2--;
+        }
+        if(el>0){
+            for(int i=0; i<el; i++){
+                System.out.println(el);
+                System.out.println(current.name+" wounded El Gringo with a "
+                        + " Bull's Eye and took an arrow.");
+                arrowAction(1);
+            }
         }
         
     }
 
     public void gatAttack(int gat){
+        boolean el = false;
         if(gat > 2) {
             ling.seek(Duration.ZERO);
             ling.play();
             for(int k=1; k < play_order.size(); k++) {
+                if(play_order.get(k).name.equals("El Gringo"))
+                    el = true;
                 if(play_order.get(k).name.equals("Paul Regret"))
                     play_order.get(k).damage(0);
                 else 
                     play_order.get(k).damage(1);
-                 if(play_order.get(k).name.equals("El Gringo"))
-                	currPlayer.arrows++;
             }
+        }
+        if(el) {
+            System.out.println(current.name+" wounded El Gringo with the "
+                    + "Gatling and took an arrow.");
+            arrowAction(1);
         }
         play_order.get(0).arrowReset();
     }
     
     public void dueling(){
-        
+        boolean el = false;
         Random rand = new Random();
         int pick, pick2;
         do {
@@ -3802,12 +3927,21 @@ public class BangFX extends Application {
         
         pick2 = (rand.nextInt(100)%2);
         if(pick2 == 0) {
+            if(play_order.get(pick).name.equals("El Gringo"))
+                el = true;
             play_order.get(pick).damage(1);
             System.out.println(play_order.get(pick).name +" was shot in the duel\n");
         }
         if(pick2 == 1) {
+            if(current.name.equals("El Gringo"))
+                el = true;
             current.damage(1);
             System.out.println(current.name +" was shot in the duel\n");
+        }
+        if(el) {
+            System.out.println(current.name+" wounded El Gringo in the "
+                    + "duel and took an arrow.");
+            arrowAction(1);
         }
     }
     
@@ -3827,8 +3961,13 @@ public class BangFX extends Application {
         }
         for (int j = 0; j < play_order.size(); j++) {
             if (play_order.get(j).chiefArrow == false || j != index) {
-                if ((play_order.get(j).jourdonnais == true) && (play_order.get(j).arrows > 0)) {
-                    play_order.get(j).arrows = 1;
+                if (play_order.get(j).jourdonnais == true) {
+                    if (play_order.get(j).arrows > 0) { 
+                        play_order.get(j).arrows = 1;
+                        }
+                    else {
+                        play_order.get(j).arrows = 0;
+                    }
                 }
                 play_order.get(j).damage(play_order.get(j).arrows);
                 if (!safe) {

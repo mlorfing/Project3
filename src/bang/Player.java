@@ -99,7 +99,7 @@ public class Player {
         } else {
             this.health = 0;
         }
-        if(pedro)
+        if(pedro && this.arrows > 0)
             this.arrows--;
         bulletUpdate();
     }
