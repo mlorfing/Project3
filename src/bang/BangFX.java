@@ -3641,7 +3641,7 @@ public class BangFX extends Application {
                 
             });
         }
-        if(current.name.equals("Belle Star")){
+        if(current.name.equals("Belle Star")&&current.dynToGat){
             current.usedAbility();
             
         }
