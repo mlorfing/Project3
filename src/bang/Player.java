@@ -94,6 +94,8 @@ public class Player {
         } else {
             this.health = 0;
         }
+        if(pedro)
+            this.arrows--;
         bulletUpdate();
     }
     
