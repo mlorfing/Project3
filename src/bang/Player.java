@@ -170,14 +170,19 @@ public class Player {
  	}
     //disables abilities if used
     public void usedAbility(){
-            if(name.equals("Belle Star"))
-            dynToGat=false;
+        BangFX.belleSpec = true;
+            if(name.equals("Belle Star")){
+                BangFX.belleSpec = true;
+                dynToGat=true;
+                }
     }
 
     //resets player ability
     public void resetAbility(){
-            if(name.equals("Belle Star"))
-            dynToGat=true;
+            if(name.equals("Belle Star")){
+                BangFX.belleSpec = false;
+                dynToGat=true;
+                }
     }
 }
 
