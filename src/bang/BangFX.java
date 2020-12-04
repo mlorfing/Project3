@@ -2053,19 +2053,19 @@ public class BangFX extends Application {
         
         //chief arrow check (ask y/n, returns boolean)
         chiefY.setLayoutX(850);
-        chiefY.setLayoutY(400);
+        chiefY.setLayoutY(300);
         chiefY.setText("Yes");
         chiefY.setVisible(false);
         chiefY.setFont(Font.font("Copperplate", 20));
         
         chiefN.setLayoutX(950);
-        chiefN.setLayoutY(400);
+        chiefN.setLayoutY(300);
         chiefN.setText("No");
         chiefN.setVisible(false);
         chiefN.setFont(Font.font("Copperplate", 20));
          
         chiefChoice.setLayoutX(850);
-        chiefChoice.setLayoutY(350);
+        chiefChoice.setLayoutY(250);
         chiefChoice.setText("Do you want the chief arrow?");
         chiefChoice.setVisible(false);
         chiefChoice.setFont(Font.font("Copperplate", 20));
@@ -2275,12 +2275,85 @@ public class BangFX extends Application {
             checkBoxes.get(i).setVisible(false);
         }
          
+        coward.setText("Use Coward Die");
+        loudmouth.setText("Use Loudmouth Die");
+        
         current = play_order.get(0);
-        coward.setDisable(current.computer);
-        loudmouth.setDisable(current.computer);
+        coward.setDisable(false);
+        loudmouth.setDisable(false);
         coward.setSelected(false);
         loudmouth.setSelected(false);
         
+        if(current.computer && salInc.isSelected()){
+            Random rd = new Random();
+            boolean bool = rd.nextBoolean();
+            if(bool) {    
+                coward.setOnAction((ActionEvent event) -> {
+                    event.consume();
+                    cDSelect = coward.isSelected();
+
+                    if(cDSelect){
+                        die2.setText("Coward");
+                        dice.remove(RD2);
+                        RD2 = new Dice(1, 0, "Indian Arrow", "Broken Arrow", "Dynamite",
+                                "Bull's Eye 1", "Beer", "Double Beer");
+                        dice.add(RD2);
+                        coward.setText("Coward Die in use");
+                        loudmouth.setText("Use Loudmouth Die");
+                        loudmouth.setSelected(false);
+                        lDie_img.setVisible(false);
+                        cDie_img.setVisible(true);
+                        rDie2_img.setVisible(false);
+                    } else {
+                        die2.setText("");
+                        dice.remove(RD2);
+                        RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+                            "Bull's Eye 2", "Beer", "Gatling");
+                        dice.add(RD2);
+                        coward.setText("Use Coward Die");
+                        lDie_img.setVisible(false);
+                        cDie_img.setVisible(false);
+                        rDie2_img.setVisible(true);
+                    }
+                });
+                coward.fire();
+            }
+            boolean bool2 = rd.nextBoolean();
+            if(bool2) {
+                loudmouth.setOnAction((ActionEvent event) -> {
+                    event.consume();
+                    lDSelect = loudmouth.isSelected();
+
+                    if(lDSelect){
+                        die2.setText("Loudmouth");
+                        dice.remove(RD2);
+                        RD2 = new Dice(1, 0, "Indian Arrow", "Bullet", "Dynamite", 
+                                "Double Bull's Eye 1", "Double Bull's Eye 2", 
+                                "Double Gatling");
+                        dice.add(RD2);
+                        loudmouth.setText("Loudmouth Die in use");
+                        coward.setText("Use Coward Die");
+                        coward.setSelected(false);
+                        cDie_img.setVisible(false);
+                        lDie_img.setVisible(true);
+                        rDie2_img.setVisible(false);
+                    } else {
+                        die2.setText("");
+                        dice.remove(RD2);
+                        RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+                            "Bull's Eye 2", "Beer", "Gatling");
+                        dice.add(RD2);
+                        loudmouth.setText("Use Loudmouth Die");
+                        cDie_img.setVisible(false);
+                        lDie_img.setVisible(false);
+                        rDie2_img.setVisible(true);
+                    }
+                });
+                loudmouth.fire();
+            }
+        }
+        coward.setDisable(current.computer);
+        loudmouth.setDisable(current.computer);
         rollDice.setOnAction(e-> {
             rollS.seek(Duration.ZERO);
             rollS.play();
@@ -2290,14 +2363,6 @@ public class BangFX extends Application {
             rollDiceGo();
         });
         
-        if(current.computer) {
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-            rollDice.fire();
-        }
     }
     
     public void resetDieFace(){
@@ -2379,10 +2444,6 @@ public class BangFX extends Application {
         current = play_order.get(0);
         current.resetAbility();
       
-        coward.setDisable(current.computer);
-        loudmouth.setDisable(current.computer);
-        coward.setSelected(false);
-        loudmouth.setSelected(false);
         
         group3.getChildren().remove(character);
         //Start of play order
@@ -2415,19 +2476,9 @@ public class BangFX extends Application {
         
         resetDieFace();
         
-        for(int i=0; i<5; i++) {
-            checkBoxes.get(i).setSelected(false);
-            if(current.computer)
-                checkBoxes.get(i).setDisable(true);   
-            else
-                checkBoxes.get(i).setDisable(false);
-        }
-        
         for (int roll = 0; roll < 5; roll++) {
             dice.get(roll).roll();
         }
-        
-        current = play_order.get(0);
         
         System.out.println("Roll " + (rollCount + 1) + " results:");
         System.out.println("Dice 1 : " + RD1.sides[RD1.side]);
@@ -2524,9 +2575,7 @@ public class BangFX extends Application {
                 if(dice.get(i).dice == 1) {
                     dl2.setLayoutX(385);
                     dl2.setVisible(true);
-                    die2.setSelected(true);
-                    die2.setDisable(true);
-                    bulletAction();
+                    bulletAction(i);
                 }
             }
             else if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) {
@@ -2534,26 +2583,31 @@ public class BangFX extends Application {
                     if(dice.get(i).equals(RD1)){
                         d2.setLayoutX(300);
                         d2.setVisible(true);
+                        die1.setDisable(true);
                         dynamiteCount++;
                     }
                     if(dice.get(i).equals(RD2)){
                         d22.setLayoutX(385);
                         d22.setVisible(true);
+                        die2.setDisable(true);
                         dynamiteCount++;
                     }
                     if(dice.get(i).equals(RD3)){
                         d23.setLayoutX(470);
                         d23.setVisible(true);
+                        die3.setDisable(true);
                         dynamiteCount++;
                     }
                     if(dice.get(i).equals(RD4)){
                         d24.setLayoutX(555);
                         d24.setVisible(true);
+                        die4.setDisable(true);
                         dynamiteCount++;
                     }
                     if(dice.get(i).equals(RD5)){
                         d25.setLayoutX(640);
                         d25.setVisible(true);
+                        die5.setDisable(true);
                         dynamiteCount++;
                     }
                 }
@@ -2561,6 +2615,7 @@ public class BangFX extends Application {
                     if(dice.get(i).equals(RD2)){
                         dl3.setLayoutX(385);
                         dl3.setVisible(true);
+                        die2.setDisable(true);
                         dynamiteCount++;
                     }
                 }
@@ -2568,6 +2623,7 @@ public class BangFX extends Application {
                     if(dice.get(i).equals(RD2)){
                         dc3.setLayoutX(385);
                         dc3.setVisible(true);
+                        die2.setDisable(true);
                         dynamiteCount++;
                     }
                 }
@@ -2575,11 +2631,13 @@ public class BangFX extends Application {
                     if(dice.get(i).equals(RD4)){
                         du2.setLayoutX(555);
                         du2.setVisible(true);
+                        die4.setDisable(true);
                         dynamiteCount++;
                     }
                     if(dice.get(i).equals(RD5)){
                         du22.setLayoutX(640);
                         du22.setVisible(true);
+                        die5.setDisable(true);
                         dynamiteCount++;
                     }
                 }
@@ -2888,9 +2946,28 @@ public class BangFX extends Application {
             checkBoxes.get(i).setFont(Font.font("Copperplate", 10)); 
             checkBoxes.get(i).setLayoutX((i * 85) + 300);   
             checkBoxes.get(i).setLayoutY(275); 
-            if(current.computer)
-                checkBoxes.get(i).setDisable(true);    
-
+            checkBoxes.get(i).setDisable(false);
+            if(current.computer) {
+                aiSetRoll(i);
+                checkBoxes.get(i).setDisable(true);  
+            }
+            else {
+                checkBoxes.get(i).setSelected(false);
+                if(dice.get(i).equals("Indian Arrow")) {
+                    checkBoxes.get(i).setSelected(true);
+                    checkBoxes.get(i).setDisable(true);  
+                }
+                if(dice.get(i).equals("Broken Arrow")) {
+                    checkBoxes.get(i).setSelected(true);
+                    checkBoxes.get(i).setDisable(true);  
+                }
+                
+                if(dice.get(i).equals("Bullet")) {
+                    checkBoxes.get(i).setSelected(true);
+                    checkBoxes.get(i).setDisable(true);  
+                }
+                
+            }
         } 
         
         rollDice.setOnAction(e-> {
@@ -2900,9 +2977,6 @@ public class BangFX extends Application {
             rollCount++;
             reroll();
         });
-        if(current.computer){
-            rollDice.fire();
-        }
     
     }
     
@@ -2944,6 +3018,35 @@ public class BangFX extends Application {
             group3.getChildren().add(character);
 
             resetDieFace();
+
+            for(int i=0; i<5; i++) {
+                checkBoxes.get(i).setDisable(false);
+                if(current.computer) {
+                    aiSetRoll(i);
+                    checkBoxes.get(i).setDisable(true);  
+                }
+                else {
+                    checkBoxes.get(i).setSelected(false);
+                    if(dice.get(i).equals("Indian Arrow")) {
+                        checkBoxes.get(i).setSelected(true);
+                        checkBoxes.get(i).setDisable(true);  
+                    }
+                    if(dice.get(i).equals("Broken Arrow")) {
+                        checkBoxes.get(i).setSelected(true);
+                        checkBoxes.get(i).setDisable(true);  
+                    }
+                    if(dice.get(i).equals("Bullet")) {
+                        checkBoxes.get(i).setSelected(true);
+                        checkBoxes.get(i).setDisable(true);  
+                    }
+                    if(dice.get(i).equals("Dynamite")) {
+                        checkBoxes.get(i).setSelected(false);
+                        checkBoxes.get(i).setDisable(true);  
+                    }
+
+
+                }
+            } 
 
             for (int roll = 0; roll < 5; roll++) {
                 if(checkBoxes.get(roll).isSelected()) {
@@ -3050,9 +3153,7 @@ public class BangFX extends Application {
                     if(dice.get(i).dice == 1) {
                         dl2.setLayoutX(385);
                         dl2.setVisible(true);
-                        die2.setSelected(true);
-                        die2.setDisable(true);
-                        bulletAction();
+                        bulletAction(i);
                     }
                 }
                 else if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) {
@@ -3060,26 +3161,31 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD1)){
                             d2.setLayoutX(300);
                             d2.setVisible(true);
+                            die1.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD2)){
                             d22.setLayoutX(385);
                             d22.setVisible(true);
+                            die2.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD3)){
                             d23.setLayoutX(470);
                             d23.setVisible(true);
+                            die3.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD4)){
                             d24.setLayoutX(555);
                             d24.setVisible(true);
+                            die4.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD5)){
                             d25.setLayoutX(640);
                             d25.setVisible(true);
+                            die5.setDisable(true);
                             dynamiteCount++;
                         }
                     }
@@ -3087,6 +3193,7 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD2)){
                             dc3.setLayoutX(385);
                             dc3.setVisible(true);
+                            die2.setDisable(true);
                             dynamiteCount++;
                         }
                     }
@@ -3094,6 +3201,7 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD2)){
                             dl3.setLayoutX(385);
                             dl3.setVisible(true);
+                            die2.setDisable(true);
                             dynamiteCount++;
                         }
                     }
@@ -3101,11 +3209,13 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD4)){
                             du2.setLayoutX(555);
                             du2.setVisible(true);
+                            die4.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD5)){
                             du22.setLayoutX(640);
                             du22.setVisible(true);
+                            die5.setDisable(true);
                             dynamiteCount++;
                         }
                     }
@@ -3410,11 +3520,6 @@ public class BangFX extends Application {
             arrowAction(arrCount, current);
             }
         
-        for (int i = 0; i < 5; i++) {                                    
-            if(current.computer)
-                checkBoxes.get(i).setDisable(true);    
-        } 
-        
         if(rollCount != 4)
             rollDice.setOnAction(e->{
                 rollS.seek(Duration.ZERO);
@@ -3422,9 +3527,6 @@ public class BangFX extends Application {
                 arrCount = 0;
                 reroll2();
             });
-        if(current.computer){
-            rollDice.fire();
-        }
 
     }
     
@@ -3466,6 +3568,34 @@ public class BangFX extends Application {
 
             resetDieFace();
 
+            for(int i=0; i<5; i++) {
+                checkBoxes.get(i).setDisable(false);
+                if(current.computer) {
+                    aiSetRoll(i);
+                    checkBoxes.get(i).setDisable(true);  
+                }
+                else {
+                    checkBoxes.get(i).setSelected(false);
+                    if(dice.get(i).equals("Indian Arrow")) {
+                        checkBoxes.get(i).setSelected(true);
+                        checkBoxes.get(i).setDisable(true);  
+                    }
+                    if(dice.get(i).equals("Broken Arrow")) {
+                        checkBoxes.get(i).setSelected(true);
+                        checkBoxes.get(i).setDisable(true);  
+                    }
+                    if(dice.get(i).equals("Bullet")) {
+                        checkBoxes.get(i).setSelected(true);
+                        checkBoxes.get(i).setDisable(true);  
+                    }
+                    if(dice.get(i).equals("Dynamite")) {
+                        checkBoxes.get(i).setSelected(false);
+                        checkBoxes.get(i).setDisable(true);  
+                    }
+
+
+                }
+            } 
             for (int roll = 0; roll < 5; roll++) {
                 if(checkBoxes.get(roll).isSelected()) {
                     dice.get(roll).roll();
@@ -3572,9 +3702,7 @@ public class BangFX extends Application {
                     if(dice.get(i).dice == 1) {
                         dl2.setLayoutX(385);
                         dl2.setVisible(true);
-                        die2.setSelected(true);
-                        die2.setDisable(true);
-                        bulletAction();
+                        bulletAction(i);
                     }
                 }
                 else if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) {
@@ -3582,26 +3710,31 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD1)){
                             d2.setLayoutX(300);
                             d2.setVisible(true);
+                            die1.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD2)){
                             d22.setLayoutX(385);
                             d22.setVisible(true);
+                            die2.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD3)){
                             d23.setLayoutX(470);
                             d23.setVisible(true);
+                            die3.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD4)){
                             d24.setLayoutX(555);
                             d24.setVisible(true);
+                            die4.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD5)){
                             d25.setLayoutX(640);
                             d25.setVisible(true);
+                            die5.setDisable(true);
                             dynamiteCount++;
                         }
                     }
@@ -3609,6 +3742,7 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD2)){
                             dl3.setLayoutX(385);
                             dl3.setVisible(true);
+                            die2.setDisable(true);
                             dynamiteCount++;
                         }
                     }
@@ -3616,6 +3750,7 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD2)){
                             dc3.setLayoutX(385);
                             dc3.setVisible(true);
+                            die2.setDisable(true);
                             dynamiteCount++;
                         }
                     }
@@ -3623,11 +3758,13 @@ public class BangFX extends Application {
                         if(dice.get(i).equals(RD4)){
                             du2.setLayoutX(555);
                             du2.setVisible(true);
+                            die4.setDisable(true);
                             dynamiteCount++;
                         }
                         if(dice.get(i).equals(RD5)){
                             du22.setLayoutX(640);
                             du22.setVisible(true);
+                            die5.setDisable(true);
                             dynamiteCount++;
                         }
                     }
@@ -4015,10 +4152,81 @@ public class BangFX extends Application {
         
         current = play_order.get(0);
         
-        coward.setDisable(current.computer);
-        loudmouth.setDisable(current.computer);
+        coward.setDisable(false);
+        loudmouth.setDisable(false);
         coward.setSelected(false);
         loudmouth.setSelected(false);
+        
+        if(current.computer && salInc.isSelected()){
+            Random rd = new Random();
+            boolean bool = rd.nextBoolean();
+            if(bool) {    
+                coward.setOnAction((ActionEvent event) -> {
+                    event.consume();
+                    cDSelect = coward.isSelected();
+
+                    if(cDSelect){
+                        die2.setText("Coward");
+                        dice.remove(RD2);
+                        RD2 = new Dice(1, 0, "Indian Arrow", "Broken Arrow", "Dynamite",
+                                "Bull's Eye 1", "Beer", "Double Beer");
+                        dice.add(RD2);
+                        coward.setText("Coward Die in use");
+                        loudmouth.setText("Use Loudmouth Die");
+                        loudmouth.setSelected(false);
+                        lDie_img.setVisible(false);
+                        cDie_img.setVisible(true);
+                        rDie2_img.setVisible(false);
+                    } else {
+                        die2.setText("");
+                        dice.remove(RD2);
+                        RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+                            "Bull's Eye 2", "Beer", "Gatling");
+                        dice.add(RD2);
+                        coward.setText("Use Coward Die");
+                        lDie_img.setVisible(false);
+                        cDie_img.setVisible(false);
+                        rDie2_img.setVisible(true);
+                    }
+                });
+                coward.fire();
+            }
+            boolean bool2 = rd.nextBoolean();
+            if(bool2) {
+                loudmouth.setOnAction((ActionEvent event) -> {
+                    event.consume();
+                    lDSelect = loudmouth.isSelected();
+
+                    if(lDSelect){
+                        die2.setText("Loudmouth");
+                        dice.remove(RD2);
+                        RD2 = new Dice(1, 0, "Indian Arrow", "Bullet", "Dynamite", 
+                                "Double Bull's Eye 1", "Double Bull's Eye 2", 
+                                "Double Gatling");
+                        dice.add(RD2);
+                        loudmouth.setText("Loudmouth Die in use");
+                        coward.setText("Use Coward Die");
+                        coward.setSelected(false);
+                        cDie_img.setVisible(false);
+                        lDie_img.setVisible(true);
+                        rDie2_img.setVisible(false);
+                    } else {
+                        die2.setText("");
+                        dice.remove(RD2);
+                        RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
+                            "Bull's Eye 2", "Beer", "Gatling");
+                        dice.add(RD2);
+                        loudmouth.setText("Use Loudmouth Die");
+                        cDie_img.setVisible(false);
+                        lDie_img.setVisible(false);
+                        rDie2_img.setVisible(true);
+                    }
+                });
+                loudmouth.fire();
+            }
+        }
+        coward.setDisable(current.computer);
+        loudmouth.setDisable(current.computer);
         rollDice.setDisable(false);
         
         rollDice.setOnAction(e-> {
@@ -4027,11 +4235,8 @@ public class BangFX extends Application {
             arrCount = 0;
             dynamiteCount = 0;
             rollDiceGo();
-        });/*
-        if(current.computer) {
-            rollDice.fire();
-        }
-    */
+        });
+        
     }
     
     public void dynamiteAction(int i, int count){
@@ -4075,8 +4280,6 @@ public class BangFX extends Application {
                 mite.stop();
                 
             });
-            if(play_order.get(1).computer)
-                rollDice.fire();
         }
     }
     
@@ -4171,7 +4374,7 @@ public class BangFX extends Application {
         }
     }
     
-    public void bulletAction(){
+    public void bulletAction(int i){
         eye.seek(Duration.ZERO);
         eye.play();
         current.damage(1);
@@ -4285,10 +4488,10 @@ public class BangFX extends Application {
                 else 
                     play_order.get(k).damage(1);
             }
+            System.out.println(play_order.get(0).name+" found a Gatling gun and "
+                    + "shot everyone!");
             play_order.get(0).arrowReset();
         }
-        System.out.println(play_order.get(0).name+" found a Gatling gun and "
-                + "shot everyone!");
         if(el) {
             System.out.println(current.name+" wounded El Gringo with the "
                     + "Gatling and took an arrow.");
@@ -4306,18 +4509,18 @@ public class BangFX extends Application {
         
         pick2 = (rand.nextInt(100)%2);
         if(pick2 == 0) {
+            System.out.println(play_order.get(pick).name +" was shot in the duel\n");
+            play_order.get(pick).damage(1);
             if(play_order.get(pick).name.equals("El Gringo")) {
-                play_order.get(pick).damage(1);
-                System.out.println(play_order.get(pick).name +" was shot in the duel\n");
                 System.out.println(current.name+" wounded El Gringo"
                         + " in the duel and took an arrow.");
                 arrowAction(1, current);
             }
         }
         if(pick2 == 1) {
+            System.out.println(current.name +" was shot in the duel\n");
+            current.damage(1);
             if(current.name.equals("El Gringo")) {
-                current.damage(1);
-                System.out.println(current.name +" was shot in the duel\n");
                 System.out.println(play_order.get(pick).name+" wounded El Gringo in the "
                         + "duel and took an arrow.");
                 arrowAction(1, play_order.get(pick));
@@ -4371,13 +4574,37 @@ public class BangFX extends Application {
         }
     }
     
-    public void aiSetRoll(){
+    public void aiSetRoll(int i){
         Random rd = new Random();
-        
-        for(int i=0; i<5; i++){
-            boolean bool = (rd.nextBoolean());
+        if(dice.get(i).sides[dice.get(i).side].equals("Arrow")){
+            checkBoxes.get(i).setSelected(true);
+            checkBoxes.get(i).setDisable(true);
         }
-        
+        else if(dice.get(i).sides[dice.get(i).side].equals("Broken Arrow")){
+            checkBoxes.get(i).setSelected(true);
+            checkBoxes.get(i).setDisable(true);
+        }
+        if(dice.get(i).sides[dice.get(i).side].equals("Bullet")){
+            checkBoxes.get(i).setSelected(true);
+            checkBoxes.get(i).setDisable(true);
+        }
+        else if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")){
+            checkBoxes.get(i).setSelected(false);
+            checkBoxes.get(i).setDisable(true);
+        }
+        else if(dice.get(i).sides[dice.get(i).side].equals("Gatling")){
+            checkBoxes.get(i).setSelected(false);
+            checkBoxes.get(i).setDisable(true);
+        }
+        else if(dice.get(i).sides[dice.get(i).side].equals("Double Gatling")){
+            checkBoxes.get(i).setSelected(false);
+            checkBoxes.get(i).setDisable(true);
+        }
+        else {
+            boolean bool = (rd.nextBoolean());
+            checkBoxes.get(i).setSelected(bool);
+            checkBoxes.get(i).setDisable(true);
+        }
     }
     //end of file
 }
