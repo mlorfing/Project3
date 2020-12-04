@@ -26,7 +26,8 @@ import javafx.util.Duration;
 /**
  *
  * @author ctaylor
- * @author Seth
+ * @author Seth, secondary
+ * @author Hunter, secondary
  */
 public class BangFX extends Application {
 
@@ -130,15 +131,16 @@ public class BangFX extends Application {
     CheckBox die5 = new CheckBox();
     
     //variables for background data
-    Boolean isSelected, cDSelect, lDSelect, sher, reroll, belleSpec;
+    Boolean isSelected, cDSelect, lDSelect, sher, reroll;
     int cSel, pageNum=0, dynamiteCount = 0, rollCount = 0, arrCount = 0,
-            gatCount = 0, BE1, BE2;
+            gatCount = 0, BE1, BE2, blah;
     
     static Scanner scan;
     String answer;
     static int arrowCount = 9;
     static boolean chiefArrow = false;
     static boolean chief = false;
+    static boolean  belleSpec = false;
     
     //initialization of game variables
     ComboBox players = new ComboBox();
@@ -1711,13 +1713,13 @@ public class BangFX extends Application {
             Collections.shuffle(char_cards);
         }
         char_cards.add(new CharCards("Black Jack", 8));
-        char_cards.add(new CharCards("El Gringo", 7));
+        char_cards.add(new CharCards("El Gringo", 7));/*
         char_cards.add(new CharCards("Jesse Jones", 9));
         char_cards.add(new CharCards("Jourdonnais", 7));
         char_cards.add(new CharCards("Paul Regret", 9));
         char_cards.add(new CharCards("Pedro Ramirez", 8));
         char_cards.add(new CharCards("Suzy Lafayette", 8));
-        char_cards.add(new CharCards("Vulture Sam", 9));
+        char_cards.add(new CharCards("Vulture Sam", 9));*/
         Collections.shuffle(char_cards);  
 
         //A switch to add specific cards based on how many players there are
@@ -2128,23 +2130,6 @@ public class BangFX extends Application {
             chiefN.setVisible(false);
             chiefChoice.setVisible(false);
         });
-            
-        belleY.setOnAction(e-> {
-            rollDice.setDisable(false);
-            belleSpec = true;
-            belleY.setVisible(false);
-            belleN.setVisible(false);
-            belleQ.setVisible(false);
-        });
-
-        belleN.setOnAction(e-> {
-            rollDice.setDisable(false);
-            belleSpec = false;
-            belleY.setVisible(false);
-            belleN.setVisible(false);
-            belleQ.setVisible(false);
-        });
-        
         //adds all elements to group
         group3.getChildren().clear();
         group3.getChildren()
@@ -2286,6 +2271,9 @@ public class BangFX extends Application {
             }
         });
         
+        for(int i=0; i<5; i++){
+            checkBoxes.get(i).setVisible(false);
+        }
          
         current = play_order.get(0);
         coward.setDisable(current.computer);
@@ -2296,8 +2284,20 @@ public class BangFX extends Application {
         rollDice.setOnAction(e-> {
             rollS.seek(Duration.ZERO);
             rollS.play();
+            for(int i=0; i<5; i++){
+                checkBoxes.get(i).setVisible(true);
+            }
             rollDiceGo();
         });
+        
+        if(current.computer) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            rollDice.fire();
+        }
     }
     
     public void resetDieFace(){
@@ -2415,9 +2415,12 @@ public class BangFX extends Application {
         
         resetDieFace();
         
-        for (int roll = 0; roll < 5; roll++) {
-            checkBoxes.get(roll).setSelected(false);
-            checkBoxes.get(roll).setDisable(false);
+        for(int i=0; i<5; i++) {
+            checkBoxes.get(i).setSelected(false);
+            if(current.computer)
+                checkBoxes.get(i).setDisable(true);   
+            else
+                checkBoxes.get(i).setDisable(false);
         }
         
         for (int roll = 0; roll < 5; roll++) {
@@ -2434,8 +2437,6 @@ public class BangFX extends Application {
         System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
         
         for(int i=0; i<5; i++) {
-            checkBoxes.get(i).setSelected(false);
-            checkBoxes.get(i).setDisable(false);
             if(dice.get(i).sides[dice.get(i).side].equals("Indian Arrow")) {
                 if(dice.get(i).dice == 0){
                     if(dice.get(i).equals(RD1)){
@@ -2582,6 +2583,97 @@ public class BangFX extends Application {
                         dynamiteCount++;
                     }
                 }
+                if(dynamiteCount < 3) {
+                    if(current.name.equals("Belle Star")){
+                        blah = i;
+                        belleY.setOnAction(e-> {
+                            rollDice.setDisable(false);
+                            belleSpec = true;
+                            belleY.setVisible(false);
+                            belleN.setVisible(false);
+                            belleQ.setVisible(false);
+                            checkBoxes.get(blah).setDisable(false);
+                            checkBoxes.get(blah).setSelected(false);
+                            dynamiteCount--;
+                            if(dice.get(blah).dice == 1){
+                                coward.setSelected(false);
+                                loudmouth.setSelected(false);
+                            }
+                            do {
+                                dice.get(blah).roll();
+                            }
+                            while(!dice.get(blah).sides[dice.get(blah).side].equals("Gatling"));
+                            if(dice.get(blah).dice == 0){
+                                if(dice.get(blah).equals(RD1)){
+                                    d6.setLayoutX(300);
+                                    d6.setVisible(true);
+                                    d2.setVisible(false);
+                                }
+                                if(dice.get(blah).equals(RD2)){
+                                    d62.setLayoutX(385);
+                                    d62.setVisible(true);
+                                    d22.setVisible(false);
+                                }
+                                if(dice.get(blah).equals(RD3)){
+                                    d63.setLayoutX(470);
+                                    d63.setVisible(true);
+                                    d23.setVisible(false);
+                                }
+                                if(dice.get(blah).equals(RD4)){
+                                    d64.setLayoutX(555);
+                                    d64.setVisible(true);
+                                    d24.setVisible(false);
+                                }
+                                if(dice.get(blah).equals(RD5)){
+                                    d65.setLayoutX(640);
+                                    d65.setVisible(true);
+                                    d25.setVisible(false);
+                                }
+                            }
+                            else if(dice.get(blah).dice == 2){
+                                if(dice.get(blah).equals(RD4)){
+                                    du4.setLayoutX(555);
+                                    du4.setVisible(true);
+                                    du2.setVisible(false);
+                                }
+                                if(dice.get(blah).equals(RD5)){
+                                    du42.setLayoutX(640);
+                                    du42.setVisible(true);
+                                    du22.setVisible(false);
+                                }
+                            }
+                        });
+
+                        belleN.setOnAction(e-> {
+                            rollDice.setDisable(false);
+                            belleSpec = false;
+                            belleY.setVisible(false);
+                            belleN.setVisible(false);
+                            belleQ.setVisible(false);
+                            checkBoxes.get(blah).setDisable(true);
+                            checkBoxes.get(blah).setSelected(false);
+                        });
+
+                        if(!belleSpec) {
+                            if(current.computer){ 
+                                belleY.setVisible(true);
+                                belleN.setVisible(true);
+                                belleQ.setVisible(true);
+                                rollDice.setDisable(true);
+                                belleY.fire();
+                            }
+                            else {
+                                belleY.setVisible(true);
+                                belleN.setVisible(true);
+                                belleQ.setVisible(true);
+                                rollDice.setDisable(true);
+                            }
+                        }
+
+                    }
+                }
+                if(current.name.equals("Belle Star"))
+                    System.out.println("Belle switched Dynamite to Gatling? "+belleSpec);
                 dynamiteAction(i, dynamiteCount);
             }
             else if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) {
@@ -2764,7 +2856,7 @@ public class BangFX extends Application {
         
         if(arrCount != 0){
             System.out.println("r1");
-            arrowAction(arrCount);
+            arrowAction(arrCount, current);
         }
         
         for (int i = 0; i < 5; i++) {                                    
@@ -2783,6 +2875,9 @@ public class BangFX extends Application {
             rollCount++;
             reroll();
         });
+        if(current.computer){
+            rollDice.fire();
+        }
     
     }
     
@@ -2989,6 +3084,97 @@ public class BangFX extends Application {
                             dynamiteCount++;
                         }
                     }
+                    if(dynamiteCount < 3) {
+                        if(current.name.equals("Belle Star")){
+                            blah = i;
+                            belleY.setOnAction(e-> {
+                                rollDice.setDisable(false);
+                                belleSpec = true;
+                                belleY.setVisible(false);
+                                belleN.setVisible(false);
+                                belleQ.setVisible(false);
+                                checkBoxes.get(blah).setDisable(false);
+                                checkBoxes.get(blah).setSelected(false);
+                                dynamiteCount--;
+                                if(dice.get(blah).dice == 1){
+                                    coward.setSelected(false);
+                                    loudmouth.setSelected(false);
+                                }
+                                do {
+                                    dice.get(blah).roll();
+                                }
+                                while(!dice.get(blah).sides[dice.get(blah).side].equals("Gatling"));
+                                if(dice.get(blah).dice == 0){
+                                    if(dice.get(blah).equals(RD1)){
+                                        d6.setLayoutX(300);
+                                        d6.setVisible(true);
+                                        d2.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD2)){
+                                        d62.setLayoutX(385);
+                                        d62.setVisible(true);
+                                        d22.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD3)){
+                                        d63.setLayoutX(470);
+                                        d63.setVisible(true);
+                                        d23.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD4)){
+                                        d64.setLayoutX(555);
+                                        d64.setVisible(true);
+                                        d24.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD5)){
+                                        d65.setLayoutX(640);
+                                        d65.setVisible(true);
+                                        d25.setVisible(false);
+                                    }
+                                }
+                                else if(dice.get(blah).dice == 2){
+                                    if(dice.get(blah).equals(RD4)){
+                                        du4.setLayoutX(555);
+                                        du4.setVisible(true);
+                                        du2.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD5)){
+                                        du42.setLayoutX(640);
+                                        du42.setVisible(true);
+                                        du22.setVisible(false);
+                                    }
+                                }
+                            });
+
+                            belleN.setOnAction(e-> {
+                                rollDice.setDisable(false);
+                                belleSpec = false;
+                                belleY.setVisible(false);
+                                belleN.setVisible(false);
+                                belleQ.setVisible(false);
+                                checkBoxes.get(blah).setDisable(true);
+                                checkBoxes.get(blah).setSelected(false);
+                            });
+
+                            if(!belleSpec) {
+                                if(current.computer){ 
+                                    belleY.setVisible(true);
+                                    belleN.setVisible(true);
+                                    belleQ.setVisible(true);
+                                    rollDice.setDisable(true);
+                                    belleY.fire();
+                                }
+                                else {
+                                    belleY.setVisible(true);
+                                    belleN.setVisible(true);
+                                    belleQ.setVisible(true);
+                                    rollDice.setDisable(true);
+                                }
+                            }
+
+                        }
+                    }
+                    if(current.name.equals("Belle Star"))
+                        System.out.println("Belle switched Dynamite to Gatling? "+belleSpec);
                     dynamiteAction(i, dynamiteCount);
                 }
                 else if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) {
@@ -3172,7 +3358,7 @@ public class BangFX extends Application {
         
         if(arrCount != 0){
             System.out.println("rr1");
-            arrowAction(arrCount);
+            arrowAction(arrCount, current);
             }
         
         for (int i = 0; i < 5; i++) {                                    
@@ -3187,6 +3373,9 @@ public class BangFX extends Application {
                 arrCount = 0;
                 reroll2();
             });
+        if(current.computer){
+            rollDice.fire();
+        }
 
     }
     
@@ -3393,6 +3582,97 @@ public class BangFX extends Application {
                             dynamiteCount++;
                         }
                     }
+                    if(dynamiteCount < 3) {
+                        if(current.name.equals("Belle Star")){
+                            blah = i;
+                            belleY.setOnAction(e-> {
+                                rollDice.setDisable(false);
+                                belleSpec = true;
+                                belleY.setVisible(false);
+                                belleN.setVisible(false);
+                                belleQ.setVisible(false);
+                                checkBoxes.get(blah).setDisable(false);
+                                checkBoxes.get(blah).setSelected(false);
+                                dynamiteCount--;
+                                if(dice.get(blah).dice == 1){
+                                    coward.setSelected(false);
+                                    loudmouth.setSelected(false);
+                                }
+                                do {
+                                    dice.get(blah).roll();
+                                }
+                                while(!dice.get(blah).sides[dice.get(blah).side].equals("Gatling"));
+                                if(dice.get(blah).dice == 0){
+                                    if(dice.get(blah).equals(RD1)){
+                                        d6.setLayoutX(300);
+                                        d6.setVisible(true);
+                                        d2.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD2)){
+                                        d62.setLayoutX(385);
+                                        d62.setVisible(true);
+                                        d22.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD3)){
+                                        d63.setLayoutX(470);
+                                        d63.setVisible(true);
+                                        d23.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD4)){
+                                        d64.setLayoutX(555);
+                                        d64.setVisible(true);
+                                        d24.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD5)){
+                                        d65.setLayoutX(640);
+                                        d65.setVisible(true);
+                                        d25.setVisible(false);
+                                    }
+                                }
+                                else if(dice.get(blah).dice == 2){
+                                    if(dice.get(blah).equals(RD4)){
+                                        du4.setLayoutX(555);
+                                        du4.setVisible(true);
+                                        du2.setVisible(false);
+                                    }
+                                    if(dice.get(blah).equals(RD5)){
+                                        du42.setLayoutX(640);
+                                        du42.setVisible(true);
+                                        du22.setVisible(false);
+                                    }
+                                }
+                            });
+
+                            belleN.setOnAction(e-> {
+                                rollDice.setDisable(false);
+                                belleSpec = false;
+                                belleY.setVisible(false);
+                                belleN.setVisible(false);
+                                belleQ.setVisible(false);
+                                checkBoxes.get(blah).setDisable(true);
+                                checkBoxes.get(blah).setSelected(false);
+                            });
+
+                            if(!belleSpec) {
+                                if(current.computer){ 
+                                    belleY.setVisible(true);
+                                    belleN.setVisible(true);
+                                    belleQ.setVisible(true);
+                                    rollDice.setDisable(true);
+                                    belleY.fire();
+                                }
+                                else {
+                                    belleY.setVisible(true);
+                                    belleN.setVisible(true);
+                                    belleQ.setVisible(true);
+                                    rollDice.setDisable(true);
+                                }
+                            }
+
+                        }
+                    }
+                    if(current.name.equals("Belle Star"))
+                        System.out.println("Belle switched Dynamite to Gatling? "+belleSpec);
                     dynamiteAction(i, dynamiteCount);
                 }
                 else if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) {
@@ -3610,7 +3890,7 @@ public class BangFX extends Application {
         
         if(arrCount != 0){
             System.out.println("rr2");
-            arrowAction(arrCount);
+            arrowAction(arrCount, current);
             }
         
         try {
@@ -3670,10 +3950,6 @@ public class BangFX extends Application {
         
         current = play_order.get(0);
         
-        for(int i=0; i<5; i++) {
-            if(current.computer)
-                checkBoxes.get(i).setDisable(true);   
-        }
         coward.setDisable(current.computer);
         loudmouth.setDisable(current.computer);
         coward.setSelected(false);
@@ -3687,11 +3963,18 @@ public class BangFX extends Application {
             dynamiteCount = 0;
             rollDiceGo();
         });
+        if(current.computer) {
+            rollDice.fire();
+        }
     
     }
     
     public void dynamiteAction(int i, int count){
         dynExp.setText(current.name+"'s turn ended due to dynamite explosion.");
+        
+        checkBoxes.get(i).setDisable(true);
+        checkBoxes.get(i).setSelected(false);
+        
         if(play_order.get(0).name.equals("Black Jack")) {
                 if(current.computer == false){
                     checkBoxes.get(i).setSelected(true);
@@ -3701,10 +3984,6 @@ public class BangFX extends Application {
                     checkBoxes.get(i).setSelected(true);
                     checkBoxes.get(i).setDisable(true);
                 }
-        }
-        else {
-            checkBoxes.get(i).setDisable(true);
-            checkBoxes.get(i).setSelected(false);
         }
         
         if(count > 2){
@@ -3731,14 +4010,13 @@ public class BangFX extends Application {
                 mite.stop();
                 
             });
-        }
-        if(current.name.equals("Belle Star")&&current.dynToGat){
-            current.usedAbility();
-            
+            if(play_order.get(1).computer)
+                rollDice.fire();
         }
     }
     
-    public void arrowAction(int arr) {
+    public void arrowAction(int arr, Player takingArr) {
+        current = takingArr;
         if(chiefArrow){
             if(current.computer){ 
                 chiefY.setVisible(true);
@@ -3771,8 +4049,41 @@ public class BangFX extends Application {
                 attack.stop();
             });
             indianAttack();
+
+        }
+        group3.getChildren().remove(character);
+        
+        character.setText("Players: \n"
+                + current.name +"'s turn \n");
+
+        for (int j = 0; j < play_order.size(); j++) {
+            if(play_order.get(j).computer == false){
+                character.setText(character.getText()+ (j + 1) + ") You (" 
+                    +play_order.get(j).name+")"
+                    + "\nHealth: "+play_order.get(j).health
+                    +"\nArrows: "+play_order.get(j).arrows);
+            } else {
+                character.setText(character.getText()+ (j + 1) + ") "
+                    + play_order.get(j).name
+                    + "\nHealth: "+play_order.get(j).health
+                    + "\nArrows: "+play_order.get(j).arrows);
+            }
+            if(play_order.get(j).chiefArrow == true)
+            {
+            character.setText(character.getText()
+                    +"\nHas Chief Arrow"
+                    +"\n\n");
+            }
+            else {
+                character.setText(character.getText()+".\n\n");
+            }
+        }
+        group3.getChildren().add(character);
+        for(int k=0; k<play_order.size(); k++) {
+            System.out.println(play_order.get(k).name+" "+play_order.get(k).arrows);
         }
         System.out.println(arrowCount+" arrows left in pile.");
+        current = play_order.get(0);
     }
     
     public void barrowAction(){
@@ -3790,7 +4101,7 @@ public class BangFX extends Application {
                 pick = (rand.nextInt(1000000)%cSel);
             System.out.println(play_order.get(pick).name+" returned an arrow.");
             play_order.get(pick).arrows -= 1;
-            arrowCount += 1;
+            arrowCount++;
             System.out.println(arrowCount+" arrows in the pile.");
         }
     }
@@ -3887,9 +4198,9 @@ public class BangFX extends Application {
         if(el>0){
             for(int i=0; i<el; i++){
                 System.out.println(el);
-                System.out.println(current.name+" wounded El Gringo with a "
+                System.out.println(current.name+" wounded El Gringo with a"
                         + " Bull's Eye and took an arrow.");
-                arrowAction(1);
+                arrowAction(1, current);
             }
         }
         
@@ -3908,13 +4219,13 @@ public class BangFX extends Application {
                 else 
                     play_order.get(k).damage(1);
             }
+            play_order.get(0).arrowReset();
         }
         if(el) {
             System.out.println(current.name+" wounded El Gringo with the "
                     + "Gatling and took an arrow.");
-            arrowAction(1);
+            arrowAction(1, current);
         }
-        play_order.get(0).arrowReset();
     }
     
     public void dueling(){
@@ -3927,21 +4238,22 @@ public class BangFX extends Application {
         
         pick2 = (rand.nextInt(100)%2);
         if(pick2 == 0) {
-            if(play_order.get(pick).name.equals("El Gringo"))
-                el = true;
-            play_order.get(pick).damage(1);
-            System.out.println(play_order.get(pick).name +" was shot in the duel\n");
+            if(play_order.get(pick).name.equals("El Gringo")) {
+                play_order.get(pick).damage(1);
+                System.out.println(play_order.get(pick).name +" was shot in the duel\n");
+                System.out.println(current.name+" wounded El Gringo"
+                        + " in the duel and took an arrow.");
+                arrowAction(1, current);
+            }
         }
         if(pick2 == 1) {
-            if(current.name.equals("El Gringo"))
-                el = true;
-            current.damage(1);
-            System.out.println(current.name +" was shot in the duel\n");
-        }
-        if(el) {
-            System.out.println(current.name+" wounded El Gringo in the "
-                    + "duel and took an arrow.");
-            arrowAction(1);
+            if(current.name.equals("El Gringo")) {
+                current.damage(1);
+                System.out.println(current.name +" was shot in the duel\n");
+                System.out.println(play_order.get(pick).name+" wounded El Gringo in the "
+                        + "duel and took an arrow.");
+                arrowAction(1, play_order.get(pick));
+            }
         }
     }
     
@@ -3977,9 +4289,6 @@ public class BangFX extends Application {
                 }
                 play_order.get(j).arrowReset();
                 play_order.get(j).chiefArrow = false;
-                if (play_order.get(j).health <= 0) {
-                    //action.setText(play_order.get(j).name+ " has died.");
-                }
             } else {
                 play_order.get(j).arrowReset();
                 play_order.get(j).chiefArrow = false;
