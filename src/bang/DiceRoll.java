@@ -10,7 +10,12 @@ import java.util.Scanner;
 
 /**
  *
- * @author ctaylor
+ * @MainAuthor Sean Criswell
+ * @author Cristiana Taylor
+ * @author Seth Michaels
+ * @author Megan Lorfing
+ * @author Hunter King
+ * 
  */
 public class DiceRoll {
     private static String reroll() {

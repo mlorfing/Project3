@@ -8,8 +8,12 @@ package bang;
 import java.util.Random;
 
 /**
- *
- * @author ctaylor
+ * @MainAuthor Sean Criswell
+ * @author Cristiana Taylor
+ * @author Seth Michaels
+ * @author Megan Lorfing
+ * @author Hunter King
+ * 
  */
 public class Dice {
 

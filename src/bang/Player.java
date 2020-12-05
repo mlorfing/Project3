@@ -7,8 +7,12 @@ package bang;
 
 /**
  *
- * @author ctaylor
+ * @author Christiana
  * @author Megan Lorfing (secondary author)
+ * @author Hunter King
+ * @author Seth Michaels
+ * @author sean Criswell
+ * 
  */
 public class Player {
 

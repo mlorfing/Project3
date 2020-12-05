@@ -7,7 +7,11 @@ package bang;
 
 /**
  *
- * @author ctaylor
+ * @MainAuthor Cristiana Taylor 
+ * @author Megan Lorfing
+ * @author Seth Michaels
+ * @author Sean Criswell
+ * @author Hunter King
  */
 public class CharCards {
     public String name;

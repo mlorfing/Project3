@@ -10,8 +10,12 @@ package bang;
 import java.util.*;
 /**
  *
- * @author Hunter King 
+ * @Main author Hunter King 
  * @author Megan Lorfing
+ * @aurthor Sean Criswell
+ * @aurthor seth Michaels
+ * @aurthor Christiana Taylor
+ * 
  */
 
 /*

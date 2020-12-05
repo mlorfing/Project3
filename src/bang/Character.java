@@ -1,6 +1,10 @@
 package bang;
 /*
- * @author Megan Lorfing
+ * @MainAuthor Megan Lorfing 
+ * @author Cristiana Taylor
+ * @author Seth Michaels
+ * @author Sean Criswell
+ * @author Hunter King
  * 
  * CS 2365-001
  * Project 3

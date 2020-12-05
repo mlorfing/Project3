@@ -7,7 +7,12 @@ package bang;
 
 /**
  *
- * @author ctaylor
+ * @Main author Sean Criswell
+ * @author Christiana Taylor
+ * @author seth Michaels
+ * @author Megan Lorfing
+ * @author Hunter King
+ * 
  */
 public class Roles {
     public String role;
