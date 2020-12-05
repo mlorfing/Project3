@@ -61,7 +61,7 @@ public class Player {
         if(name.equals("Greg Digger"))
         	doubleBeer = true;
         if(name.equals("Pedro Ramirez"))
-        	pedro = true;
+        	this.pedro = true;
         if(name.equals("Jourdonnais"))
         	this.jourdonnais = true;
         if(name.equals("Jesse Jones"))
@@ -91,7 +91,7 @@ public class Player {
 
     public void arrowReset() {
         this.arrows = 0;
-    }
+    }    
 
     public void damage(int damage) {
         if (this.health > damage) {
@@ -99,9 +99,10 @@ public class Player {
         } else {
             this.health = 0;
         }
-        if(pedro && this.arrows > 0)
+        if(pedro && this.arrows > 0){
             this.arrows--;
-        bulletUpdate();
+            System.out.println("Pedro returned an arrow.");
+        }
     }
     
     // function name: clearArrows()
