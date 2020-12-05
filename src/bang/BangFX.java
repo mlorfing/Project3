@@ -2138,6 +2138,7 @@ public class BangFX extends Application {
                         dl6, du1, du2, du3, du4, du5, du6, du12, du22, 
                         du32, du42, du52, du62, die1, die2, die3, die4, die5,
                         indAtt, dynExp, belleQ, belleY, belleN);
+        //replaces reg dice with Look at Me dice
         if((undInc.isSelected())){
             group3.getChildren()
                     .addAll(bDie_img, bDie2_img);
@@ -2171,6 +2172,7 @@ public class BangFX extends Application {
                 }
             
             }
+        //sets regular dice
         else if((!undInc.isSelected())){
             group3.getChildren()
                     .add(rDie_img);
@@ -2208,7 +2210,7 @@ public class BangFX extends Application {
         
         coward.setText("Use Coward Die");
         loudmouth.setText("Use Loudmouth Die");
-        
+        //changes die to loudmouth
         loudmouth.setOnAction((ActionEvent event) -> {
             event.consume();
             lDSelect = loudmouth.isSelected();
@@ -2227,6 +2229,7 @@ public class BangFX extends Application {
                 lDie_img.setVisible(true);
                 rDie2_img.setVisible(false);
             } else {
+                //changes die to regular
                 die2.setText("");
                 dice.remove(RD2);
                 RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
@@ -2238,7 +2241,7 @@ public class BangFX extends Application {
                 rDie2_img.setVisible(true);
             }
         });     
-        
+        ///changes die to coward
         coward.setOnAction((ActionEvent event) -> {
             event.consume();
             cDSelect = coward.isSelected();
@@ -2256,6 +2259,7 @@ public class BangFX extends Application {
                 cDie_img.setVisible(true);
                 rDie2_img.setVisible(false);
             } else {
+                //changes die to regular
                 die2.setText("");
                 dice.remove(RD2);
                 RD2 = new Dice(0, 0, "Indian Arrow", "Dynamite", "Bull's Eye 1",
@@ -2281,6 +2285,7 @@ public class BangFX extends Application {
         coward.setSelected(false);
         loudmouth.setSelected(false);
         
+        //AI for computer players and use of dice
         if(current.computer && salInc.isSelected()){
             Random rd = new Random();
             boolean bool = rd.nextBoolean();
@@ -2478,14 +2483,14 @@ public class BangFX extends Application {
         for (int roll = 0; roll < 5; roll++) {
             dice.get(roll).roll();
         }
-        
+        //prints roll output
         System.out.println("Roll " + (rollCount + 1) + " results:");
         System.out.println("Dice 1 : " + RD1.sides[RD1.side]);
         System.out.println("Dice 2 : " + RD2.sides[RD2.side]);
         System.out.println("Dice 3 : " + RD3.sides[RD3.side]);
         System.out.println("Dice 4 : " + RD4.sides[RD4.side]);
         System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
-        
+        //sets checkbox and die faces for rolls
         for(int i=0; i<5; i++) {
             if(dice.get(i).sides[dice.get(i).side].equals("Indian Arrow")) {
                 if(dice.get(i).dice == 0){
@@ -2640,6 +2645,7 @@ public class BangFX extends Application {
                         dynamiteCount++;
                     }
                 }
+                //belle star special check
                 if(dynamiteCount < 3) {
                     if(current.name.equals("Belle Star")){
                         blah = i;
@@ -2755,6 +2761,7 @@ public class BangFX extends Application {
                         chiefN.setDisable(false);
                     }
                 }
+                //applies dynamite action immediately
                 if(current.name.equals("Belle Star"))
                     System.out.println("Belle switched Dynamite to Gatling? "+belleSpec);
                 dynamiteAction(i, dynamiteCount);
@@ -2936,11 +2943,12 @@ public class BangFX extends Application {
                 }
             }
         }
-        
+        //applies arrows at end of roll
         if(arrCount != 0){
             arrowAction(arrCount, current);
         }
         
+        //if a computer is playing, disables buttons
         for (int i = 0; i < 5; i++) {                                    
             checkBoxes.get(i).setFont(Font.font("Copperplate", 10)); 
             checkBoxes.get(i).setLayoutX((i * 85) + 300);   
@@ -3019,7 +3027,7 @@ public class BangFX extends Application {
             group3.getChildren().add(character);
 
             resetDieFace();
-
+            //if computer, sets selected for checkboxes
             for(int i=0; i<5; i++) {
                 if(current.computer) {
                     checkBoxes.get(i).setDisable(false);
@@ -3052,6 +3060,7 @@ public class BangFX extends Application {
                     dice.get(roll).roll();
                 }
             }
+            //prints out roll outcomes
             System.out.println("Roll " + (rollCount + 1) + " results:");
             System.out.println("Dice 1 : " + RD1.sides[RD1.side]);
             System.out.println("Dice 2 : " + RD2.sides[RD2.side]);
@@ -3059,6 +3068,7 @@ public class BangFX extends Application {
             System.out.println("Dice 4 : " + RD4.sides[RD4.side]);
             System.out.println("Dice 5 : " + RD5.sides[RD5.side]);
 
+            //enables checkboxes for human
             if(!current.computer){
                 for(int i=0; i<5; i++){
                     checkBoxes.get(i).setSelected(false);
@@ -3066,6 +3076,7 @@ public class BangFX extends Application {
                 }
             }
             
+            //sets die faces and checkboxes per die
             for(int i=0; i<5; i++) {
                 if(dice.get(i).sides[dice.get(i).side].equals("Indian Arrow")) {
                     if(dice.get(i).dice == 0){
@@ -3220,6 +3231,7 @@ public class BangFX extends Application {
                             dynamiteCount++;
                         }
                     }
+                    //belle star special ability
                     if(dynamiteCount < 3) {
                         if(current.name.equals("Belle Star")){
                             blah = i;
@@ -3335,7 +3347,7 @@ public class BangFX extends Application {
                             chiefN.setDisable(false);
                         }
                     }
-                    
+                    //applies dynamite action immediately
                     dynamiteAction(i, dynamiteCount);
                 }
                 else if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) {
@@ -3516,7 +3528,7 @@ public class BangFX extends Application {
                 }
             }rollCount++;
         }
-        
+        //applies arrows at end of roll
         if(arrCount != 0){
             arrowAction(arrCount, current);
             }
@@ -3535,7 +3547,7 @@ public class BangFX extends Application {
         dynamiteCount = 0;
         current.resetAbility();
         if(rollCount != 4) {
-            
+            //clears array of final outcomes
             finalDice.clear();
  
             group3.getChildren().remove(character);
@@ -3572,6 +3584,7 @@ public class BangFX extends Application {
 
             resetDieFace();
 
+            //if computer, selects checkboxes
             for(int i=0; i<5; i++) {
                 if(current.computer) {
                     checkBoxes.get(i).setDisable(false);
@@ -3600,12 +3613,14 @@ public class BangFX extends Application {
 
                 }
             } 
+            //rolls dice not selected
             for (int roll = 0; roll < 5; roll++) {
                 if(checkBoxes.get(roll).isSelected()) {
                     dice.get(roll).roll();
                 }
             }
             
+            //gets array of dice
             for (int roll = 0; roll < 5; roll++) {
                 finalDice.add(dice.get(roll).keep());
             }
@@ -3772,6 +3787,7 @@ public class BangFX extends Application {
                             dynamiteCount++;
                         }
                     }
+                    //applies dynamite action immediately
                     dynamiteAction(i, dynamiteCount);
                 }
                 else if(dice.get(i).sides[dice.get(i).side].equals("Whiskey")) {
@@ -3961,6 +3977,7 @@ public class BangFX extends Application {
             if(dice.get(i).sides[dice.get(i).side].equals("Dynamite")) {
                 rollDice.setDisable(true);
                 if(dynamiteCount < 3) {
+                    //belle special ability
                     if(current.name.equals("Belle Star")){
                         blah = i;
                         belleY.setOnAction(e-> {
@@ -4063,6 +4080,7 @@ public class BangFX extends Application {
             }
         }
         
+        //calls action of all other dice in order of priority
         int lifejuice = 0;
         int duelCount = 0;
         dynamiteCount = 0;
@@ -4114,7 +4132,7 @@ public class BangFX extends Application {
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             } 
-
+            //suzy lafayette special ability
             if(current.name.equals("Suzy Lafayette") && BE1 == 0 && BE2 == 0 
                 && current.health!=current.maxHealth) {
                     current.heal(2);
@@ -4151,20 +4169,20 @@ public class BangFX extends Application {
                 dueling();
             }
         }
-        
+        //checks for a winner
         deathcheck();
         setWin(weiner);
         
         play_order.add(play_order.get(0));
         play_order.remove(0);
-        
+        //moves player to back of line
         current = play_order.get(0);
         
         coward.setDisable(false);
         loudmouth.setDisable(false);
         coward.setSelected(false);
         loudmouth.setSelected(false);
-        
+        //sets dice for computer
         if(current.computer && salInc.isSelected()){
             Random rd = new Random();
             boolean bool = rd.nextBoolean();
@@ -4267,7 +4285,7 @@ public class BangFX extends Application {
                     checkBoxes.get(i).setDisable(true);
                 }
         }
-        
+        //if enough dynamite, will explode
         if(count > 2){
             dynExp.setVisible(true);
             rollDice.setDisable(true);
@@ -4304,6 +4322,7 @@ public class BangFX extends Application {
      */
     public void arrowAction(int arr, Player takingArr) {
         current = takingArr;
+        //if chief arrow is in play
         if(chiefArrow){
             if(current.computer){ 
                 chiefY.setVisible(true);
@@ -4319,6 +4338,7 @@ public class BangFX extends Application {
             }
         }
         current.arrows += arr;
+        //displays each arrow amount for records
         for(int k=0; k<play_order.size(); k++) {
             System.out.println(play_order.get(k).name+" arrows: "+play_order.get(k).arrows);
         }
@@ -4338,6 +4358,7 @@ public class BangFX extends Application {
                 indAtt.setVisible(false);
                 attack.stop();
             });
+            //checks for winner
             indianAttack();
             setWin(weiner);
 
@@ -4346,7 +4367,7 @@ public class BangFX extends Application {
         
         character.setText("Players: \n"
                 + current.name +"'s turn \n");
-
+        //updates screen
         for (int j = 0; j < play_order.size(); j++) {
             if(play_order.get(j).computer == false){
                 character.setText(character.getText()+ (j + 1) + ") You (" 
@@ -4381,12 +4402,14 @@ public class BangFX extends Application {
      * adds arrow back to pile
      */
     public void barrowAction(){
+        //checks if anyone has an arrow
         boolean arrC = false;
         for(int i=0; i<cSel; i++){
             if(play_order.get(i).arrows > 0) {
                 arrC = true;
             }
         }
+        //picks random to return arrow if current has none
         if(arrC){
             Random rand = new Random();
             int pick = 0;
@@ -4409,6 +4432,7 @@ public class BangFX extends Application {
     }
     /**
      * heals player based off drink
+     * if current = maxHealth, will give to random player
      * @param i - takes int for how drunk player is getting
      */    
     public void getDrunk(int i){
@@ -4449,9 +4473,11 @@ public class BangFX extends Application {
         
     }
     /**
-     * 
+     * current shoots person to immediate left or right
      * @param be1 - number of Bull's Eye 1
+     * current shoots person 2 left or 2 right
      * @param be2 - number of Bull's Eye 2
+     * El Gringo special
      */
     public void beAction(int be1, int be2){
         eye.seek(Duration.ZERO);
@@ -4504,6 +4530,8 @@ public class BangFX extends Application {
     }
     /**
      * performs gatling attack if correct# of gat
+     * applies damage to all players
+     * El Gringo Special
      * @param gat - gatling count on last roll
      */
     public void gatAttack(int gat){
@@ -4533,6 +4561,7 @@ public class BangFX extends Application {
     /**
      * FISTICUFFS AT DAWN
      * takes both players and sets to randomly pick a loser
+     * El Gringo special
      */
     public void dueling(){
         boolean el = false;
@@ -4565,6 +4594,7 @@ public class BangFX extends Application {
     /**
      * Indians are taking back their land
      * applies arrow damage and resets pile
+     * Jourdonnais special
      */
     public static void indianAttack() {
         int most = 0;
