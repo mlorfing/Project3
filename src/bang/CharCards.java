@@ -7,7 +7,7 @@ package bang;
 
 /**
  *
- * @MainAuthor Cristiana Taylor 
+ * @MainAuthor Christiana Taylor 
  * @author Megan Lorfing
  * @author Seth Michaels
  * @author Sean Criswell
@@ -16,7 +16,7 @@ package bang;
 public class CharCards {
     public String name;
     public int lp;
-    
+    //returns character values
     public CharCards(String name, int lifepoints){
         this.name = name;
         this.lp = lifepoints;
