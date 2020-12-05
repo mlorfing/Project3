@@ -62,6 +62,7 @@ public class Player {
         } else if (this.role.equals("Renegade")) {
             this.team = 2;
         }
+        //specials
         if(name.equals("Greg Digger"))
         	doubleBeer = true;
         if(name.equals("Pedro Ramirez"))
@@ -120,11 +121,7 @@ public class Player {
  		health -= arrows;
  		arrows = 0;
  	}
-
-//AI assigning  each character roles according to their abilties
-
-
-       
+    
    public void setMaxHealth(int maxHealth){
        this.maxHealth = maxHealth;
    }
@@ -142,12 +139,6 @@ public class Player {
     public void revealRole() {
         this.shown = true;
         this.known = true;
-    }
-    
-    public boolean diceChoice()
-    {
-        
-        return true;
     }
     
     // function: isDead
@@ -173,7 +164,7 @@ public class Player {
  		else
  			health += healthAdded;
  	}
-    //disables abilities if used
+    //disables Belle abilities if used
     public void usedAbility(){
         BangFX.belleSpec = true;
             if(name.equals("Belle Star")){
@@ -182,7 +173,7 @@ public class Player {
                 }
     }
 
-    //resets player ability
+    //resets Belle ability
     public void resetAbility(){
             if(name.equals("Belle Star")){
                 BangFX.belleSpec = false;
