@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  * @MainAuthor Sean Criswell
- * @author Cristiana Taylor
+ * @author Christiana Taylor
  * @author Seth Michaels
  * @author Megan Lorfing
  * @author Hunter King
@@ -22,6 +22,7 @@ public class Dice {
     int dice;
     boolean canRoll;
     
+    //takes dice from arraylist
     public Dice(int dice, int side, String s1, String s2, String s3, 
             String s4, String s5, String s6){
         this.side = side;
@@ -39,6 +40,7 @@ public class Dice {
         return this.sides[this.side];
     }
     
+    //rolls to display 1 of 6 sides
     public String roll(){
         Random rand = new Random();  
         this.side = (rand.nextInt(1000000000)%6);
