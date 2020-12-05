@@ -32,20 +32,12 @@ public class Turn {
     
     public Turn(ArrayList<Player> lobby, int pos){
         //dice rolls
-        String indianArrow="indian arrow";
         int dynCounter=0; 
-        String be1= "bull's eye '1'";
-        String be2= "bull's eye '2'";
-        String beer= "beer";
-        String gatling= "gatling";
         String Reroll;
         
         Player turnPlayer = lobby.get(pos);
         
         Dice currDie;
-        String side;
-        
-        Dice regDie = new Dice(0,0, "indian arrow","dynamite" ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
         
         Dice die1 = new Dice(0,0, "indian arrow","dynamite" 
                              ,"bull's eye '1'","bull's eye '2'" , "beer", "gatling");
@@ -259,16 +251,6 @@ public class Turn {
             arrowPool--;
         }
     	return l;
-    }
-    /*
-    arrowCheck
-    checks to see if all arrows have be drawn and will deal appropriate 
-    damage if all are drawn 
-    in: arrowCounter, player list
-    out: updated player list
-    */
-    public void arrowCheck(){
-        
     }
     public ArrayList<Player> heal (Dice d, ArrayList<Player> l, int p){
         int choice; //stores player choise if applicable 
