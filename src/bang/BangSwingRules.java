@@ -10,7 +10,7 @@ import java.awt.*;
 
 /**
  *
- * @MainAuthor Cristiana Taylor 
+ * @MainAuthor Christiana Taylor 
  * @author Megan Lorfing
  * @author Seth Michaels
  * @author Sean Criswell
