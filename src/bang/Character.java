@@ -1,7 +1,7 @@
 package bang;
 /*
  * @MainAuthor Megan Lorfing 
- * @author Cristiana Taylor
+ * @author Christiana Taylor
  * @author Seth Michaels
  * @author Sean Criswell
  * @author Hunter King
