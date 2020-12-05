@@ -11,7 +11,7 @@ import java.util.Scanner;
 /**
  *
  * @MainAuthor Sean Criswell
- * @author Cristiana Taylor
+ * @author Christiana Taylor
  * @author Seth Michaels
  * @author Megan Lorfing
  * @author Hunter King
