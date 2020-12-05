@@ -1,10 +1,3 @@
-/*
-EXTREAMLY BROKEN
-ToDo: add layed out methods
-    add dice checker 
-    add rounds
-
- */
 
 package bang;
 import java.util.*;
@@ -13,7 +6,7 @@ import java.util.*;
  * @Main author Hunter King 
  * @author Megan Lorfing
  * @aurthor Sean Criswell
- * @aurthor seth Michaels
+ * @aurthor Seth Michaels
  * @aurthor Christiana Taylor
  * 
  */
