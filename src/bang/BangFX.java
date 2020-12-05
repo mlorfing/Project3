@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bang;
 
 import java.io.FileInputStream;
@@ -25,9 +20,11 @@ import javafx.util.Duration;
 
 /**
  *
- * @author ctaylor
- * @author Seth, secondary
- * @author Hunter, secondary
+ * @author Christiana Taylor
+ * @author Seth Michaels, secondary
+ * @author Hunter King, secondary
+ * @author Sean Criswell
+ * @author Megan Lorfing
  */
 public class BangFX extends Application {
 
@@ -2364,7 +2361,7 @@ public class BangFX extends Application {
         });
         
     }
-    
+    //resets dice on screen
     public void resetDieFace(){
         
         d1.setVisible(false);
@@ -2431,7 +2428,7 @@ public class BangFX extends Application {
         du62.setVisible(false);
         
     }
-    
+    //initial roll of the dice
     public void rollDiceGo(){
         BE1 = 0;
         BE2 = 0;
@@ -2981,7 +2978,7 @@ public class BangFX extends Application {
         });
     
     }
-    
+    //second roll of the dice
     public void reroll(){  
         dynamiteCount = 0;
         current.resetAbility();
@@ -3533,7 +3530,7 @@ public class BangFX extends Application {
             });
 
     }
-    
+    //last roll of the dice
     public void reroll2(){
         dynamiteCount = 0;
         current.resetAbility();
@@ -4249,7 +4246,11 @@ public class BangFX extends Application {
         });
         
     }
-    
+    /**
+     * starts dynamite action
+     * @param i - iteration of play order
+     * @param count - number of Dynamite rolled
+     */
     public void dynamiteAction(int i, int count){
         dynExp.setText(current.name+"'s turn ended due to dynamite explosion.");
         
@@ -4295,7 +4296,12 @@ public class BangFX extends Application {
             });
         }
     }
-    
+    /**
+     * starts arrow action
+     * takes arrow from pile, checks for Indian attack
+     * @param arr - number of arrows 
+     * @param takingArr - player taking arrow
+     */
     public void arrowAction(int arr, Player takingArr) {
         current = takingArr;
         if(chiefArrow){
@@ -4370,7 +4376,10 @@ public class BangFX extends Application {
         System.out.println(arrowCount+" arrow(s) left in pile.");
         current = play_order.get(0);
     }
-    
+    /**
+     * starts broken arrow action
+     * adds arrow back to pile
+     */
     public void barrowAction(){
         boolean arrC = false;
         for(int i=0; i<cSel; i++){
@@ -4389,13 +4398,19 @@ public class BangFX extends Application {
             System.out.println(arrowCount+" arrow(s) in the pile.");
         }
     }
-    
+    /**
+     * bullet immediately deals damage to current player
+     * @param i - to select Checkbox for reroll
+     */
     public void bulletAction(int i){
         eye.seek(Duration.ZERO);
         eye.play();
         current.damage(1);
     }
-                
+    /**
+     * heals player based off drink
+     * @param i - takes int for how drunk player is getting
+     */    
     public void getDrunk(int i){
         clink.seek(Duration.ZERO);
         clink.play();
@@ -4433,7 +4448,11 @@ public class BangFX extends Application {
         }
         
     }
-    
+    /**
+     * 
+     * @param be1 - number of Bull's Eye 1
+     * @param be2 - number of Bull's Eye 2
+     */
     public void beAction(int be1, int be2){
         eye.seek(Duration.ZERO);
         eye.play();
@@ -4483,7 +4502,10 @@ public class BangFX extends Application {
         }
         
     }
-
+    /**
+     * performs gatling attack if correct# of gat
+     * @param gat - gatling count on last roll
+     */
     public void gatAttack(int gat){
         boolean el = false;
         if(gat > 2) {
@@ -4508,7 +4530,10 @@ public class BangFX extends Application {
             arrowAction(1, current);
         }
     }
-    
+    /**
+     * FISTICUFFS AT DAWN
+     * takes both players and sets to randomly pick a loser
+     */
     public void dueling(){
         boolean el = false;
         Random rand = new Random();
@@ -4537,7 +4562,10 @@ public class BangFX extends Application {
             }
         }
     }
-    
+    /**
+     * Indians are taking back their land
+     * applies arrow damage and resets pile
+     */
     public static void indianAttack() {
         int most = 0;
         int index = 0;
@@ -4587,7 +4615,11 @@ public class BangFX extends Application {
             chiefArrow = false;
         }
     }
-    
+    /**
+     * if a computer, sets checkboxes to disable and randomly select valid
+     * dice to reroll
+     * @param i - location of checkbox
+     */
     public void aiSetRoll(int i){
         Random rd = new Random();
         if(dice.get(i).sides[dice.get(i).side].equals("Arrow")){
@@ -4620,7 +4652,10 @@ public class BangFX extends Application {
         }
         checkBoxes.get(i).setDisable(true);
     }    
-    
+    /**
+     * checks after damage is dealt if a player has died
+     * adds life to Vulture Sam and calls winner if true
+     */
     public static void deathcheck() {
         sheriffCheck = 0;
         deputyCount = 0;
@@ -4664,7 +4699,10 @@ public class BangFX extends Application {
         weiner = winner();
         
     }
-    
+    /**
+     * if a player has died, it asks for player's team and role
+     * @return int - number of winning team, if there is one
+     */
     public static int winner() {
         
         if(sheriffCheck==0 && outlawCount == 0 && deputyCount==0) {
@@ -4689,8 +4727,10 @@ public class BangFX extends Application {
         }
         
     }
-    
-    
+    /**
+     * win screen GUI
+     * @param bullhonkey - return of winner()
+     */
     public void setWin(int bullhonkey) {
         Group fuckdis = new Group();
         
